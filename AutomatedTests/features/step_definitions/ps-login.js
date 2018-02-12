@@ -6,17 +6,7 @@ When('I enter my correct email address', function (callback) {
     callback(null, 'pending');
 });
 
-When('I click login', function (callback) {
-    // Write code here that turns the phrase above into concrete actions
-    callback(null, 'pending');
-});
-
 When('I enter my correct password', function (callback) {
-    // Write code here that turns the phrase above into concrete actions
-    callback(null, 'pending');
-});
-
-When('I click submit', function (callback) {
     // Write code here that turns the phrase above into concrete actions
     callback(null, 'pending');
 });
@@ -32,11 +22,6 @@ Given('that I have received the verification code', function (callback) {
 });
 
 When('I enter the correct verification code', function (callback) {
-    // Write code here that turns the phrase above into concrete actions
-    callback(null, 'pending');
-});
-
-When('I click the submit button', function (callback) {
     // Write code here that turns the phrase above into concrete actions
     callback(null, 'pending');
 });

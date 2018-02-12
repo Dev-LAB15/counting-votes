@@ -14,5 +14,5 @@ And I get a visual confirmation
 Scenario: Step Two
 Given that I'm signed in
 And I have entered the 'Counting' screen
-When I click on Finish Voting
+When I click on the 'Finish Voting' button
 Then I'm redirected to the 'Verification Step Two' screen
