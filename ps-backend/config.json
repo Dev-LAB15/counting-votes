@@ -1,0 +1,4 @@
+{
+    "secret": "app-secret",
+    "port": 3000
+}
