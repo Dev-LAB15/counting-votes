@@ -1,15 +1,23 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Counting Votes Backend Services
 
 # Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+### Installation process
+Install Node.js 8.x
+### API References
+- [Node.js](https://nodejs.org/en/)
+Base Runtime Environment
+- [Express](https://expressjs.com/)
+Base API Framework
+- [LokiJS](http://lokijs.org/#/)
+In-Memory Database for volatile information such as tokens, codes and queues
 
 # Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+Install VSCode (latest);
+Add npm intellisense (latest);
+Add npm support for VS Code;
+If everything is setup correctly just press F5 to start debug;
+You can use fiddler or postman to debug API Requests;
 
 # Contribute
 TODO: Explain how other users and developers can contribute to make your code better. 

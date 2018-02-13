@@ -8,8 +8,8 @@ module.exports.sendVerificationCode = function(to, name, code){
         from: config.sendGridEmailFrom,
         subject: 'Your Verification Code',
         html: `
-        Dear ${name}, <br />
-        This is your activation code: ${code}.<br /><br />
+        Dear ${name}, <br /><br />
+        This is your activation code: <b>${code}</b>.<br /><br />
         Best Regards.
         `
     };
