@@ -1,3 +1,4 @@
+@PollingStation
 Feature: Verify that vote count matches control numbers
   As the Chairman
   I want to verify that the votes match control numbers

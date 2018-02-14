@@ -1,3 +1,4 @@
+@PollingStation
 Feature: Log in to the polling station application
   As a User
   I want to log in to the application

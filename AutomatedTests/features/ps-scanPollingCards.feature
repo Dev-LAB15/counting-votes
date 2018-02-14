@@ -1,3 +1,4 @@
+@PollingStation
 Feature: Scan polling cards
   As a Charirman
   I want to be able to scan polling cards

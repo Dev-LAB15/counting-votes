@@ -1,8 +1,10 @@
+@PollingStation
 Feature: Register votes
   As a Charirman
   I want to be able to register counted votes
   So that I can compare the numbers with control values
 
+@Current
 Scenario: Step One
 Given that I'm signed in
 And I have entered the 'Counting' screen
