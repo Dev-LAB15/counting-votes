@@ -1,50 +1,5 @@
-html,
-body {
-	height: 100%;
-	overflow-x: hidden;
-}
-
-header {
-	padding: 70px 60px;
-	background: #fff;
-	border-bottom: 1px #eaeaea solid;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 100;
-	width: 100%;
-	height: 200px;
-}
-
-footer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-}
-
-.btn {
-	outline: none;
-}
-
-.btn-primary {
-	background: #000;
-	color: #fff;
-	font-size: 34px;
-	font-weight: 600;
-	padding: 59px 60px;
-}
-
-.btn-full {
-	width: 100%;
-	display: block;
-	text-align: right;
-}
-
 .main {
-	height: 100%;
 	padding: 0 0 0 20px;
-	position: relative;
 }
 
 .main:before {
@@ -109,8 +64,8 @@ footer {
 
 .grid__item.highlight {
 	background: red;
-	-webkit-transform: scale3d(0.8,0.8,0.8);
-	transform: scale3d(0.8,0.8,0.8);
+	-webkit-transform: scale3d(1,1,1);
+	transform: scale3d(1,1,1);
 }
 
 .is-dragging {
@@ -125,8 +80,8 @@ footer {
 	opacity: 0;
 	-webkit-transition: opacity 0.3s, -webkit-transform 0.3s !important;
 	transition: opacity 0.3s, transform 0.3s !important;
-	-webkit-transform: scale3d(0.5,0.5,0.5) !important;
-	transform: scale3d(0.5,0.5,0.5) !important;
+	-webkit-transform: scale3d(0.5,0.5,1) !important;
+	transform: scale3d(0.5,0.5,1) !important;
 }
 
 .is-complete {
@@ -209,8 +164,8 @@ footer {
 .drop-area__item.highlight {
 	background-color: #000;
 	color: #fff;
-	-webkit-transform: scale3d(1.5,1.5,1.5);
-	transform: scale3d(1.5,1.5,1.5);
+	-webkit-transform: scale(1.5);
+	transform: scale(1.5);
 }
 
 /* */

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="101px" height="30px" viewBox="0 0 101 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>cv-arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Chairman-login-#1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1679.000000, -705.000000)">
+        <g id="form" transform="translate(380.000000, 638.000000)" fill="#4A90E2">
+            <g id="button" transform="translate(1140.000000, 59.000000)">
+                <path d="M249.739408,20.3447186 L241.233035,11.8383461 L245.071613,7.99976798 L259.999098,22.9272521 L259.92635,23 L259.999098,23.0727479 L245.071613,38.000232 L241.233035,34.1616539 L249.73821,25.6564787 L159,25.6564787 L159,20.3447186 L249.739408,20.3447186 Z" id="cv-arrow"></path>
+            </g>
+        </g>
+    </g>
+</svg>
