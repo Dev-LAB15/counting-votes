@@ -10,6 +10,7 @@
         <meta name="author" content="LAB15"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/main.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -22,105 +23,76 @@
     <body>
         <div id="app">
             <div class="main login">
-                <section class="cv-fullwidth">
-                    <div class="logo">
-                        <img src="img/svg/logo.svg" class="img-responsive">
+                <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
+                    <div class="col-md-3">
+                        <a class="navbar-brand" href="index.html">
+                            <img src="img/svg/logo.svg" class="navbar-brand" width="160">
+                        </a>
                     </div>
-                    <div class="cv-vertical-align">
-                        <div class="container-fluid">
-                            <div class="row justify-content-md-center">
-                                <div class="col col-lg-8">
-                                    <div class="input-group">
-                                        <input type="text" v-model="model.email" class="form-control" :placeholder="$t('message.emailAddress')" aria-label="e-mail address">
-                                        <span class="input-border"></span>
-                                        <div class="input-group-append">
-                                            <button type="button" class="btn btn-info" v-on:click="requestStatus">
-                                                {{$t("message.signin")}}
-											<i class="cv cv-arrow-right"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    
+                    <div class="col-md-6 text-center">
+                        <span class="signed-user">
+                            signed in users
+                            <ul class="list-inline users">
+                                <li class="list-inline-item"><span class="pic"><img src="img/user-pic.png"></span></li>
+                                <li class="list-inline-item"><span class="pic"><img src="img/user-pic.png"></span></li>
+                                <li class="list-inline-item"><span class="pic"><img src="img/user-pic.png"></span></li>
+                                <li class="list-inline-item"><span class="pic"><img src="img/user-pic.png"></span></li>
+                            </ul>
+                        </span>
                     </div>
-                    <!-- /content -->
-                </section>
-            </div>
-            <!-- /main -->
-            <div class="bg">
-                <div class="rect"></div>
-            </div>
-            <div id="create-password-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">{{$t('message.twoFactorAuthentication')}}</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <form>
-                                    <div class="row justify-content-md-center">
-                                        <div class="col col-lg-8">
-                                            <div class="input-group mb-5">
-                                                <input type="password" class="form-control" v-model="model.password" :placeholder="$t('message.enterYourPassword')">
-                                                <span class="input-border"></span>
-                                            </div>
-                                            <div class="input-group mb-5">
-                                                <input type="password" class="form-control" v-model="model.passwordConfirmation" :placeholder="$t('message.enterYourPasswordConfirmation')">
-                                                <span class="input-border"></span>
-                                            </div>
-                                            <div class="input-group mb-5">
-                                                <input type="text" class="form-control" v-model="model.code" :placeholder="$t('message.enterYourActivationCode')">
-                                                <span class="input-border"></span>
-                                                <div class="input-group-append">
-                                                    <button type="button" v-on:click="requestCreatePassword" class="btn btn-info">
-                                                        {{$t('message.createPassword')}}
-													<i class="cv cv-arrow-right"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+    
+                    <div class="col-md-3 text-right">
+                        <button class="navbar-toggler_" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon">menu</span>
+                        </button>
                     </div>
+                </header>
+    
+                <div id="#main-menu" class="collapse">
+                    menu
                 </div>
             </div>
-            <div id="sign-in-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">{{$t('message.twoFactorAuthentication')}}</h5>
-                        </div>
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <form>
-                                    <div class="row justify-content-md-center">
-                                        <div class="col col-lg-8">
-                                            <div class="input-group mb-5">
-                                                <input type="password" v-model="model.password" class="form-control" :placeholder="$t('message.enterYourPassword')">
-                                                <span class="input-border"></span>
-                                            </div>
-                                            <div class="input-group mb-5">
-                                                <input type="text" v-model="model.code" class="form-control" :placeholder="$t('message.enterYourActivationCode')">
-                                                <span class="input-border"></span>
-                                                <div class="input-group-append">
-                                                    <button type="button" v-on:click="requestSignIn" class="btn btn-info">
-                                                        {{$t('message.authenticate')}}
-													<i class="cv cv-arrow-right"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+
+            <section class="cv-fullwidth has-header">
+                <div class="row">
+                    <div class="col col-lg-3">
+                        <a href="#" class="section cv-fullwidth scan">
+                            <span class="info cv-vertical-align">
+                                <h1>scan <i class="icon icon-arrow-right"></i></h1>
+                                <i class="icon icon-lg icon-camera"></i>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="col col-lg-3">
+                        <a href="#" class="section cv-fullwidth verification">
+                            <span class="info cv-vertical-align">
+                                <h1>verification <i class="icon icon-arrow-right"></i></h1>
+                                <i class="icon icon-lg icon-verification"></i>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="col col-lg-3">
+                        <a href="#" class="section cv-fullwidth counting">
+                            <span class="info cv-vertical-align">
+                                <h1>counting <i class="icon icon-arrow-right"></i></h1>
+                                <i class="icon icon-lg icon-counting"></i>
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="col col-lg-3">
+                        <a href="#" class="section cv-fullwidth transactions">
+                            <span class="info cv-vertical-align">
+                                <h1>transactions <i class="icon icon-arrow-right"></i></h1>
+                                <i class="icon icon-lg icon-transactions"></i>
+                            </span>
+                        </a>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
         <!-- base -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
