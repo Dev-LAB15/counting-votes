@@ -13,7 +13,7 @@ module.exports = function (app) {
 	 */
 	app.post('/authentication/verification', function(req, res){
 		if(!req.body.email || req.body.email == ''){
-			res.status(400).json({message: "Email can't be empty"});
+			res.status(422).json({message: "Email can't be empty"});
 			return;
 		}
 
@@ -56,42 +56,42 @@ module.exports = function (app) {
 		}
 
 		if(user.password && user.password.length > 0){
-			res.status(409).json({
+			res.status(422).json({
 				message: 'Password already defined, if you forgot it, try to recover'
 			});
 			return;
 		}
 
 		if(!req.body.password || req.body.password.length === 0){
-			res.status(403).json({
+			res.status(422).json({
 				message: "Please inform a password"
 			});
 			return;
 		}
 
 		if(!req.body.passwordConfirmation || req.body.passwordConfirmation.length === 0){
-			res.status(412).json({
+			res.status(422).json({
 				message: "Please inform a password confirmation"
 			});
 			return;
 		}
 
 		if(req.body.password != req.body.passwordConfirmation){
-			res.status(412).json({
+			res.status(422).json({
 				message: "Password and Password Confirmation doesn't match"
 			});
 			return;
 		}
 
 		if(!code){
-			res.status(403).json({
+			res.status(422).json({
 				message: "You must first request an activation code"
 			});
 			return;
 		}
 
 		if(code.code != req.body.code){
-			res.status(401).json({
+			res.status(422).json({
 				message: "Invalid verification code"
 			});
 			return;
@@ -123,14 +123,14 @@ module.exports = function (app) {
 
 		var vcode = vcodes.find(user.email);
 		if(!vcode){
-			res.status(409).json({
+			res.status(422).json({
 				message: 'Please request a Verification Code First'
 			})
 			return;
 		}
 
 		if(vcode.code != req.body.code){
-			res.status(403).json({
+			res.status(422).json({
 				message: 'Invalid Verification Code'
 			});
 			return;
