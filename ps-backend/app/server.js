@@ -15,8 +15,30 @@ app.appRouter = express.Router();
 //jwt for security (http only is builtin)
 app.jwt = require('jsonwebtoken');
 
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
+
+var unauthorized = [
+  "/authentication/verification",
+  "/authentication/createpassword",
+  "/authentication/signin"
+]
+
+
 
 app.appRouter.use(function (req, res, next) {
+
+  if (unauthorized.indexOf(req.path) >= 0){
+    next();
+    return;
+  }
+
   var token = req.headers.token;
   if (token) {
     app.jwt.verify(token, app.config.secret, function (err, decoded) {
@@ -29,7 +51,6 @@ app.appRouter.use(function (req, res, next) {
     });
   } else {
     return res.status(403).send({
-      success: false,
       message: 'No token provided.'
     });
   }

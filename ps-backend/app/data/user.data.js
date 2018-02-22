@@ -3,7 +3,8 @@ var loki = require('lokijs');
 var db = new loki('users.json');
 var data = db.addCollection('users', {indices: ['email']});
 
-data.insert({name: 'Moises', email: 'moises@lab15.io'});
+data.insert({name: 'Moises', email: 'moises@lab15.io', isActive: false, role: 'Chairman'});
+data.insert({name: 'Jose', email: 'jmoisespg@gmail.com', isActive: false, role: 'Teller'});
 
 module.exports.data = data;
 

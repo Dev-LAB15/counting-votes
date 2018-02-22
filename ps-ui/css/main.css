@@ -329,3 +329,7 @@ footer {
     right: -15%; } }
 
 /*# sourceMappingURL=main.css.map */
+
+.toasted.bubble{
+  font-size: 35px;
+}

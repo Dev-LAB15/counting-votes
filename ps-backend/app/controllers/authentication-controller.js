@@ -13,20 +13,18 @@ module.exports = function (app) {
 	 */
 	app.post('/authentication/verification', function(req, res){
 		if(!req.body.email || req.body.email == ''){
-			res.json({
-				success: false,
-				message: "Email can't be empty"
-			});
+			res.status(400).json({message: "Email can't be empty"});
 			return;
 		}
 
 		var user = users.find(req.body.email);
 		if(!user){
-			res.json({
-				success: false,
-				message: 'invalid credentials'
-			});
+			res.status(403).json({message: 'Invalid credentials'});
 			return;
+		}
+
+		if(user.role != req.body.role){
+			res.status(403).json({message: 'Action Forbidden! Please verify your role and try again.'});
 		}
 
 		var code = utils.generateCode();
@@ -39,10 +37,11 @@ module.exports = function (app) {
 		vcodes.save(vcode);
 		mailService.sendVerificationCode(user.email, user.name, code);
 		res.json({
-			success: true,
+			isActive: user.isActive,
 			message: 'Please check your email address to get the verification code'
 		});
 	});
+
 	/**
 	 * Generates user password.
 	 */
@@ -52,56 +51,47 @@ module.exports = function (app) {
 
 		//#region Validation
 		if(!user){
-			res.json({
-				success:false,
-				message: 'Invalid credentials'
-			});
+			res.status(403).json({message: 'Invalid credentials'});
 			return;
 		}
 
 		if(user.password && user.password.length > 0){
-			res.json({
-				success:false,
+			res.status(409).json({
 				message: 'Password already defined, if you forgot it, try to recover'
 			});
 			return;
 		}
 
 		if(!req.body.password || req.body.password.length === 0){
-			res.json({
-				success: false,
+			res.status(403).json({
 				message: "Please inform a password"
 			});
 			return;
 		}
 
 		if(!req.body.passwordConfirmation || req.body.passwordConfirmation.length === 0){
-			res.json({
-				success: false,
+			res.status(412).json({
 				message: "Please inform a password confirmation"
 			});
 			return;
 		}
 
 		if(req.body.password != req.body.passwordConfirmation){
-			res.json({
-				success: false,
+			res.status(412).json({
 				message: "Password and Password Confirmation doesn't match"
 			});
 			return;
 		}
 
 		if(!code){
-			res.json({
-				success: false,
+			res.status(403).json({
 				message: "You must first request an activation code"
 			});
 			return;
 		}
 
 		if(code.code != req.body.code){
-			res.json({
-				success: false,
+			res.status(401).json({
 				message: "Invalid verification code"
 			});
 			return;
@@ -109,12 +99,12 @@ module.exports = function (app) {
 		//#endregion
 		
 		user.password = sha1(req.body.password);
+		user.isActive = true;
 		users.update(user);
 		vcodes.markUsed(code);
 		var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
 		res.json({
-			success: true,
-			user: user,
+			user: user.name,
 			token: token
 		});
 	});
@@ -125,8 +115,7 @@ module.exports = function (app) {
     app.post('/authentication/signin', function (req, res) {
 		var user = users.find(req.body.email);
 		if(!user){
-			res.json({
-				success: false,
+			res.status(403).json({
 				message: 'Invalid Credentials'
 			});
 			return;
@@ -134,16 +123,14 @@ module.exports = function (app) {
 
 		var vcode = vcodes.find(user.email);
 		if(!vcode){
-			res.json({
-				success: false,
+			res.status(409).json({
 				message: 'Please request a Verification Code First'
 			})
 			return;
 		}
 
 		if(vcode.code != req.body.code){
-			res.json({
-				success: false,
+			res.status(403).json({
 				message: 'Invalid Verification Code'
 			});
 			return;
@@ -154,13 +141,12 @@ module.exports = function (app) {
 			var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
 			res.json({
 				success: true,
-				user: user,
+				user: user.name,
 				token: token
 			});
-		}
+		} 
 		else {
-			res.json({
-				success: false,
+			res.status(403).json({
 				message: 'Invalid Credentials'
 			});
 		}
