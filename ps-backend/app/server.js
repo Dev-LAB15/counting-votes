@@ -6,15 +6,23 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 //used for debug
 var morgan = require('morgan');
-
+//instantiate express environment
 var app = express();
+
+//load config specs
 app.config = require('../config.json');
+//default api logger
 app.use(morgan('dev'));
+//default data transport
 app.use(bodyParser.json());
+//router for handling requests
 app.appRouter = express.Router();
 //jwt for security (http only is builtin)
 app.jwt = require('jsonwebtoken');
 
+/**
+ * CORS Headers
+ */
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -23,18 +31,17 @@ app.use(function (req, res, next) {
   next();
 });
 
-
-var unauthorized = [
-  "/authentication/verification",
-  "/authentication/createpassword",
-  "/authentication/signin"
-]
-
-
-
+/**
+ * Token Protection
+ */
 app.appRouter.use(function (req, res, next) {
+  var anonymousServices = [
+    "/authentication/verification",
+    "/authentication/createpassword",
+    "/authentication/signin"
+  ]
 
-  if (unauthorized.indexOf(req.path) >= 0){
+  if (anonymousServices.indexOf(req.path) >= 0){
     next();
     return;
   }
@@ -56,8 +63,12 @@ app.appRouter.use(function (req, res, next) {
   }
 });
 
+//Require All Controllers for Environment Setup.
 require('../app/controllers/home-cotroller')(app);
 require('../app/controllers/authentication-controller')(app);
+require('../app/controllers/scan-controller')(app);
 
+//mark the app to use the router 
 app.use('', app.appRouter);
+//start app on the configured port
 app.listen(app.config.port);

@@ -10,7 +10,7 @@ window.addEventListener('load', function() {
         el: '#app',
         data: {
             chairman: this.window.localStorage.chairman,
-            tellers: getTellers(),
+            tellers: [],
             model: {
                 email: '',
                 password: '',
@@ -47,6 +47,7 @@ window.addEventListener('load', function() {
             requestCreatePassword: function(event) {
                 axios.post(apiEndpoint + '/authentication/createpassword', vm.model).then(resp=>{
                     addTeller(resp.data.user);
+                    vm.data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('#create-password-modal').modal('hide');
                 }
@@ -62,6 +63,7 @@ window.addEventListener('load', function() {
             requestSignIn: function(event) {
                 axios.post(apiEndpoint + '/authentication/signin', vm.model).then(resp=>{
                     addTeller(resp.data.user);
+                    vm.data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('#sign-in-modal').modal('hide');
                 }
@@ -89,4 +91,10 @@ window.addEventListener('load', function() {
 
     });
     vm.$mount('#app');
+
+    var tellers = getTellers();
+    if(tellers){
+        for(var i = 0; i < tellers.length; i++)
+            vm.tellers.push(tellers[i]);
+    }
 });

@@ -17,7 +17,14 @@ const lang = {
 				tellerSignIn: "teller sign in",
 				goToDashBoard: "go to dashboard",
 				signedInTellers: "signed in tellers",
-				errorEmailCannotBeEmpty: "email can't be empty"
+                errorEmailCannotBeEmpty: "email can't be empty",
+                signedInUsers: "signed in users",
+                menu: "menu",
+                verification: "verification",
+                transactions: "transactions",
+                counting: "counting",
+                scan: "scan"
+
             }
         }
     }

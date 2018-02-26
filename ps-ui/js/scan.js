@@ -1,10 +1,12 @@
 window.addEventListener('load', function () {
 
+
     let tellers = getTellers();
 
     if (!tellers || tellers.length == 0) {
         window.location = 'tellerlogin.html';
     }
+
     var vm = new Vue({
         i18n,
         el: '#app',
@@ -20,6 +22,17 @@ window.addEventListener('load', function () {
             }
         },
         methods: {
+            /**
+             * Decodes a QR Code content from the camera.
+             * @param {qrcode decoded content} content 
+             */
+            onDecode(content) {
+                console.log(content);
+            },
+
+            onLocate(points) {
+                
+            }
         }
 
     });
