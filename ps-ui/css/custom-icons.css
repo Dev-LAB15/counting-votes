@@ -30,14 +30,26 @@
 
 /* icon list */
 
+.icon-check:before {
+  content: "\e907";
+}
+.icon-close:before {
+  content: "\e908";
+}
+.icon-menu:before {
+  content: "\e906";
+}
+.icon-chevron-left:before {
+  content: "\e905";
+}
 .icon-counting:before {
   content: "\e902";
 }
-.icon-transactions:before {
-  content: "\e903";
-}
 .icon-verification:before {
   content: "\e904";
+}
+.icon-transactions:before {
+  content: "\e903";
 }
 .icon-arrow-right:before {
   content: "\e900";

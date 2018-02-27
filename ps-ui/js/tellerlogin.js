@@ -1,9 +1,6 @@
 window.addEventListener('load', function() {
 
-    if(!window.localStorage.chairman){
-        window.location = 'index.html';
-    }
-    
+
 
     var vm = new Vue({
         i18n,

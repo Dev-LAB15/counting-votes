@@ -1,30 +1,3 @@
-.main {
-	padding: 0 0 0 20px;
-}
-
-.main:before {
-	content: '';
-	background: #5BCBC3;
-	width: 20px;
-	height: 100%;
-	left: 0;
-	position: absolute;
-}
-
-.main footer {
-	padding-left: 20px;
-}
-
-.page-title {
-	border: none;
-	margin: 0px;
-	text-align: center;
-}
-
-.page-title h1 {
-	font-size: 40px;
-}
-
 .grid {
 	margin: 0 auto;
 	position: relative;
@@ -99,12 +72,12 @@
 
 .drop-area {
 	position: absolute;
-	top: 200px;
+	top: 0;
 	left: 0;
-	bottom: 160px;
-	z-index: 99;
+	z-index: 30;
 	text-align: center;
 	width: 100%;
+	height: 100%;
 	-webkit-transition: opacity 0.3s;
 	transition: transform 0.3s, opacity 0.3s;
 	-webkit-transform: scale3d(1,1,1);
@@ -130,6 +103,7 @@
 	-webkit-transition: -webkit-transform 0.3s, background 0.3s;
 	transition: transform 0.3s, background 0.3s;
 	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
 }
 
 .drop-area__item::before,
@@ -141,7 +115,7 @@
 	height: 100%;
 	color: #fff;
 	font-size: 60px;
-	font-family: FontAwesome;
+	font-family: 'CV Icons' !important;
 	pointer-events: none;
 	opacity: 0;
 	border-radius: 50%;
@@ -158,7 +132,7 @@
 }
 
 .drop-area__item::after {
-	content: '\f00c';
+	content: "\e907";
 }
 
 .drop-area__item.highlight {
