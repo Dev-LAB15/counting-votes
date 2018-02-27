@@ -1,37 +1,44 @@
 var apiEndpoint = 'http://localhost:3000';
 var i18n;
+var axiosHeaders;
 
 window.addEventListener('load', function () {
     Vue.use(VueI18n);
     Vue.use(Toasted);
     i18n = new VueI18n(lang);
+    axiosHeaders = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Authorization": this.window.localStorage.chairmanToken
+        }
+    }
 });
 
 
-function addTeller(teller){
+function addTeller(teller) {
     var tellers, tellersString;
-    try{
-        tellersString = window.localStorage.getItem('tellers');    
-    }catch(err){
+    try {
+        tellersString = window.localStorage.getItem('tellers');
+    } catch (err) {
 
     }
-    
 
-    if(!tellersString){
+
+    if (!tellersString) {
         tellers = new Array();
-    }else{
+    } else {
         var tellers = JSON.parse(tellersString)
     }
-    if(tellers.indexOf(teller) < 0){
+    if (tellers.indexOf(teller) < 0) {
         tellers.push(teller);
         window.localStorage.setItem('tellers', JSON.stringify(tellers));
     }
 }
 
-function getTellers(){
-    try{
+function getTellers() {
+    try {
         return JSON.parse(window.localStorage.getItem('tellers'));
-    }catch(err){
+    } catch (err) {
         return null;
     }
 }

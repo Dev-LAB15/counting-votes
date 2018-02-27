@@ -154,7 +154,7 @@ module.exports = function (app) {
 	/**
 	 * Executes the signout process
 	 */
-    app.appRouter.get('/authentication/signout', function (req, res) {
+    app.get('/authentication/signout', function (req, res) {
         res.send({ ok: "ok" });
     });
 }

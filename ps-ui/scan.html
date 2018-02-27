@@ -1,316 +1,337 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>Counting Votes</title>
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="author" content="LAB15" />
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="sass/main.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/vue-qrcode-reader.css" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Counting Votes</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="LAB15" />
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="sass/main.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/vue-qrcode-reader.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+</head>
 
-        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
-        <script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
-    </head>
+<body>
+    <div id="app" class="main scan">
+        <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
+            <div class="col-md-3">
+                <a class="nav" href="dashboard.html">
+                    <i class="icon icon-chevron-left"></i>
+                </a>
+            </div>
 
-    <body>
-        <div id="app" class="main scan">
-            <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
-                <div class="col-md-3">
-                    <a class="nav" href="dashboard.html">
-                        <i class="icon icon-chevron-left"></i>
-                    </a>
+            <div class="col-md-6 text-center">
+                <h1 class="title">{{$t('message.scan')}}</h1>
+            </div>
+
+            <div class="col-md-3">
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-menu" aria-expanded="false">
+                    <i class="icon icon-menu"></i>
+                </button>
+
+                <div class="collapse" id="main-menu">
+                    <nav class="cv-fullwidth">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="dashboard.html">{{$t('message.dashboard')}}</a>
+                            </li>
+                            <li>
+                                <a href="scan.html">{{$t('message.scan')}}</a>
+                            </li>
+                            <li>
+                                <a href="verification.html">{{$t('message.verification')}}</a>
+                            </li>
+                            <li>
+                                <a href="counting.html">{{$t('message.counting')}}</a>
+                            </li>
+                            <li>
+                                <a href="transactions.html">{{$t('message.transactions')}}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <section class="cv-fullwidth has-header">
+            <div class="row">
+                <div class="col col-lg-6 camera-wrapper">
+                    <div class="camera"></div>
+                    <qrcode-reader @decode="onDecode" class="capture-image"></qrcode-reader>
                 </div>
 
-                <div class="col-md-6 text-center">
-                    <h1 class="title">scan</h1>
-                </div>
+                <div class="col col-lg-6 transactions-wrapper">
+                    <div class="page-title page-title-sm">
+                        <h5>transactions</h5>
+                    </div>
 
-                <div class="col-md-3">
-                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#main-menu" aria-expanded="false">
-                        <i class="icon icon-menu"></i>
-                    </button>
+                    <div class="transactions-list">
+                        <ul class="list-unstyled">
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-transactions"></i>
+                            </li>
 
-                    <div class="collapse" id="main-menu">
-                        <nav class="cv-fullwidth">
-                            <ul class="list-unstyled">
-                                <li><a href="index.html">dashboard</a></li>
-                                <li><a href="scan.html">scan</a></li>
-                                <li><a href="verification.html">verification</a></li>
-                                <li><a href="counting.html">counting</a></li>
-                                <li><a href="transactions.html">transactions</a></li>
-                            </ul>
-                        </nav>
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-transactions"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-check"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-check"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-close"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-check"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-check"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-check"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-check"></i>
+                            </li>
+
+                            <li>
+                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
+                                <i class="icon icon-check"></i>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="vote-options">
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voter-pass">{{$t('message.voterPass')}}</button>
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#power-attorney">{{$t('message.powerOfAttorney')}}</button>
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#manual-input">{{$t('message.manualInput')}}</button>
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#objection-pilot">{{$t('message.objectionToPilot')}}</button>
                     </div>
                 </div>
-            </header>
+            </div>
+        </section>
 
-            <section class="cv-fullwidth has-header">
-                <div class="row">
-                    <div class="col col-lg-6 camera-wrapper">
-                        <div class="camera"></div>
-                        <qrcode-reader @decode="onDecode" class="capture-image"></qrcode-reader>
+        <div class="modal fade" id="voter-pass" tabindex="-1" role="dialog" aria-labelledby="VoterPass" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{$t('message.cVoterPass')}}</h5>
                     </div>
 
-                    <div class="col col-lg-6 transactions-wrapper">
-                        <div class="page-title page-title-sm">
-                            <h5>transactions</h5>
-                        </div>
-
-                        <div class="transactions-list">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-transactions"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-transactions"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-check"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-check"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-close"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-check"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-check"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-check"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-check"></i>
-                                </li>
-
-                                <li>
-                                    <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                    <i class="icon icon-check"></i>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="vote-options">
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voter-pass">voter pass</button>
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#power-attorney">power of attorney</button>
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#manual-input">manual input</button>
-                            <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#objection-pilot">objection to pilot</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="modal fade" id="voter-pass" tabindex="-1" role="dialog" aria-labelledby="VoterPass" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Voter Pass</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row justify-content-md-center">
-                                    <div class="col col-lg-8 text-center">
-                                        <p>do you want to register a <strong>voter pass</strong>?</p>
-
-                                        <div class="btn-group-separated">
-                                            <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">no</button>
-                                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">yes</button>
-                                        </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-8 text-center">
+                                    <p>{{$t('message.doYoutWantToRegister')}}
+                                        <strong>{{$t('message.voterPass')}}</strong>?</p>
+                                    <div class="btn-group-separated">
+                                        <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">{{$t('message.no')}}</button>
+                                        <button type="button" class="btn btn-primary btn-sm" v-on:click='votersPass'  data-dismiss="modal">{{$t('message.yes')}}</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /modal -->
-
-            <div class="modal fade" id="objection-pilot" tabindex="-1" role="dialog" aria-labelledby="ObjectionPilot" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Objection to Pilot</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row justify-content-md-center">
-                                    <div class="col col-lg-8 text-center">
-                                        <p>do you want to register a <strong>objection to pilot</strong>?</p>
-
-                                        <div class="btn-group-separated">
-                                            <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">no</button>
-                                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /modal -->
-
-            <div class="modal fade" id="manual-input" tabindex="-1" role="dialog" aria-labelledby="ManualInput" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Manual Input</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row justify-content-md-center">
-                                    <div class="col col-lg-8">
-                                        <div class="input-group mb-5">
-                                            <input type="text" class="form-control" placeholder="insert the vote code" aria-label="enter your activation code">
-                                            <span class="input-border"></span>
-                                            <div class="input-group-append">
-                                                <button type="submit" class="btn btn-link" data-dismiss="modal">register <i class="icon icon-arrow-right"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /modal -->
-
-            <div class="modal fade" id="power-attorney" tabindex="-1" role="dialog" aria-labelledby="PowerAttorney" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Power of Attorney</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row justify-content-md-center">
-                                    <div class="col col-lg-12 text-center">
-                                        <div class="btn-group-vertical">
-                                            <button type="button" class="btn btn-info btn-block" data-attorney="private">private authorization</button>
-                                            <button type="button" class="btn btn-info btn-block" data-attorney="written">written authorization</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary btn-block btn-submit" data-dismiss="modal" disabled>register <i class="icon icon-arrow-right"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /modal -->
-
-            <div class="modal fade" id="written-authorization" tabindex="-1" role="dialog" aria-labelledby="WrittenAuthorization" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Power of Attorney</h5>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="container-fluid">
-                                <div class="row justify-content-md-center">
-                                    <div class="col col-lg-8 text-center">
-                                        <p>do you want to register a <strong>written authorization</strong>?</p>
-
-                                        <div class="btn-group-separated">
-                                            <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">no</button>
-                                            <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">yes</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- /modal -->
-
-            <div id="confirm-qrcode-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">{{$t('message.confirmation')}}</h5>
-                        </div>
-                        <div class="modal-body">
-                            {{$t('message.areYouSureToSaveQrCode')}}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" class="btn btn-success" id="button-yes">{{$t('message.yes')}}</button>
-                            <button type="button" data-dismiss="modal" class="btn btn-danger">{{$t('message.no')}}</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div><!-- /main -->
+        </div>
+        <!-- /modal -->
 
-        <!-- base -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/7.4.2/vue-i18n.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-toasted/1.1.24/vue-toasted.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <!-- /base -->
+        <div class="modal fade" id="objection-pilot" tabindex="-1" role="dialog" aria-labelledby="ObjectionPilot" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{$t('message.cObjectionToPilot')}}</h5>
+                    </div>
 
-        <script src="/lang/en.js"></script>
-        <script src="/js/config.js"></script>
-        <script src="/js/vue-qrcode-reader.browser.js"></script>
-        <script src="/js/scan.js"></script>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-8 text-center">
+                                        <p>{{$t('message.doYoutWantToRegister')}}
+                                        <strong>{{$t('message.objectionToPilot')}}</strong>?</p>
 
-        <script>
-            $(function(){
-                $('[data-attorney]').on('click', function(){
-                    $('#power-attorney .btn-submit').attr('disabled', false);
+                                    <div class="btn-group-separated">
+                                        <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">{{$t('message.no')}}</button>
+                                        <button type="button" class="btn btn-primary btn-sm" v-on:click='objection' data-dismiss="modal">{{$t('message.yes')}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal -->
 
-                    if ( $(this).data('attorney') == 'written' ) {
-                        console.log('written!');
-                        $('#power-attorney .btn-submit').attr( { "data-toggle": "modal", "data-target": "#written-authorization" } );
-                    } else {
-                        console.log('remove written!');
-                        $('#power-attorney .btn-submit').removeAttr("data-toggle data-target");
-                    }
-                });
+        <div class="modal fade" id="manual-input" tabindex="-1" role="dialog" aria-labelledby="ManualInput" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{$t('message.cManualInput')}}</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-8">
+                                    <div class="input-group mb-5">
+                                        <input type="text" v-model="model.qrcode" class="form-control" placeholder="insert the vote code" aria-label="enter your activation code">
+                                        <span class="input-border"></span>
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-link" v-on:click="manualInput" data-dismiss="modal">{{$t('message.ok')}}
+                                                <i class="icon icon-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal -->
+
+        <div class="modal fade" id="power-attorney" tabindex="-1" role="dialog" aria-labelledby="PowerAttorney" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{$t('message.cPowerOfAttorney')}}</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-12 text-center">
+                                    <div class="btn-group-vertical">
+                                        <button type="button" class="btn btn-info btn-block" v-on:click="privatePowerOfAttorney" data-attorney="private">{{$t('message.privateAuthorization')}}</button>
+                                        <button type="button" class="btn btn-info btn-block" v-on:click="writtenPowerOfAttorney" data-attorney="written">{{$t('message.writtenAuthorization')}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary btn-block btn-submit" data-dismiss="modal" disabled>{{$t('message.ok')}}
+                            <i class="icon icon-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal -->
+
+        <div class="modal fade" id="written-authorization" tabindex="-1" role="dialog" aria-labelledby="WrittenAuthorization" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Power of Attorney</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row justify-content-md-center">
+                                <div class="col col-lg-8 text-center">
+                                    <p>do you want to register a
+                                        <strong>written authorization</strong>?</p>
+
+                                    <div class="btn-group-separated">
+                                        <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">no</button>
+                                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">yes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /modal -->
+
+        <div id="confirm-qrcode-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{$t('message.confirmation')}}</h5>
+                    </div>
+                    <div class="modal-body">
+                        {{$t('message.areYouSureToSaveQrCode')}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-success" id="button-yes">{{$t('message.yes')}}</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">{{$t('message.no')}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /main -->
+
+    <!-- base -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/7.4.2/vue-i18n.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-toasted/1.1.24/vue-toasted.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- /base -->
+
+    <script src="/lang/en.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/vue-qrcode-reader.browser.js"></script>
+    <script src="/js/scan.js"></script>
+
+    <script>
+        $(function () {
+            $('[data-attorney]').on('click', function () {
+                $('#power-attorney .btn-submit').attr('disabled', false);
+
+                if ($(this).data('attorney') == 'written') {
+                    console.log('written!');
+                    $('#power-attorney .btn-submit').attr({ "data-toggle": "modal", "data-target": "#written-authorization" });
+                } else {
+                    console.log('remove written!');
+                    $('#power-attorney .btn-submit').removeAttr("data-toggle data-target");
+                }
             });
-        </script>
-    </body>
+        });
+    </script>
+</body>
+
 </html>
