@@ -1,12 +1,24 @@
+var utils = require('../common/utils');
 var loki = require('lokijs');
-var data = db.addCollection('qrcode', {indices: ['code']});
+var db = new loki('users.json');
+var data = db.addCollection('qrcode', {indices: ['code', 'timestamp']});
 
 /**
  * Saves a scanned QR Code
  * @param { code: '', timestamp: # } qrcode 
  */
-module.exports.save = function(qrcode){
-    data.insert(qrcode);
+module.exports.save = function(code){
+    if(!this.find(code)){
+        var qrcode = {
+            code: code,
+            timestamp: utils.timestamp()
+        }
+        data.insert(qrcode);
+    }
+    else{
+        throw 422;
+    }
+    
 }
 /**
  * Queries if the qrcode is already registered

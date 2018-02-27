@@ -23,8 +23,12 @@ const lang = {
                 verification: "verification",
                 transactions: "transactions",
                 counting: "counting",
-                scan: "scan"
-
+                scan: "scan",
+                confirmation: "Confirmation",
+                areYouSureToSaveQrCode: "Are you sure you want to save this QR Code?",
+                yes: "Yes",
+                no: "No",
+                qrCodeScannedSuccessfully: "QR Code Scanned Successfully."
             }
         }
     }

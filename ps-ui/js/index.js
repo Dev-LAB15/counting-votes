@@ -1,4 +1,4 @@
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
 
     if (this.window.localStorage.chairmanToken) {
         this.window.location = 'tellerlogin.html';
@@ -17,7 +17,7 @@ window.addEventListener('load', function() {
             }
         },
         methods: {
-            requestVerification: function(event) {
+            requestVerification: function (event) {
 
                 if (!vm.model.email || vm.model.email == '') {
                     this.$toasted.show(this.$t('message.errorEmailCannotBeEmpty'), {
@@ -27,7 +27,7 @@ window.addEventListener('load', function() {
                     });
                     return;
                 }
-                axios.post(apiEndpoint + '/authentication/verification', vm.model).then(resp=>{
+                axios.post(apiEndpoint + '/authentication/verification', vm.model).then(resp => {
                     $('#two-factor-modal').modal();
                     if (resp.data.isActive) {
                         this.showModalSignIn(event);
@@ -35,7 +35,7 @@ window.addEventListener('load', function() {
                         this.showModalCreatePassword(event);
                     }
                 }
-                ).catch(error=>{
+                ).catch(error => {
                     this.$toasted.show(error.response.data.message, {
                         theme: "bubble",
                         position: "bottom-center",
@@ -45,41 +45,42 @@ window.addEventListener('load', function() {
                 );
 
             },
-            showModalCreatePassword: function(event) {
+            showModalCreatePassword: function (event) {
                 $('#create-password-modal').modal();
             },
-            showModalSignIn: function(event) {
+            showModalSignIn: function (event) {
                 $('#sign-in-modal').modal();
             },
-            requestCreatePassword: function(event) {
-                axios.post(apiEndpoint + '/authentication/createpassword', vm.model).then(resp=>{
-                    window.localStorage.chairman = resp.data.user;
-                    window.localStorage.chairmanToken = resp.data.token;
-                    window.location = 'tellerlogin.html';
-                }
-                ).catch(error=>{
-                    this.$toasted.show(error.response.data.message, {
-                        theme: "bubble",
-                        position: "bottom-center",
-                        duration: 3000
-                    });
-                }
-                );
+            requestCreatePassword: function (event) {
+                axios.post(apiEndpoint + '/authentication/createpassword', vm.model)
+                    .then(resp => {
+                        window.localStorage.chairman = resp.data.user;
+                        window.localStorage.chairmanToken = resp.data.token;
+                        window.location = 'tellerlogin.html';
+                    }
+                    ).catch(error => {
+                        this.$toasted.show(error.response.data.message, {
+                            theme: "bubble",
+                            position: "bottom-center",
+                            duration: 3000
+                        });
+                    }
+                    );
             },
-            requestSignIn: function(event) {
-                axios.post(apiEndpoint + '/authentication/signin', vm.model).then(resp=>{
-                    window.localStorage.chairman = resp.data.user;
-                    window.localStorage.chairmanToken = resp.data.token;
-                    window.location = 'tellerlogin.html';
-                }
-                ).catch(error=>{
-                    this.$toasted.show(error.response.data.message, {
-                        theme: "bubble",
-                        position: "bottom-center",
-                        duration: 3000
+            requestSignIn: function (event) {
+                axios.post(apiEndpoint + '/authentication/signin', vm.model)
+                    .then(resp => {
+                        window.localStorage.chairman = resp.data.user;
+                        window.localStorage.chairmanToken = resp.data.token;
+                        window.location = 'tellerlogin.html';
+                    })
+                    .catch(error => {
+                        this.$toasted.show(error.response.data.message, {
+                            theme: "bubble",
+                            position: "bottom-center",
+                            duration: 3000
+                        });
                     });
-                }
-                );
             }
         }
 

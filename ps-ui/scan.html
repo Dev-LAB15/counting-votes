@@ -26,8 +26,29 @@
 
 <body>
     <div id="app" class="cv-fullwidth">
-        <qrcode-reader @decode="onDecode"></qrcode-reader>
+        <qrcode-reader @decode="onDecode" :paused="paused"></qrcode-reader>
+        <div id="confirm-qrcode-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{$t('message.confirmation')}}</h5>
+                    </div>
+                    <div class="modal-body">
+                        {{$t('message.areYouSureToSaveQrCode')}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-success" id="button-yes">{{$t('message.yes')}}</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">{{$t('message.no')}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
+
+
     <!-- base -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>

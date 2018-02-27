@@ -11,6 +11,7 @@ window.addEventListener('load', function () {
         i18n,
         el: '#app',
         data: {
+            paused: false,
             chairman: this.window.localStorage.chairman,
             tellers: getTellers(),
             model: {
@@ -27,11 +28,30 @@ window.addEventListener('load', function () {
              * @param {qrcode decoded content} content 
              */
             onDecode(content) {
-                console.log(content);
+                $('#confirm-qrcode-modal').modal()
+                    .one('click', '#button-yes', function (e) {
+
+                        axios.post(apiEndpoint + '/scan/qrcode', vm.model)
+                            .then(resp => {
+                                vm.$toasted.show(this.$t('message.qrCodeScannedSuccessfully'), {
+                                    theme: "outline",
+                                    position: "bottom-center",
+                                    duration: 3000
+                                });
+                            })
+                            .catch(error => {
+                                console.log(error.response);
+                                //TODO fix 403 error accordingly.
+                            }
+                            );
+
+
+                    });
+
             },
 
             onLocate(points) {
-                
+
             }
         }
 

@@ -41,7 +41,7 @@ app.appRouter.use(function (req, res, next) {
     "/authentication/signin"
   ]
 
-  if (anonymousServices.indexOf(req.path) >= 0){
+  if (anonymousServices.indexOf(req.path) >= 0) {
     next();
     return;
   }
@@ -50,16 +50,14 @@ app.appRouter.use(function (req, res, next) {
   if (token) {
     app.jwt.verify(token, app.config.secret, function (err, decoded) {
       if (err) {
-        return res.json({ success: false, message: 'Failed to autenticate token' })
+        return res.status(403).json({ message: 'Failed to autenticate token' })
       } else {
         req.decoded = decoded;
         next();
       }
     });
   } else {
-    return res.status(403).send({
-      message: 'No token provided.'
-    });
+    return res.status(403).send({ message: 'No token provided.' });
   }
 });
 

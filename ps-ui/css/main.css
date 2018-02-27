@@ -117,6 +117,19 @@ footer {
     background: #2275d7;
     color: #fff; }
 
+.btn-default {
+  border-radius: 80px;
+  padding-left: 90px;
+  padding-right: 90px; 
+}
+
+.btn-danger {
+  border-radius: 80px;
+  padding-left: 90px;
+  padding-right: 90px; 
+}
+
+
 .btn-full {
   width: 100%;
   display: block;
