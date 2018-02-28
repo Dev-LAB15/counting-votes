@@ -6,6 +6,7 @@
     "verification_code_length": 4,
     "secret": "app-secret",
     "port": 3000,
+    "tokenExpiration": "14 days",
     "blockchain": {
         "provider": "http://leaderlsuery.westeurope.cloudapp.azure.com:8545",
         "owner" : {

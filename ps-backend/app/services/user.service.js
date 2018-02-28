@@ -15,3 +15,6 @@ exports.getRoleId = function (email, callback) {
     contract.getRoleId(email, callback);
 }
 
+exports.getUsedEmail = function(email, callback){
+    contract.getUsedEmail(email, callback);
+}
