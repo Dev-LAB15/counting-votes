@@ -1,5 +1,8 @@
-var loki = require('lokijs');
+var config = require('../../config.json');
+var blockchain = require('../data/blockchain.data');
 
+
+var loki = require('lokijs');
 var db = new loki('users.json');
 var data = db.addCollection('users', { indices: ['email'] });
 

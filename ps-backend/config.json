@@ -7,11 +7,15 @@
     "secret": "app-secret",
     "port": 3000,
     "blockchain": {
-        "provider": "http://leaderlsuery.westeurope.cloudapp.azure.com:8545"
+        "provider": "http://leaderlsuery.westeurope.cloudapp.azure.com:8545",
+        "owner" : {
+            "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
+            "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"    
+        }
     },
     "addresses": {
-        "polling": "0x50e72cc43875c6f34d921a4580a7db7b737f2c49",
-        "municipality": "0x",
-        "useraccesscontrol": "0x"
+        "municipality": "0x77a486d2e6bcc83d69cfb4f9ce5a788c695c7e5d",
+        "userActivation": "0x43a0ebf528e4cc41098b18ee811de6dc76112c89",
+        "pollingStation": "0x02e80638bc1d772b4c671167f2a0fa067073ba40"
     }
 }

@@ -1,9 +1,13 @@
+var blockchain = require('../services/blockchain.service');
 var axios = require('axios');
 var mailService = require('../common/mail.service');
 var sha1 = require('sha1');
 var utils = require('../common/utils');
 var users = require('../data/user.data');
+var userService = require('../services/user.service');
 var vcodes = require('../data/verification.code.data');
+
+
 
 module.exports = function (app) {
 	/**
@@ -46,6 +50,15 @@ module.exports = function (app) {
 	 * Generates user password.
 	 */
 	app.post('/authentication/createpassword', function(req, res){
+
+		//anyone can search if the user exists on the block
+
+		var usr = userService.getRoleId(req.body.email, function(err, data){
+			console.log(data);
+		});
+
+
+
 		var user = users.find(req.body.email);
 		var code = vcodes.find(req.body.email);
 

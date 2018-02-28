@@ -50,20 +50,24 @@ app.use(function (req, res, next) {
     next();
   }
   else {
-    var token = req.headers.authorization;
-    if (token) {
-      app.jwt.verify(token, app.config.secret, function (err, decoded) {
-        if (err) {
-          return res.status(403).json({ message: 'Failed to autenticate token' })
-        } else {
-          req.decoded = decoded;
-          next();
-        }
-      });
-    } else {
-      return res.status(403).send({ message: 'No token provided.' });
-    }
+    next();
   }
+
+  /*
+  var token = req.headers.token;
+  if (token) {
+    app.jwt.verify(token, app.config.secret, function (err, decoded) {
+      if (err) {
+        return res.status(403).json({ message: 'Failed to autenticate token' })
+      } else {
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {
+    return res.status(403).send({ message: 'No token provided.' });
+  }
+  */
 });
 
 //Require All Controllers for Environment Setup.
@@ -71,5 +75,7 @@ require('../app/controllers/home-cotroller')(app);
 require('../app/controllers/authentication-controller')(app);
 require('../app/controllers/scan-controller')(app);
 
+//mark the app to use the router 
+app.use('', app.appRouter);
 //start app on the configured port
 app.listen(app.config.port);
