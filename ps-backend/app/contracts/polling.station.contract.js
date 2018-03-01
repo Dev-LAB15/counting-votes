@@ -487,7 +487,7 @@ module.exports.recordVoter = function (qrCodeHash, voterType, callback) {
  * @returns {int}
  */
 module.exports.getRole = function (callback) {
-    municipality.methods.getRole().call({ from: config.blockchain.owner.address }, callback);
+    pollingStation.methods.getRole().call({ from: config.blockchain.owner.address }, callback);
 }
 
 /**
@@ -496,7 +496,7 @@ module.exports.getRole = function (callback) {
  * @returns {int}
  */
 module.exports.getDeviation = function (callback) {
-    municipality.methods.getDeviation().call({ from: config.blockchain.owner.address }, callback);
+    pollingStation.methods.getDeviation().call({ from: config.blockchain.owner.address }, callback);
 }
 
 /**
@@ -505,7 +505,7 @@ module.exports.getDeviation = function (callback) {
  * @returns {boolean}
  */
 module.exports.getVerification = function (callback) {
-    municipality.methods.getVerification().call({ from: config.blockchain.owner.address }, callback);
+    pollingStation.methods.getVerification().call({ from: config.blockchain.owner.address }, callback);
 }
 
 /**
@@ -514,7 +514,7 @@ module.exports.getVerification = function (callback) {
  * @returns {int}
  */
 module.exports.getVotingRound = function (callback) {
-    municipality.methods.getVotingRound().call({ from: config.blockchain.owner.address }, callback);
+    pollingStation.methods.getVotingRound().call({ from: config.blockchain.owner.address }, callback);
 }
 
 /**
@@ -523,5 +523,14 @@ module.exports.getVotingRound = function (callback) {
  * @returns {boolean}
  */
 module.exports.isSessionOpen = function (callback) {
-    municipality.methods.isSessionOpen().call({ from: config.blockchain.owner.address }, callback);
+    pollingStation.methods.isSessionOpen().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * 
+ * @param {function(any,any)} callback 
+ * @returns {int scannedPollingCards, int registeredVoterPasses, int scannedPowerOfAttorneys, int registeredPowerOfAttorneys, int registeredObjections, int collectedPollingCards, int collectedVoterPasses, int collectedPowerOfAttorneys}
+ */
+module.exports.getReport = function (callback) {
+    pollingStation.methods.getReport().call({ from: config.blockchain.owner.address }, callback);
 }

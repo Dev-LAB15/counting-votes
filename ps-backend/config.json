@@ -15,9 +15,9 @@
         }
     },
     "addresses": {
-        "municipality": "0x0e152bc7a855bdb309888048dac9c8b7a93ce0d1",
-        "userActivation": "0x2e1455d9bc2745816da588548fc6a658cf64bcb2",
-        "pollingStation": "0x9c874dcc17a6670230a541c924f9deb1c80c2285"
+        "municipality": "0xb584e9a14cab9d0d497f5abac51620f054ff2e73",
+        "userActivation": "0x72e1abc56ddb9b94758a63ea5398fed061ed78ef",
+        "pollingStation": "0xba857a053545112e26e7c181acb4800425885034"
     },
     "roles": {
         "Unknown": 0,
@@ -29,8 +29,9 @@
     "voterTypes": {
         "Unspecified": 0,
         "PollingCard": 1,
-        "PowerOfAttorney": 2,
-        "VoterPass": 3,
-        "Objection": 4
+        "PowerOfAttorneyPollingCard": 2,
+        "PowerOfAttorney": 3,
+        "VoterPass": 4,
+        "Objection": 5
     }
 }

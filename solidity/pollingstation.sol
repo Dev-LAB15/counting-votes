@@ -14,6 +14,7 @@ contract PollingStation is Permissions {
     
     //Voter Registration
     uint private scannedPollingCardCount = 0;
+    uint private scannedPowerOfAttorneyCount = 0;
     uint private registeredPowerOfAttorneyCount = 0;
     uint private registeredVoterPassCount = 0;
     uint private registeredObjectionCount = 0;
@@ -203,6 +204,8 @@ contract PollingStation is Permissions {
         
         if (voterType == VoterType.PollingCard) {
             scannedPollingCardCount++;
+        } else if (voterType == VoterType.PowerOfAttorneyPollingCard) {
+            scannedPowerOfAttorneyCount++;
         } else if (voterType == VoterType.PowerOfAttorney) {
             registeredPowerOfAttorneyCount++;
         } else if (voterType == VoterType.VoterPass) {
@@ -212,6 +215,10 @@ contract PollingStation is Permissions {
         }
         
         return true;
+    }
+    
+    function getReport() public view returns (uint scannedPollingCards, uint registeredVoterPasses, uint scannedPowerOfAttorneys, uint registeredPowerOfAttorneys, uint registeredObjections, uint collectedPollingCards, uint collectedVoterPasses, uint collectedPowerOfAttorneys) {
+        return (scannedPollingCardCount, registeredVoterPassCount, scannedPowerOfAttorneyCount, registeredPowerOfAttorneyCount, registeredObjectionCount, collectedPollingCardCount, collectedVoterPassCount, collectedPowerOfAttorneyCount);
     }
     
     function yes() public _isSessionOpen() _verifyRole(Role.Chairman) {

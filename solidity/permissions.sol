@@ -8,6 +8,7 @@ contract Permissions {
     enum VoterType {
         Unspecified,
         PollingCard,
+        PowerOfAttorneyPollingCard,
         PowerOfAttorney,
         VoterPass,
         Objection
