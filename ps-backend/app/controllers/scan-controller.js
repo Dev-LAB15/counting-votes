@@ -1,14 +1,20 @@
-var qrcodes = require('../data/qrcode.data');
+let pollingstationService = require('../services/pollingstation.service');
 
 
 module.exports = function(app){
     //Registers a Scanned QR Code or Manually Inputed QR Code
     app.post('/scan/qrcode', function (req, res) {
         try{
-            qrcodes.save(req.body.code);
-            res.send('Ok');
+            pollingstationService.recordVoter(req.body.code, 1, function(err, data){
+                if(data){
+                    res.send('Ok');
+                }else{
+                    res.status(422).json({message: 'QR Code Already Scanned!'});
+                }
+            });
+            
         }catch(err){
-            res.status(422).json({message: 'QR Code Already Scanned!'});
+            res.status(500).json({message: 'Internal Server Error'});
         }
         
     });

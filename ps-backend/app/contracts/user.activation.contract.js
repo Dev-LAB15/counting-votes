@@ -109,11 +109,12 @@ var UserActivationContract = new web3.eth.Contract(UserActivationAbi, config.add
 
 /**
  * Requests information if the getUsedEmail is 
- * @param {email address of the user} email 
- * @param {A callback function (err, data) to be called after the transaction is complete } callback 
+ * @param {string} email 
+ * @param {function(any,any)} callback 
+ * @returns {void}
  */
-module.exports.getUsedEmail = function(email, callback){
-    return UserActivationContract.methods.getUsedEmail(email).call({from: config.blockchain.owner.address}, callback);
+module.exports.getUsedEmail = function (email, callback) {
+	UserActivationContract.methods.getUsedEmail(email).call({ from: config.blockchain.owner.address }, callback);
 }
 /**
  * Requests the role of an user or if the user is registered on the block.
@@ -122,9 +123,10 @@ module.exports.getUsedEmail = function(email, callback){
  * 2 user is mayor
  * 3 user is chairman
  * 4 user is teller
- * @param {email address of the user} email 
- * @param {A callback function (err, data) to be called after the transaction is complete} callback 
+ * @param {string } email 
+ * @param {function (any, any)} callback 
+ * @returns {void}
  */
-module.exports.getRoleId = function(email, callback){
-	return UserActivationContract.methods.getRoleId(email).call({from: config.blockchain.owner.address}, callback);
+module.exports.getRoleId = function (email, callback) {
+	UserActivationContract.methods.getRoleId(email).call({ from: config.blockchain.owner.address }, callback);
 }

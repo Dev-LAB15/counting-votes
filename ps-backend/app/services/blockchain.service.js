@@ -1,23 +1,17 @@
-/** 
- * Base Service for Blockchain Operations.
- * All other Services must inherit this base service. 
-*/
 var web3raw = require('web3js-raw');
 var config = require('../../config.json');
-
 var W3JSR = new web3raw();
-W3JSR.setProvider(config.blockchain.provider);
 
+W3JSR.setProvider(config.blockchain.provider);
 /**
- * 
- * @param {A combination of address and privateKey} userData 
- * @param {Address for the base operations} contractAddress 
- * @param {ASCI name of the funcion to be called from the contract} functionName 
- * @param {Array containing a key-pair of type and value} params 
- * @param {A funcion to be executed after the transaction has been processed} callback 
+ * Executes a raw transaction on the block.
+ * @param {{address:string,privateKey:string}} userData 
+ * @param {string} contractAddress 
+ * @param {string} functionName 
+ * @param {Array} params 
+ * @param {function({status:number,functionName:string,message:string})} callback 
  */
 module.exports.executeFunction = function (userData, contractAddress, functionName, params, callback) {
-
     var privateKey = new Buffer(userData.privateKey, 'hex');
     var types = [];
     var args = [];
@@ -33,18 +27,3 @@ module.exports.executeFunction = function (userData, contractAddress, functionNa
 
     W3JSR.invokeSendRawTransaction(functionName, serializedTx, callback);
 }
-
-module.exports.toAscii = function (hex) {
-    // Find termination
-    var str = "";
-    var i = 0, l = hex.length;
-    if (hex.substring(0, 2) === '0x') {
-        i = 2;
-    }
-    for (; i < l; i += 2) {
-        var code = parseInt(hex.substr(i, 2), 16);
-        str += String.fromCharCode(code);
-    }
-
-    return str;
-};

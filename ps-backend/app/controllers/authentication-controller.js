@@ -1,16 +1,11 @@
 var ethwallet = require('ethereumjs-wallet');
-var crypto = require('crypto');
 var config = require('../../config.json');
-var blockchain = require('../services/blockchain.service');
-var axios = require('axios');
 var mailService = require('../common/mail.service');
 var sha1 = require('sha1');
 var utils = require('../common/utils');
 var users = require('../data/user.data');
 var userService = require('../services/user.service');
 var vcodes = require('../data/verification.code.data');
-
-
 
 module.exports = function (app) {
 	/**
@@ -24,28 +19,33 @@ module.exports = function (app) {
 			return;
 		}
 
-		var user = users.find(req.body.email);
-		if (!user) {
-			res.status(403).json({ message: 'Invalid credentials' });
-			return;
-		}
+		userService.getRoleId(req.body.email, function (err, data1) {
+			if (!data1 || data1 == "0") {
+				res.status(403).json({ message: 'Invalid credentials' });
+				return;
+			}
 
-		if (user.role != req.body.role) {
-			res.status(403).json({ message: 'Action Forbidden! Please verify your role and try again.' });
-		}
+			userService.getUsedEmail(req.body.email, function (err, data) {
+				if (!data) {
+					res.status(422).json({
+						message: "Wallet wasn't generated"
+					});
+				}
+				var wallet = userService.getWallet(req.body.email, req.body.password);
+				var code = utils.generateCode();
+				var vcode = {
+					code: code,
+					timestamp: utils.timestamp(),
+					email: user.email
+				}
 
-		var code = utils.generateCode();
-		var vcode = {
-			code: code,
-			timestamp: utils.timestamp(),
-			email: user.email
-		}
-
-		vcodes.save(vcode);
-		mailService.sendVerificationCode(user.email, user.name, code);
-		res.json({
-			isActive: user.isActive,
-			message: 'Please check your email address to get the verification code'
+				vcodes.save(vcode);
+				mailService.sendVerificationCode(user.email, user.name, code);
+				res.json({
+					isActive: user.isActive,
+					message: 'Please check your email address to get the verification code'
+				});
+			});
 		});
 	});
 
@@ -98,21 +98,9 @@ module.exports = function (app) {
 						// 	return;
 						// }
 
-						//generates private key for address resolution
-						let passphrase = req.body.email+req.body.password;
-						//generates a sha256 address
-						var hash = crypto.createHmac('sha256', config.secret);
-						//updates the hash containing the passphrase
-						hash.update(passphrase);
-						//retrieves a private key based on the secret of the application
-						var privateKey = hash.digest('hex');
-						//generates a wallet with the combination of the email and the password
-						var wallet = JSON.parse(ethwallet.fromPrivateKey(new Buffer(privateKey, 'hex')).toV3String('hex'));
-						//captures the address from the wallet
+						var wallet = userService.getWallet(req.body.email, req.body.password);
 						var address = wallet.address;
-						//TODO: add ether to the address
-						//
-						var token = app.jwt.sign(user, app.config.secret, { expiresIn: config.tokenExpiration });					
+						var token = app.jwt.sign(user, app.config.secret, { expiresIn: config.tokenExpiration });
 						res.json({
 							user: user.name,
 							address: address,
@@ -121,78 +109,11 @@ module.exports = function (app) {
 					}
 				});
 			}
-
-
-
-			console.log(data);
-		});
-
-
-
-		var user = users.find(req.body.email);
-		var code = vcodes.find(req.body.email);
-
-		//#region Validation
-		if (!user) {
-			res.status(403).json({ message: 'Invalid credentials' });
-			return;
-		}
-
-		if (user.password && user.password.length > 0) {
-			res.status(422).json({
-				message: 'Password already defined, if you forgot it, try to recover'
-			});
-			return;
-		}
-
-		if (!req.body.password || req.body.password.length === 0) {
-			res.status(422).json({
-				message: "Please inform a password"
-			});
-			return;
-		}
-
-		if (!req.body.passwordConfirmation || req.body.passwordConfirmation.length === 0) {
-			res.status(422).json({
-				message: "Please inform a password confirmation"
-			});
-			return;
-		}
-
-		if (req.body.password != req.body.passwordConfirmation) {
-			res.status(422).json({
-				message: "Password and Password Confirmation doesn't match"
-			});
-			return;
-		}
-
-		if (!code) {
-			res.status(422).json({
-				message: "You must first request an activation code"
-			});
-			return;
-		}
-
-		if (code.code != req.body.code) {
-			res.status(422).json({
-				message: "Invalid verification code"
-			});
-			return;
-		}
-		//#endregion
-
-		user.password = sha1(req.body.password);
-		user.isActive = true;
-		users.update(user);
-		vcodes.markUsed(code);
-		var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
-		res.json({
-			user: user.name,
-			token: token
 		});
 	});
 
 	/**
+	 * TODO: review signin page
 	 * Allows user signin by providing email, password and verification_code
 	 */
 	app.post('/authentication/signin', function (req, res) {
