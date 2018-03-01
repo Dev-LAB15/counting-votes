@@ -9,7 +9,8 @@ contract Municipality is Permissions {
     uint128 private no = 0;
     uint128 private invalid = 0;
     uint128 private blank = 0;
-    uint128 public duplicityError = 0;
+    uint128 private duplicityError = 0;
+    uint128 private recounts = 0;
     
     //Voter Registration
     uint private scannedPollingCardCount = 0;
@@ -22,8 +23,13 @@ contract Municipality is Permissions {
     uint private collectedPowerOfAttorneyCount = 0;
     uint private collectedVoterPassCount = 0;
     
-    mapping (bytes32 => uint128) public whosError;
-    mapping (bytes32 => address) public cardsClaimed;
+    mapping (bytes32 => uint128) private whosError;
+    mapping (bytes32 => address) private cardsClaimed;
+    mapping (address => uint128) private pollingStationYesVotes;
+    mapping (address => uint128) private pollingStationNoVotes;
+    mapping (address => uint128) private pollingStationBlankVotes;
+    mapping (address => uint128) private pollingStationInvalidVotes;
+    mapping (address => bool) private enrolledPollStations;
 
     event VoterAlreadyRecorded(bytes32 qrCodeHash, uint howMany);
     event VoterCleared(bytes32 qrCodeHash, VoterType voterType);
@@ -32,27 +38,43 @@ contract Municipality is Permissions {
     event NoVoted();
     event InvalidVoted();
     event BlankVoted();
-    event NotAllowed(string message);
     
     function Municipality(address uacAddress) Permissions(uacAddress) public payable { }
+    
+    modifier _canVote() {
+        if (enrolledPollStations[msg.sender] == true) {
+            _;
+        } else {
+            NotAllowed("Only enrolled poll stations can cast votes.");
+            revert();
+        }
+    }
+    
+    function enrollPollStation() public _isOwner() {
+        enrolledPollStations[msg.sender] = true;
+    }
 
-    function voteYes() public _verifyRole(Role.Chairman) {
+    function voteYes() public _verifyRole(Role.Chairman) _canVote() {
         yes++;
+        pollingStationYesVotes[msg.sender]++;
         YesVoted();
     }
     
-    function voteNo() public _verifyRole(Role.Chairman) {
+    function voteNo() public _verifyRole(Role.Chairman) _canVote() {
         no++;
+        pollingStationNoVotes[msg.sender]++;
         NoVoted();
     }
     
-    function voteBlank() public _verifyRole(Role.Chairman) {
+    function voteBlank() public _verifyRole(Role.Chairman) _canVote() {
         blank++;
+        pollingStationBlankVotes[msg.sender]++;
         BlankVoted();
     }
     
-    function voteInvalid() public _verifyRole(Role.Chairman) {
+    function voteInvalid() public _verifyRole(Role.Chairman) _canVote() {
         invalid++;
+        pollingStationInvalidVotes[msg.sender]++;
         InvalidVoted();
     }
     
@@ -70,6 +92,28 @@ contract Municipality is Permissions {
     
     function getBlank() public view returns (uint128) {
         return blank;
+    }
+    
+    function recount() public _verifyRole(Role.Chairman) _canVote() {
+        uint128 yesTemp = pollingStationYesVotes[msg.sender];
+        uint128 noTemp = pollingStationNoVotes[msg.sender];
+        uint128 blankTemp = pollingStationBlankVotes[msg.sender];
+        uint128 invalidTemp = pollingStationInvalidVotes[msg.sender];
+        
+        pollingStationYesVotes[msg.sender] = 0;
+        pollingStationNoVotes[msg.sender] = 0;
+        pollingStationBlankVotes[msg.sender] = 0;
+        pollingStationInvalidVotes[msg.sender] = 0;
+        
+        yes -= yesTemp;
+        no -= noTemp;
+        blank -= blankTemp;
+        invalid -= invalidTemp;
+        recounts++;
+    }
+    
+    function getRecounts() public view returns (uint128) {
+        return recounts;
     }
     
     modifier _noRevote(bytes32 qrCodeHash) {

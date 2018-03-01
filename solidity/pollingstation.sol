@@ -6,11 +6,11 @@ import "./municipality.sol";
 contract PollingStation is Permissions {
     
     //Voting data
-    uint private votingRound = 0;
-    uint private yeslocal = 0;
-    uint private nolocal = 0;
-    uint private invalidlocal = 0;
-    uint private blanklocal = 0;
+    uint128 private votingRound = 0;
+    uint128 private yesLocal = 0;
+    uint128 private noLocal = 0;
+    uint128 private invalidLocal = 0;
+    uint128 private blankLocal = 0;
     
     //Voter Registration
     uint private scannedPollingCardCount = 0;
@@ -26,23 +26,30 @@ contract PollingStation is Permissions {
     //Access control
     uint8 private signedInChairmenCount = 0;
     uint8 private signedInTellerCount = 0;
+    uint8 private signedOffChairmenCount = 0;
+    uint8 private signedOffTellerCount = 0;
     bool private votingSessionClosed = true;
-    uint256 constant public VOTING_START_TIMESTAMP = 1; //Timestamp in seconds (from UNIX epoch). Voting date: 21-03-2018 05:00:00 GMT: 1521604800
+    string private deviationExplanation;
+    bool private verificationSuccessful = false;
     
     //Mappings
     mapping (address => bool) private signedInChairmen;
     mapping (address => bool) private signedInTellers;
+    mapping (address => uint256) private signedOffStaff;
     
     Municipality public munContract;
     
     event VoterAlreadyRecorded(bytes32 qrCodeHash);
     event VoterCleared(bytes32 qrCodeHash);
-    event NotAllowed(string message);
     event UserSignedIn(address userAddress, Role role);
     event UserSignedOut(address userAddress, Role role);
+    event VotingFinished(address pollingStation);
+    event StaffSignedOff(address staff);
+    event VerificationAttempt(bool yes, bool no, bool blank, bool invalid);
     
     function PollingStation(address mAddress, address uacAddress) Permissions(uacAddress) public {
         munContract = Municipality(mAddress);
+        munContract.enrollPollStation();
     }
 
     modifier _noRevote(bytes32 qrCodeHash) {
@@ -54,10 +61,18 @@ contract PollingStation is Permissions {
         }
     }
     
+    modifier _isSessionOpen() {
+        if (!isSessionOpen()) {
+            NotAllowed("Session is closed.");
+        } else {
+            _;
+        }
+    }
+    
     modifier _canSignIn() {
         Role currRole = Role(roles[msg.sender]);
         
-        if (votingSessionClosed) {
+        if (!isSessionOpen()) {
             NotAllowed("Voting Session is closed.");
         }
         
@@ -79,19 +94,9 @@ contract PollingStation is Permissions {
         }
     }
     
-    modifier _verifyRole(Role role) {
-        Role senderRole = Role(roles[msg.sender]);
-        
-        if (senderRole == role) {
-            _;
-        } else {
-            NotAllowed("Unauthorized access.");
-        }
-    }
-    
     modifier _canSessionStart() {
         
-        if (now > VOTING_START_TIMESTAMP) {
+        if (now > VOTING_START_TIMESTAMP && votingSessionClosed && !verificationSuccessful) {
             _;
         } else {
             NotAllowed("Not allowed before official start date.");
@@ -99,53 +104,39 @@ contract PollingStation is Permissions {
         
     }
     
-    function beginVotingSession() public _isOwner _canSessionStart() {
-        votingSessionClosed = false;
-        votingRound++;
-    }
-    
-    // Checks if the number of all votes matches the number of recorded cards
-    // Locally
-    function isValid() public view returns (bool res) {
-        res = ((blanklocal + nolocal + yeslocal + invalidlocal) == (collectedVoterPassCount + collectedPowerOfAttorneyCount + collectedPollingCardCount));
-    }
-    
-    function recordVoter(bytes32 qrCodeHash, VoterType voterType) public _verifyRole(Role.Chairman) _noRevote(qrCodeHash) returns(bool) {
-
-        if (voterType == VoterType.PollingCard) {
-            scannedPollingCardCount++;
-        } else if (voterType == VoterType.PowerOfAttorney) {
-            registeredPowerOfAttorneyCount++;
-        } else if (voterType == VoterType.VoterPass) {
-            registeredVoterPassCount++;
-        } else if (voterType == VoterType.Objection) {
-            registeredObjectionCount++;
-        } else {
-            NotAllowed("Invalid voter type.");
+    modifier _canSignOff() {
+        if (votingSessionClosed) {
+            NotAllowed("Can only sign off during open voting session.");
             return;
         }
         
-        return munContract.recordVoter(qrCodeHash, voterType);
-    }
-    
-    function yes() public _verifyRole(Role.Chairman) {
-        yeslocal++;
-        munContract.voteYes();
-    }
-    
-    function no() public _verifyRole(Role.Chairman) {
-        nolocal++;
-        munContract.voteNo();
-    }
-    
-    function blank() public _verifyRole(Role.Chairman) {
-        blanklocal++;
-        munContract.voteBlank();
-    }
-    
-    function invalid() public _verifyRole(Role.Chairman) {
-        invalidlocal++;
-        munContract.voteInvalid();
+        if (!verificationSuccessful) {
+            return;
+        }
+        
+        if (signedOffStaff[msg.sender] != 0) {
+            NotAllowed("Staff memeber already signed off.");
+            return;
+        }
+        
+        Role currRole = Role(roles[msg.sender]);
+        
+        if (currRole == Role.Teller && signedInTellers[msg.sender] != true) {
+            NotAllowed("Only signed in Tellers can sign off.");
+            return;
+        }
+        
+        if (currRole == Role.Chairman && signedInChairmen[msg.sender] != true) {
+            NotAllowed("Only signed in Chairmen can sign off.");
+            return;
+        }
+        
+        if ((currRole == Role.Chairman && signedOffChairmenCount < signedInChairmenCount && signedInTellerCount > 0) || 
+            (currRole == Role.Teller && signedOffTellerCount < signedInTellerCount && signedOffChairmenCount == 0)) {
+            _;
+        } else {
+            NotAllowed("All Tellers must sign off, then chairman can sign off. No other role can sign off.");
+        }
     }
     
     // this will record the roles locally and into the municipality
@@ -153,6 +144,10 @@ contract PollingStation is Permissions {
         super.setUserRole(user, email);
         munContract.setUserRole(user, email);
         super.setUsedEmail(email);
+    }
+    
+    function isSessionOpen() public view returns (bool) {
+        return !votingSessionClosed && !verificationSuccessful;
     }
     
     function signIn() public _canSignIn() {
@@ -188,5 +183,132 @@ contract PollingStation is Permissions {
         }
         
         UserSignedOut(msg.sender, role);
+    }
+    
+    function beginVotingSession() public _isOwner _canSessionStart() {
+        votingSessionClosed = false;
+        votingRound++;
+    }
+    
+    function recordVoter(bytes32 qrCodeHash, VoterType voterType) public _verifyRole(Role.Chairman) _noRevote(qrCodeHash) returns(bool) {
+        if (voterType <= VoterType.Unspecified || voterType > VoterType.Objection) {
+            NotAllowed("Invalid voter type.");
+            return false;
+        }
+        
+        bool success = munContract.recordVoter(qrCodeHash, voterType);
+        if (!success) {
+            return false;
+        }
+        
+        if (voterType == VoterType.PollingCard) {
+            scannedPollingCardCount++;
+        } else if (voterType == VoterType.PowerOfAttorney) {
+            registeredPowerOfAttorneyCount++;
+        } else if (voterType == VoterType.VoterPass) {
+            registeredVoterPassCount++;
+        } else if (voterType == VoterType.Objection) {
+            registeredObjectionCount++;
+        }
+        
+        return true;
+    }
+    
+    function yes() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        yesLocal++;
+        munContract.voteYes();
+    }
+    
+    function no() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        noLocal++;
+        munContract.voteNo();
+    }
+    
+    function blank() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        blankLocal++;
+        munContract.voteBlank();
+    }
+    
+    function invalid() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        invalidLocal++;
+        munContract.voteInvalid();
+    }
+    
+    function getVerification() public view returns (bool) {
+        return verificationSuccessful;
+    }
+    
+    function getVotingRound() public view returns (uint) {
+        return votingRound;
+    }
+    
+    function recount() public _verifyRole(Role.Chairman) {
+        munContract.recount();
+        votingRound++;
+        yesLocal = 0;
+        noLocal = 0;
+        blankLocal = 0;
+        invalidLocal = 0;
+    }
+    
+    function inputControlNumbers(uint pollingCards, uint powerOfAttorneys, uint voterPasses) public _verifyRole(Role.Chairman) {
+        collectedPollingCardCount = pollingCards;
+        collectedPowerOfAttorneyCount = powerOfAttorneys;
+        collectedVoterPassCount = voterPasses;
+    }
+    
+    function verifyVotes(uint yesCount, uint noCount, uint blankCount, uint invalidCount) public _verifyRole(Role.Chairman) returns (bool yesVerified, bool noVerified, bool blankVerified, bool invalidVerified) {
+        yesVerified = (yesCount == yesLocal);
+        noVerified = (noCount == noLocal);
+        blankVerified = (blankCount == blankLocal);
+        invalidVerified = (invalidCount == invalidLocal);
+        
+        VerificationAttempt(yesVerified, noVerified, blankVerified, invalidVerified);
+        if (yesVerified && noVerified && blankVerified && invalidVerified) {
+            verificationSuccessful = true;
+        }
+        
+        return (yesVerified, noVerified, blankVerified, invalidVerified);
+    }
+    
+    // Returns the deviation of all votes against the number of collected cards
+    function getDeviation() public view returns (uint) {
+        int deviation = int(blankLocal + noLocal + yesLocal + invalidLocal) - int(collectedVoterPassCount + collectedPowerOfAttorneyCount + collectedPollingCardCount);
+        
+        if (deviation < 0) {
+            deviation = deviation * -1;
+        }
+        
+        return uint(deviation);
+    }
+    
+    function signOff(string explanation) public _canSignOff() returns(bool) {
+        if (getDeviation() != 0 && bytes(explanation).length <= 5) {
+            NotAllowed("You should supply an explanation when a deviation occurs.");
+            return false;
+        }
+        
+        if (bytes(explanation).length > 140) {
+            NotAllowed("Explanation is longer than 140 characters.");
+            return false;
+        } else if (getDeviation() != 0) {
+            deviationExplanation = explanation;
+        }
+        
+        Role role = Role(roles[msg.sender]);
+        if (role == Role.Chairman) {
+            signedOffChairmenCount++;
+            if (signedOffChairmenCount >= signedInChairmenCount) {
+                votingSessionClosed = true;
+                VotingFinished(this);
+            }
+        }
+        
+        if (role == Role.Teller) {
+            signedOffTellerCount++;
+        }
+        
+        StaffSignedOff(msg.sender);
+        return true;
     }
 }

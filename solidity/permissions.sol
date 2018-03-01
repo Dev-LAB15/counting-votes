@@ -3,6 +3,7 @@ pragma solidity ^0.4.19;
 import './useractivation.sol';
 
 contract Permissions {
+    uint256 constant public VOTING_START_TIMESTAMP = 1; //Timestamp in seconds (from UNIX epoch). Voting date: 21-03-2018 05:00:00 GMT: 1521604800
     
     enum VoterType {
         Unspecified,
@@ -27,6 +28,7 @@ contract Permissions {
     
     event UserAdded(Role role);
     event UserCreationFailed(address uAddress, string email);
+    event NotAllowed(string message);
     
     function Permissions(address userActivationAddress) public {
         owner = msg.sender;
@@ -61,6 +63,8 @@ contract Permissions {
     modifier _verifyRole(Role role) {
         if (Role(roles[tx.origin]) == role) {
             _;
+        } else {
+            NotAllowed("Unauthorized access.");
         }
     }
 }

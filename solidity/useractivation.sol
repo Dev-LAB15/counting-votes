@@ -27,11 +27,7 @@ contract UserActivation {
     }
     
     function getRoleId(string email) public _isOwner view returns(uint8) {
-        if (usedAddresses[email]) {
-            return 0;
-        } else {
-            return roles[email];
-        }
+        return roles[email];
     }
     
     function setUsedEmail(string email) public _isOwner {
@@ -40,9 +36,5 @@ contract UserActivation {
     
     function getUsedEmail(string email) public _isOwner view returns(bool) {
         return usedAddresses[email];
-    }
-    
-    function getOwner() public view returns (address a) {
-        return owner;
     }
 }
