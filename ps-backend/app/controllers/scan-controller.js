@@ -1,10 +1,14 @@
 let pollingstationService = require('../services/pollingstation.service');
+var keccak256 = require('js-sha3').keccak256;
+
+
 
 module.exports = function(app){
     //Registers a Scanned QR Code or Manually Inputed QR Code
     app.post('/scan/qrcode', function (req, res) {
         try{
-            pollingstationService.recordVoter(req.body.code, 1, function(err, data){
+            var hashedCode = keccak256(req.body.code);
+            pollingstationService.recordVoter(hashedCode, 1, function(err, data){
                 if(data){
                     res.send('Ok');
                 }else{
@@ -20,7 +24,7 @@ module.exports = function(app){
     //Registers a power of attorney
     app.post('/scan/powerofattorney', function (req, res) {
         try{
-            pollingstationService.recordVoter(req.body.code, 2, function(err, data){
+            pollingstationService.recordVoter(null, 2, function(err, data){
                 if(data){
                     res.send('Ok');
                 }else{
@@ -35,7 +39,7 @@ module.exports = function(app){
     //Registers a voter's pass
     app.post('/scan/voterspass', function (req, res) {
         try{
-            pollingstationService.recordVoter(req.body.code, 3, function(err, data){
+            pollingstationService.recordVoter(null, 3, function(err, data){
                 if(data){
                     res.send('Ok');
                 }else{
@@ -50,7 +54,7 @@ module.exports = function(app){
     //Registers an objection to the pilot
     app.post('/scan/objection', function(req, res){
         try{
-            pollingstationService.recordVoter(req.body.code, 4, function(err, data){
+            pollingstationService.recordVoter(null, 4, function(err, data){
                 if(data){
                     res.send('Ok');
                 }else{

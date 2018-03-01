@@ -17,6 +17,7 @@
     "ethereumjs-wallet": "^0.6.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "js-sha3": "^0.7.0",
     "jsonwebtoken": "^8.1.1",
     "lokijs": "^1.5.2",
     "morgan": "^1.9.0",
