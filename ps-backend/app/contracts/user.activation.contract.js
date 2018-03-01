@@ -105,7 +105,7 @@ var UserActivationAbi = [
 	}
 ];
 //instance of the contract
-var UserActivationContract = new web3.eth.Contract(UserActivationAbi, config.addresses.userActivation);
+var userActivation = new web3.eth.Contract(UserActivationAbi, config.addresses.userActivation);
 
 /**
  * Requests information if the getUsedEmail is 

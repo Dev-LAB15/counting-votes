@@ -126,7 +126,7 @@ contract Municipality is Permissions {
         }
     }
     
-    function recordVoter(bytes32 qrCodeHash, VoterType voterType) public _noRevote(qrCodeHash) returns (bool) {
+    function recordVoter(bytes32 qrCodeHash, VoterType voterType) public _noRevote(qrCodeHash) _canVote() _verifyRole(Role.Chairman) returns (bool) {
         
         if (voterType == VoterType.PollingCard) {
             scannedPollingCardCount++;

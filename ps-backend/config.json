@@ -9,14 +9,28 @@
     "tokenExpiration": "14 days",
     "blockchain": {
         "provider": "http://leaderlsuery.westeurope.cloudapp.azure.com:8545",
-        "owner" : {
+        "owner": {
             "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
-            "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"    
+            "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"
         }
     },
     "addresses": {
-        "municipality": "0x77a486d2e6bcc83d69cfb4f9ce5a788c695c7e5d",
-        "userActivation": "0x43a0ebf528e4cc41098b18ee811de6dc76112c89",
-        "pollingStation": "0x02e80638bc1d772b4c671167f2a0fa067073ba40"
+        "municipality": "0x0e152bc7a855bdb309888048dac9c8b7a93ce0d1",
+        "userActivation": "0x2e1455d9bc2745816da588548fc6a658cf64bcb2",
+        "pollingStation": "0x9c874dcc17a6670230a541c924f9deb1c80c2285"
+    },
+    "roles": {
+        "Unknown": 0,
+        "Owner": 1,
+        "Mayor": 2,
+        "Chairman": 3,
+        "Teller": 4
+    },
+    "voterTypes": {
+        "Unspecified": 0,
+        "PollingCard": 1,
+        "PowerOfAttorney": 2,
+        "VoterPass": 3,
+        "Objection": 4
     }
 }

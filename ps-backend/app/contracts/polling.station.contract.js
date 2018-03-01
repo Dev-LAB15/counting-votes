@@ -8,15 +8,58 @@ var PollingStationAbi = [
     {
         "constant": true,
         "inputs": [],
-        "name": "duplicityError",
+        "name": "getVerification",
         "outputs": [
             {
                 "name": "",
-                "type": "uint128"
+                "type": "bool"
             }
         ],
         "payable": false,
         "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "yesCount",
+                "type": "uint256"
+            },
+            {
+                "name": "noCount",
+                "type": "uint256"
+            },
+            {
+                "name": "blankCount",
+                "type": "uint256"
+            },
+            {
+                "name": "invalidCount",
+                "type": "uint256"
+            }
+        ],
+        "name": "verifyVotes",
+        "outputs": [
+            {
+                "name": "yesVerified",
+                "type": "bool"
+            },
+            {
+                "name": "noVerified",
+                "type": "bool"
+            },
+            {
+                "name": "blankVerified",
+                "type": "bool"
+            },
+            {
+                "name": "invalidVerified",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -45,7 +88,7 @@ var PollingStationAbi = [
     {
         "constant": false,
         "inputs": [],
-        "name": "voteInvalid",
+        "name": "beginVotingSession",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
@@ -54,24 +97,28 @@ var PollingStationAbi = [
     {
         "constant": false,
         "inputs": [],
-        "name": "voteNo",
+        "name": "signOut",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
     },
     {
-        "constant": true,
+        "constant": false,
         "inputs": [],
-        "name": "getBlank",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint128"
-            }
-        ],
+        "name": "recount",
+        "outputs": [],
         "payable": false,
-        "stateMutability": "view",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "yes",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
         "type": "function"
     },
     {
@@ -93,9 +140,91 @@ var PollingStationAbi = [
         "type": "function"
     },
     {
+        "constant": true,
+        "inputs": [],
+        "name": "isSessionOpen",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getDeviation",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "getVotingRound",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "pollingCards",
+                "type": "uint256"
+            },
+            {
+                "name": "powerOfAttorneys",
+                "type": "uint256"
+            },
+            {
+                "name": "voterPasses",
+                "type": "uint256"
+            }
+        ],
+        "name": "inputControlNumbers",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
         "constant": false,
         "inputs": [],
-        "name": "voteYes",
+        "name": "signIn",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "no",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "invalid",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
@@ -103,13 +232,41 @@ var PollingStationAbi = [
     },
     {
         "constant": true,
-        "inputs": [
+        "inputs": [],
+        "name": "VOTING_START_TIMESTAMP",
+        "outputs": [
             {
                 "name": "",
-                "type": "bytes32"
+                "type": "uint256"
             }
         ],
-        "name": "cardsClaimed",
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "explanation",
+                "type": "string"
+            }
+        ],
+        "name": "signOff",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "munContract",
         "outputs": [
             {
                 "name": "",
@@ -121,106 +278,12 @@ var PollingStationAbi = [
         "type": "function"
     },
     {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "",
-                "type": "bytes32"
-            }
-        ],
-        "name": "whosError",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint128"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "qrCodeHash",
-                "type": "bytes32"
-            }
-        ],
-        "name": "userVoted",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "getNo",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint128"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "getYes",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint128"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "isValid",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "constant": false,
         "inputs": [],
-        "name": "voteBlank",
+        "name": "blank",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [],
-        "name": "getInvalid",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint128"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -240,12 +303,16 @@ var PollingStationAbi = [
     {
         "inputs": [
             {
+                "name": "mAddress",
+                "type": "address"
+            },
+            {
                 "name": "uacAddress",
                 "type": "address"
             }
         ],
-        "payable": true,
-        "stateMutability": "payable",
+        "payable": false,
+        "stateMutability": "nonpayable",
         "type": "constructor"
     },
     {
@@ -255,11 +322,6 @@ var PollingStationAbi = [
                 "indexed": false,
                 "name": "qrCodeHash",
                 "type": "bytes32"
-            },
-            {
-                "indexed": false,
-                "name": "howMany",
-                "type": "uint256"
             }
         ],
         "name": "VoterAlreadyRecorded",
@@ -272,11 +334,6 @@ var PollingStationAbi = [
                 "indexed": false,
                 "name": "qrCodeHash",
                 "type": "bytes32"
-            },
-            {
-                "indexed": false,
-                "name": "voterType",
-                "type": "uint8"
             }
         ],
         "name": "VoterCleared",
@@ -284,26 +341,19 @@ var PollingStationAbi = [
     },
     {
         "anonymous": false,
-        "inputs": [],
-        "name": "YesVoted",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [],
-        "name": "NoVoted",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [],
-        "name": "InvalidVoted",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [],
-        "name": "BlankVoted",
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "userAddress",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "name": "role",
+                "type": "uint8"
+            }
+        ],
+        "name": "UserSignedIn",
         "type": "event"
     },
     {
@@ -311,11 +361,67 @@ var PollingStationAbi = [
         "inputs": [
             {
                 "indexed": false,
-                "name": "message",
-                "type": "string"
+                "name": "userAddress",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "name": "role",
+                "type": "uint8"
             }
         ],
-        "name": "NotAllowed",
+        "name": "UserSignedOut",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "pollingStation",
+                "type": "address"
+            }
+        ],
+        "name": "VotingFinished",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "staff",
+                "type": "address"
+            }
+        ],
+        "name": "StaffSignedOff",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "yes",
+                "type": "bool"
+            },
+            {
+                "indexed": false,
+                "name": "no",
+                "type": "bool"
+            },
+            {
+                "indexed": false,
+                "name": "blank",
+                "type": "bool"
+            },
+            {
+                "indexed": false,
+                "name": "invalid",
+                "type": "bool"
+            }
+        ],
+        "name": "VerificationAttempt",
         "type": "event"
     },
     {
@@ -346,11 +452,23 @@ var PollingStationAbi = [
         ],
         "name": "UserCreationFailed",
         "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "message",
+                "type": "string"
+            }
+        ],
+        "name": "NotAllowed",
+        "type": "event"
     }
 ];
 
 
-var PollingStationAbi = new web3.eth.Contract(PollingStationAbi, config.addresses.userActivation);
+var pollingStation = new web3.eth.Contract(PollingStationAbi, config.addresses.userActivation);
 
 /**
  * 
@@ -359,6 +477,51 @@ var PollingStationAbi = new web3.eth.Contract(PollingStationAbi, config.addresse
  * @param {function(any,any)} callback 
  * @returns {void}
  */
-module.exports.recordVoter = function(qrCodeHash, voterType, callback){
-    PollingStationAbi.methods.recordVoter(qrCodeHash, voterType).call({ from: config.blockchain.owner.address }, callback);
+module.exports.recordVoter = function (qrCodeHash, voterType, callback) {
+    pollingStation.methods.recordVoter(qrCodeHash, voterType).call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * 
+ * @param {function(any,any)} callback 
+ * @returns {int}
+ */
+module.exports.getRole = function (callback) {
+    municipality.methods.getRole().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * 
+ * @param {function(any,any)} callback 
+ * @returns {int}
+ */
+module.exports.getDeviation = function (callback) {
+    municipality.methods.getDeviation().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * 
+ * @param {function(any,any)} callback 
+ * @returns {boolean}
+ */
+module.exports.getVerification = function (callback) {
+    municipality.methods.getVerification().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * 
+ * @param {function(any,any)} callback 
+ * @returns {int}
+ */
+module.exports.getVotingRound = function (callback) {
+    municipality.methods.getVotingRound().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * 
+ * @param {function(any,any)} callback 
+ * @returns {boolean}
+ */
+module.exports.isSessionOpen = function (callback) {
+    municipality.methods.isSessionOpen().call({ from: config.blockchain.owner.address }, callback);
 }
