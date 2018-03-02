@@ -24,28 +24,16 @@ module.exports = function (app) {
 				res.status(403).json({ message: 'Invalid credentials' });
 				return;
 			}
+			var code = utils.generateCode();
+			var vcode = {
+				code: code,
+				timestamp: utils.timestamp(),
+				email: req.body.email
+			}
 
-			userService.getUsedEmail(req.body.email, function (err, data) {
-				if (!data) {
-					res.status(422).json({
-						message: "Wallet wasn't generated"
-					});
-				}
-				var wallet = userService.getWallet(req.body.email, req.body.password);
-				var code = utils.generateCode();
-				var vcode = {
-					code: code,
-					timestamp: utils.timestamp(),
-					email: user.email
-				}
-
-				vcodes.save(vcode);
-				mailService.sendVerificationCode(user.email, user.name, code);
-				res.json({
-					isActive: user.isActive,
-					message: 'Please check your email address to get the verification code'
-				});
-			});
+			vcodes.save(vcode);
+			mailService.sendVerificationCode(req.body.email, "", code);
+			res.json({ message: 'Please check your email address to get the verification code' });
 		});
 	});
 
@@ -53,6 +41,7 @@ module.exports = function (app) {
 	 * Generates user password.
 	 */
 	app.post('/authentication/createpassword', function (req, res) {
+
 		//anyone can search if the user exists on the block
 		var usr = userService.getRoleId(req.body.email, function (err, data) {
 
@@ -60,10 +49,12 @@ module.exports = function (app) {
 				res.status(403).json({ message: 'Invalid credentials' });
 			}
 			else {
+				var vcode = vcodes.find(req.body.email);
+
 				userService.getUsedEmail(req.body.email, function (err, data) {
 					if (data) {
 						res.status(422).json({
-							message: 'Password already defined, if you forgot it, try to recover'
+							message: 'Account already activated'
 						});
 					}
 					else {
@@ -80,31 +71,35 @@ module.exports = function (app) {
 							});
 							return;
 						}
+						if (app.config.useVerificationCode) {
+							if (!vcode) {
+								res.status(422).json({
+									message: "You must first request an activation code"
+								});
+								return;
+							}
 
-
-						//verify if the address has ether
-
-						// if (!code) {
-						// 	res.status(422).json({
-						// 		message: "You must first request an activation code"
-						// 	});
-						// 	return;
-						// }
-
-						// if (code.code != req.body.code) {
-						// 	res.status(422).json({
-						// 		message: "Invalid verification code"
-						// 	});
-						// 	return;
-						// }
+							if (vcode.code != req.body.code) {
+								res.status(422).json({
+									message: "Invalid verification code"
+								});
+								return;
+							}
+						}
 
 						var wallet = userService.getWallet(req.body.email, req.body.password);
-						var address = wallet.address;
-						var token = app.jwt.sign(user, app.config.secret, { expiresIn: config.tokenExpiration });
-						res.json({
-							user: user.name,
-							address: address,
-							token: token
+						var address = `0x${wallet.address}`;
+						//defines the user role and waits for the operation to complete.
+						userService.setUserRole(req.body.email, address, function (data) {
+							var user = {
+								email: req.body.email,
+								address: address
+							}
+							var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
+							res.json({
+								user: user,
+								token: token
+							});
 						});
 					}
 				});

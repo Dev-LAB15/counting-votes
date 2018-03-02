@@ -1,4 +1,5 @@
 var config = require('../../config.json');
+var blockchainService = require('./blockchain.service');
 var contract = require('../contracts/user.activation.contract');
 var crypto = require('crypto');
 var ethwallet = require('ethereumjs-wallet');
@@ -44,4 +45,14 @@ exports.getWallet = function (email, password) {
     var wallet = JSON.parse(ethwallet.fromPrivateKey(new Buffer(privateKey, 'hex')).toV3String('hex'));
     //captures the address from the wallet
     return wallet;
+}
+/**
+ * Combines an email address with an ethereum address for further transactions.
+ * @param {string} address 
+ * @param {email} email 
+ * @param {function(any)} callback 
+ */
+exports.setUserRole = function(email, address, callback){
+    let _params = [{type: "address", value: address}, {type: "string", value: email}];
+    blockchainService.executeFunction(config.blockchain.owner, config.addresses.pollingStation, "setUserRole", _params, callback, config.blockchain.defaultValueInEther);
 }

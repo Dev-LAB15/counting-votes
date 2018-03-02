@@ -10,11 +10,14 @@ W3JSR.setProvider(config.blockchain.provider);
  * @param {string} functionName 
  * @param {Array} params 
  * @param {function({status:number,functionName:string,message:string})} callback 
+ * @param {string} valueInEther
  */
-module.exports.executeFunction = function (userData, contractAddress, functionName, params, callback) {
+module.exports.executeFunction = function (userData, contractAddress, functionName, params, callback, valueInEther) {
     var privateKey = new Buffer(userData.privateKey, 'hex');
     var types = [];
     var args = [];
+
+    valueInEther = valueInEther || '0'
 
     for (var i = 0; i < params.length; i++) {
         types.push(params[i].type);
@@ -22,7 +25,7 @@ module.exports.executeFunction = function (userData, contractAddress, functionNa
     }
 
     var txnData = W3JSR.encodeFunctionParams(functionName, types, args);
-    var txnRawData = W3JSR.getDefaultTxnAttributes('', userData.address, contractAddress, '0', txnData, '', '');
+    var txnRawData = W3JSR.getDefaultTxnAttributes('', userData.address, contractAddress, valueInEther, txnData, '', '');
     var serializedTx = W3JSR.getSignedTransaction(txnRawData, privateKey);
 
     W3JSR.invokeSendRawTransaction(functionName, serializedTx, callback);

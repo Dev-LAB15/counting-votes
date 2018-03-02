@@ -1,4 +1,5 @@
 {
+    "useVerificationCode": false,
     "sendGridEmailFrom": "no-reply@lab15.io",
     "sendGridEmailFromName": "LAB15 - Counting Votes Verification Services",
     "sendGridApiKey": "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",
@@ -8,16 +9,18 @@
     "port": 3000,
     "tokenExpiration": "14 days",
     "blockchain": {
-        "provider": "ws://leaderlsuery.westeurope.cloudapp.azure.com:8546",
+        "provider": "http://leaderlsuery.westeurope.cloudapp.azure.com:8545",
+        "wsProvider": "ws://leaderlsuery.westeurope.cloudapp.azure.com:8546",
         "owner": {
             "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
             "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"
-        }
+        },
+        "defaultValueInEther": "10"
     },
     "addresses": {
         "municipality": "0xb584e9a14cab9d0d497f5abac51620f054ff2e73",
         "userActivation": "0x72e1abc56ddb9b94758a63ea5398fed061ed78ef",
-        "pollingStation": "0xba857a053545112e26e7c181acb4800425885034"
+        "pollingStation": "0xfdcdadb28e636aaa5e1cdf8516254149edf88625"
     },
     "roles": {
         "Unknown": 0,
