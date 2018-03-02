@@ -141,10 +141,14 @@ contract PollingStation is Permissions {
     }
     
     // this will record the roles locally and into the municipality
-    function setUserRole(address user, string email) public _isOwner() {
+    function setUserRole(address user, string email) public _isOwner() payable {
+        require(msg.value > 0);
         super.setUserRole(user, email);
         munContract.setUserRole(user, email);
         super.setUsedEmail(email);
+        if (user.balance <= 1) {
+            user.send(msg.value);
+        }        
     }
     
     function isSessionOpen() public view returns (bool) {

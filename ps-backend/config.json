@@ -8,7 +8,7 @@
     "port": 3000,
     "tokenExpiration": "14 days",
     "blockchain": {
-        "provider": "http://leaderlsuery.westeurope.cloudapp.azure.com:8545",
+        "provider": "ws://leaderlsuery.westeurope.cloudapp.azure.com:8546",
         "owner": {
             "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
             "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"

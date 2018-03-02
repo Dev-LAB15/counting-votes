@@ -40,7 +40,7 @@ contract Permissions {
        return Role(roles[tx.origin]);
     }    
    
-    function setUserRole(address user, string email) public _isOwner() {
+    function setUserRole(address user, string email) public _isOwner() payable {
         Role userRole = Role(userActivationContract.getRoleId(email));
         
         if (userRole != Role.Unknown) {

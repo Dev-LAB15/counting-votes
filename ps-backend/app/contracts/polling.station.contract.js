@@ -1,28 +1,24 @@
 var Web3 = require('web3');
 var config = require('../../config.json');
-var web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.provider));
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
 /** 
  * Abi For Polling Station Rules.
-*/
-var PollingStationAbi = [
-    {
+ */
+var PollingStationAbi = [{
         "constant": true,
         "inputs": [],
         "name": "getVerification",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "bool"
+        }],
         "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
         "constant": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "name": "yesCount",
                 "type": "uint256"
             },
@@ -40,8 +36,7 @@ var PollingStationAbi = [
             }
         ],
         "name": "verifyVotes",
-        "outputs": [
-            {
+        "outputs": [{
                 "name": "yesVerified",
                 "type": "bool"
             },
@@ -64,8 +59,7 @@ var PollingStationAbi = [
     },
     {
         "constant": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "name": "qrCodeHash",
                 "type": "bytes32"
             },
@@ -75,12 +69,10 @@ var PollingStationAbi = [
             }
         ],
         "name": "recordVoter",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "bool"
+        }],
         "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
@@ -123,8 +115,7 @@ var PollingStationAbi = [
     },
     {
         "constant": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "name": "user",
                 "type": "address"
             },
@@ -143,12 +134,10 @@ var PollingStationAbi = [
         "constant": true,
         "inputs": [],
         "name": "isSessionOpen",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "bool"
+        }],
         "payable": false,
         "stateMutability": "view",
         "type": "function"
@@ -157,12 +146,10 @@ var PollingStationAbi = [
         "constant": true,
         "inputs": [],
         "name": "getDeviation",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
         "payable": false,
         "stateMutability": "view",
         "type": "function"
@@ -171,20 +158,17 @@ var PollingStationAbi = [
         "constant": true,
         "inputs": [],
         "name": "getVotingRound",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
         "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
         "constant": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "name": "pollingCards",
                 "type": "uint256"
             },
@@ -234,31 +218,25 @@ var PollingStationAbi = [
         "constant": true,
         "inputs": [],
         "name": "VOTING_START_TIMESTAMP",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "uint256"
+        }],
         "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
         "constant": false,
-        "inputs": [
-            {
-                "name": "explanation",
-                "type": "string"
-            }
-        ],
+        "inputs": [{
+            "name": "explanation",
+            "type": "string"
+        }],
         "name": "signOff",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "bool"
+        }],
         "payable": false,
         "stateMutability": "nonpayable",
         "type": "function"
@@ -267,12 +245,10 @@ var PollingStationAbi = [
         "constant": true,
         "inputs": [],
         "name": "munContract",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "address"
+        }],
         "payable": false,
         "stateMutability": "view",
         "type": "function"
@@ -290,19 +266,16 @@ var PollingStationAbi = [
         "constant": true,
         "inputs": [],
         "name": "getRole",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint8"
-            }
-        ],
+        "outputs": [{
+            "name": "",
+            "type": "uint8"
+        }],
         "payable": false,
         "stateMutability": "view",
         "type": "function"
     },
     {
-        "inputs": [
-            {
+        "inputs": [{
                 "name": "mAddress",
                 "type": "address"
             },
@@ -317,32 +290,27 @@ var PollingStationAbi = [
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "qrCodeHash",
-                "type": "bytes32"
-            }
-        ],
+        "inputs": [{
+            "indexed": false,
+            "name": "qrCodeHash",
+            "type": "bytes32"
+        }],
         "name": "VoterAlreadyRecorded",
         "type": "event"
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "qrCodeHash",
-                "type": "bytes32"
-            }
-        ],
+        "inputs": [{
+            "indexed": false,
+            "name": "qrCodeHash",
+            "type": "bytes32"
+        }],
         "name": "VoterCleared",
         "type": "event"
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "indexed": false,
                 "name": "userAddress",
                 "type": "address"
@@ -358,8 +326,7 @@ var PollingStationAbi = [
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "indexed": false,
                 "name": "userAddress",
                 "type": "address"
@@ -375,32 +342,27 @@ var PollingStationAbi = [
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "pollingStation",
-                "type": "address"
-            }
-        ],
+        "inputs": [{
+            "indexed": false,
+            "name": "pollingStation",
+            "type": "address"
+        }],
         "name": "VotingFinished",
         "type": "event"
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "staff",
-                "type": "address"
-            }
-        ],
+        "inputs": [{
+            "indexed": false,
+            "name": "staff",
+            "type": "address"
+        }],
         "name": "StaffSignedOff",
         "type": "event"
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "indexed": false,
                 "name": "yes",
                 "type": "bool"
@@ -426,20 +388,17 @@ var PollingStationAbi = [
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "role",
-                "type": "uint8"
-            }
-        ],
+        "inputs": [{
+            "indexed": false,
+            "name": "role",
+            "type": "uint8"
+        }],
         "name": "UserAdded",
         "type": "event"
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
+        "inputs": [{
                 "indexed": false,
                 "name": "uAddress",
                 "type": "address"
@@ -455,20 +414,17 @@ var PollingStationAbi = [
     },
     {
         "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "message",
-                "type": "string"
-            }
-        ],
+        "inputs": [{
+            "indexed": false,
+            "name": "message",
+            "type": "string"
+        }],
         "name": "NotAllowed",
         "type": "event"
     }
 ];
 
-
-var pollingStation = new web3.eth.Contract(PollingStationAbi, config.addresses.userActivation);
+var pollingStation = new web3.eth.Contract(PollingStationAbi, config.addresses.pollingStation);
 
 /**
  * 
@@ -477,7 +433,7 @@ var pollingStation = new web3.eth.Contract(PollingStationAbi, config.addresses.u
  * @param {function(any,any)} callback 
  * @returns {void}
  */
-module.exports.recordVoter = function (qrCodeHash, voterType, callback) {
+module.exports.recordVoter = function(qrCodeHash, voterType, callback) {
     pollingStation.methods.recordVoter(qrCodeHash, voterType).call({ from: config.blockchain.owner.address }, callback);
 }
 
@@ -533,4 +489,15 @@ module.exports.isSessionOpen = function (callback) {
  */
 module.exports.getReport = function (callback) {
     pollingStation.methods.getReport().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * Set a trigger to fire uppon an event
+ * @param {string} eventName 
+ * @param {function(error,result)} callback 
+ */
+module.exports.setTrigger = function (eventName, callback) {
+    var event = pollingStation.events[eventName](null, {
+        fromBlock: 0,
+    }, callback);
 }
