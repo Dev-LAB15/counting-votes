@@ -428,6 +428,14 @@ var PollingStationAbi = [{
 var pollingStation = new web3.eth.Contract(PollingStationAbi, config.addresses.pollingStation);
 var pollingStationWs = new web3ws.eth.Contract(PollingStationAbi, config.addresses.pollingStation);
 
+/**
+ * Requests if the user data is assigned to any role on the block.
+ * @param {address} callerAddress 
+ * @param {function(any,any)} callback 
+ */
+module.exports.getRole = function (callerAddress, callback) {
+    pollingStationWs.methods.getRole().call({ from: callerAddress }, callback);
+}
 
 /**
  * 
@@ -438,15 +446,6 @@ var pollingStationWs = new web3ws.eth.Contract(PollingStationAbi, config.address
  */
 module.exports.recordVoter = function (qrCodeHash, voterType, callback) {
     pollingStation.methods.recordVoter(qrCodeHash, voterType).call({ from: config.blockchain.owner.address }, callback);
-}
-
-/**
- * 
- * @param {function(any,any)} callback 
- * @returns {int}
- */
-module.exports.getRole = function (callback) {
-    pollingStation.methods.getRole().call({ from: config.blockchain.owner.address }, callback);
 }
 
 /**

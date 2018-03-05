@@ -8,6 +8,28 @@ var userService = require('../services/user.service');
 var vcodes = require('../data/verification.code.data');
 
 module.exports = function (app) {
+
+	/**
+	 * Requests a Verification Code for the user.
+	 * @param {string} email 
+	 * @param {string} code 
+	 */
+	function validateVerificationCode(email, code) {
+		if (app.config.useVerificationCode) {
+			try {
+				var vcode = vcodes.find(email);
+				var isValidCode = vcode && vcode.code == code;
+				if(isValidCode){
+					vcodes.markUsed(vcode);
+				}
+				return isValidCode;
+			} catch (err) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * Generates a verification code for signin process.
 	 * TODO: request ledger registry to confirm user password creation.
@@ -18,22 +40,30 @@ module.exports = function (app) {
 			res.status(422).json({ message: "Email can't be empty" });
 			return;
 		}
-
-		userService.getRoleId(req.body.email, function (err, data1) {
-			if (!data1 || data1 == "0") {
-				res.status(403).json({ message: 'Invalid credentials' });
+		userService.getUsedEmail(req.body.email, function (err, active) {
+			if (err) {
+				res.status(500).json({ message: err.message });
 				return;
 			}
-			var code = utils.generateCode();
-			var vcode = {
-				code: code,
-				timestamp: utils.timestamp(),
-				email: req.body.email
-			}
-
-			vcodes.save(vcode);
-			mailService.sendVerificationCode(req.body.email, "", code);
-			res.json({ message: 'Please check your email address to get the verification code' });
+			userService.getRoleId(req.body.email, function (err, roleId) {
+				if (err) {
+					res.status(500).json({ message: err.message });
+					return;
+				}
+				if (!roleId || roleId == "0") {
+					res.status(403).json({ message: 'Invalid credentials' });
+					return;
+				}
+				var code = utils.generateCode();
+				var vcode = {
+					code: code,
+					timestamp: utils.timestamp(),
+					email: req.body.email
+				}
+				vcodes.save(vcode);
+				mailService.sendVerificationCode(req.body.email, "", code);
+				res.json({ message: 'Please check your email address to get the verification code', isActive: active });
+			});
 		});
 	});
 
@@ -41,23 +71,27 @@ module.exports = function (app) {
 	 * Generates user password.
 	 */
 	app.post('/authentication/createpassword', function (req, res) {
-
 		//anyone can search if the user exists on the block
-		var usr = userService.getRoleId(req.body.email, function (err, data) {
-
-			if (data == "0") {
+		var usr = userService.getRoleId(req.body.email, function (err, roleId) {
+			if (roleId == "0") {
 				res.status(403).json({ message: 'Invalid credentials' });
 			}
 			else {
-				var vcode = vcodes.find(req.body.email);
-
-				userService.getUsedEmail(req.body.email, function (err, data) {
-					if (data) {
+				userService.getUsedEmail(req.body.email, function (err, active) {
+					if (active) {
 						res.status(422).json({
 							message: 'Account already activated'
 						});
 					}
 					else {
+
+						if (!validateVerificationCode(req.body.email, req.body.code)) {
+							res.status(422).json({
+								message: "Invalid Verification Code"
+							});
+							return;
+						}
+
 						if (!req.body.password || req.body.password.length === 0) {
 							res.status(422).json({
 								message: "Please inform a password"
@@ -71,24 +105,9 @@ module.exports = function (app) {
 							});
 							return;
 						}
-						if (app.config.useVerificationCode) {
-							if (!vcode) {
-								res.status(422).json({
-									message: "You must first request an activation code"
-								});
-								return;
-							}
-
-							if (vcode.code != req.body.code) {
-								res.status(422).json({
-									message: "Invalid verification code"
-								});
-								return;
-							}
-						}
 
 						var wallet = userService.getWallet(req.body.email, req.body.password);
-						var address = `0x${wallet.address}`;
+						var address = wallet.address;
 						//defines the user role and waits for the operation to complete.
 						userService.setUserRole(req.body.email, address, function (data) {
 							var user = {
@@ -112,43 +131,59 @@ module.exports = function (app) {
 	 * Allows user signin by providing email, password and verification_code
 	 */
 	app.post('/authentication/signin', function (req, res) {
-		var user = users.find(req.body.email);
-		if (!user) {
-			res.status(403).json({
-				message: 'Invalid Credentials'
-			});
-			return;
-		}
 
-		var vcode = vcodes.find(user.email);
-		if (!vcode) {
+
+		if (!req.body.email) {
 			res.status(422).json({
-				message: 'Please request a Verification Code First'
+				message: 'Please inform an email address'
 			})
-			return;
 		}
 
-		if (vcode.code != req.body.code) {
+		if (!validateVerificationCode(req.body.email, req.body.code)) {
 			res.status(422).json({
-				message: 'Invalid Verification Code'
+				message: "Invalid Verification Code"
 			});
 			return;
 		}
 
-		if (user.password == sha1(req.body.password)) {
-			vcodes.markUsed(vcode);
-			var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
-			res.json({
-				success: true,
-				user: user.name,
-				token: token
-			});
-		}
-		else {
-			res.status(403).json({
-				message: 'Invalid Credentials'
-			});
-		}
+		userService.getUsedEmail(req.body.email, function (err, active) {
+			if (err) {
+				res.status(500).json({ message: err.message });
+				return;
+			}
+			if (!active) {
+				res.status(422).json({
+					message: "Account isn't activated yet, please consider creating a password first"
+				});
+				return;
+			}
+			else {
+				var wallet = userService.getWallet(req.body.email, req.body.password);
+				userService.getRole(wallet, function (err, roleId) {
+					if (err) {
+						res.status(500).json({ message: err.message });
+						return;
+					}
+					if (!roleId || roleId == "0") {
+						res.status(403).json({
+							message: 'Invalid Credentials'
+						});
+					}
+					else {
+						var user = {
+							email: req.body.email,
+							address: wallet.address
+						}
+						var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
+						res.json({
+							success: true,
+							user: user.email,
+							token: token
+						});
+					}
+				});
+			}
+		});
 	});
 	/**
 	 * Executes the signout process

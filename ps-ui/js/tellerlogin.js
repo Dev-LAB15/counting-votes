@@ -60,7 +60,7 @@ window.addEventListener('load', function() {
             requestSignIn: function(event) {
                 axios.post(apiEndpoint + '/authentication/signin', vm.model).then(resp=>{
                     addTeller(resp.data.user);
-                    vm.data.tellers.push(resp.data.user);
+                    vm._data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('#sign-in-modal').modal('hide');
                 }
