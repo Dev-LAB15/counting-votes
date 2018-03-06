@@ -77,4 +77,5 @@ require('../app/controllers/counting-controller')(app);
 //mark the app to use the router 
 app.use('', app.appRouter);
 //start app on the configured port
-app.listen(app.config.port);
+var port = process.env.PORT || app.config.port;
+app.listen(port);
