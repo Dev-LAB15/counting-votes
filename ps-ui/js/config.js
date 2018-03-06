@@ -9,7 +9,7 @@ window.addEventListener('load', function () {
     axiosHeaders = {
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
-            "Authorization": this.window.localStorage.chairmanToken
+            "Authorization": this.window.localStorage.token
         }
     }
 });

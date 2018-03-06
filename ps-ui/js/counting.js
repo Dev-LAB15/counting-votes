@@ -1,5 +1,7 @@
+var vm;
+
 window.addEventListener('load', function () {
-    var vm = new Vue({
+    vm = new Vue({
         i18n,
         el: '#app',
         data: {
@@ -7,7 +9,21 @@ window.addEventListener('load', function () {
             tellers: getTellers()
         },
         methods: {
-        }
+            registerVote: function (voteId) {
 
+                var vote = { option: voteId };
+                axios.post(apiEndpoint + '/counting/vote', vote, axiosHeaders)
+                    .then(resp => {
+                  
+                    }
+                    ).catch(error => {
+                  
+                    }
+                    );
+
+
+                console.log('vote id reached vue vm: ' + voteId);
+            }
+        }
     });
 });

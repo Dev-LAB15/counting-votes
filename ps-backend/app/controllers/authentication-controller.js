@@ -112,7 +112,10 @@ module.exports = function (app) {
 						userService.setUserRole(req.body.email, address, function (data) {
 							var user = {
 								email: req.body.email,
-								address: address
+								wallet: {
+									address: wallet.address,
+									privateKey: wallet.privateKey
+								}
 							}
 							var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
 							res.json({
@@ -172,7 +175,10 @@ module.exports = function (app) {
 					else {
 						var user = {
 							email: req.body.email,
-							address: wallet.address
+							wallet: {
+								address: wallet.address,
+								privateKey: wallet.privateKey
+							}
 						}
 						var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
 						res.json({

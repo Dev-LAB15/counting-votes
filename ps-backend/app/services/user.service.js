@@ -13,7 +13,6 @@ var ethwallet = require('ethereumjs-wallet');
  */
 exports.getRole = function (wallet, callback) {
     pollingStationContract.getRole(wallet.address, callback);
-    // blockchainService.executeFunction(wallet, config.addresses.pollingStation, "getRole", _params, callback, "0");
 }
 
 /**
@@ -62,8 +61,6 @@ exports.getWallet = function (email, password) {
     //captures the address from the wallet
     return wallet;
 }
-
-
 
 
 /**

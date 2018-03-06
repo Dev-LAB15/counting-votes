@@ -55,7 +55,7 @@ window.addEventListener('load', function () {
                 axios.post(apiEndpoint + '/authentication/createpassword', vm.model)
                     .then(resp => {
                         window.localStorage.chairman = resp.data.user;
-                        window.localStorage.chairmanToken = resp.data.token;
+                        window.localStorage.token = resp.data.token;
                         window.location = 'tellerlogin.html';
                     }
                     ).catch(error => {
@@ -71,7 +71,7 @@ window.addEventListener('load', function () {
                 axios.post(apiEndpoint + '/authentication/signin', vm.model)
                     .then(resp => {
                         window.localStorage.chairman = resp.data.user;
-                        window.localStorage.chairmanToken = resp.data.token;
+                        window.localStorage.token = resp.data.token;
                         window.location = 'tellerlogin.html';
                     })
                     .catch(error => {

@@ -1,4 +1,5 @@
 {
+    "enableSecurityToken": true,
     "useVerificationCode": true,
     "sendGridEmailFrom": "no-reply@lab15.io",
     "sendGridEmailFromName": "LAB15 - Counting Votes Verification Services",
