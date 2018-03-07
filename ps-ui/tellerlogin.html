@@ -14,7 +14,7 @@
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="sass/main.min.css" />
     <link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/counting.min.css" />
+    <link rel="stylesheet" type="text/css" href="sass/counting.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -31,17 +31,21 @@
     <div id="app" class="cv-fullwidth">
         <div class="main overview">
             <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <a class="navbar-brand" href="index.html">
                         <img src="img/svg/logo.svg" class="img-fluid">
                     </a>
                 </div>
 
-                <div class="col-md-10 text-right">
+                <div class="col-md-6 text-center">
                     <span class="signed-user">
                         {{$t("message.chairmanSignedIn")}}
                         <strong>{{chairman}}</strong>
                     </span>
+                </div>
+
+                <div class="col-md-3 text-right">
+                    MS - powered by LAB15 
                 </div>
             </header>
 
