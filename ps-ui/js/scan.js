@@ -133,4 +133,18 @@ window.addEventListener('load', function () {
         }
 
     });
+
+    $(function () {
+        $('[data-attorney]').on('click', function () {
+            $('#power-attorney .btn-submit').attr('disabled', false);
+
+            if ($(this).data('attorney') == 'written') {
+                console.log('written!');
+                $('#power-attorney .btn-submit').attr({ "data-toggle": "modal", "data-target": "#written-authorization" });
+            } else {
+                console.log('remove written!');
+                $('#power-attorney .btn-submit').removeAttr("data-toggle data-target");
+            }
+        });
+    });
 })
