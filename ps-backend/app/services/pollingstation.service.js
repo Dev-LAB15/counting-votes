@@ -31,16 +31,16 @@ module.exports.recordVote = function (voteOption, wallet, callback) {
     var methodName;
     switch (voteOption) {
         case "vote-yes":
-            methodName: "yes";
+            methodName = "yes";
             break;
         case "vote-no":
-            methodName: "no";
+            methodName = "no";
             break;
         case "vote-blank":
-            methodName: "blank";
+            methodName = "blank";
             break;
         default:
-            methodName: "invalid";
+            methodName = "invalid";
             break;
     }
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
@@ -50,8 +50,8 @@ module.exports.recordVote = function (voteOption, wallet, callback) {
  * @param {any} wallet 
  * @param {function(any,any)} callback 
  */
-module.exports.signIn = function(wallet, callback){
-    var _params =[];
+module.exports.signIn = function (wallet, callback) {
+    var _params = [];
     var methodName = "signIn";
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
 }
