@@ -1,3 +1,4 @@
+
 //core for http requests
 var express = require("express");
 //cors
@@ -73,6 +74,11 @@ require('../app/controllers/home-cotroller')(app);
 require('../app/controllers/authentication-controller')(app);
 require('../app/controllers/scan-controller')(app);
 require('../app/controllers/counting-controller')(app);
+
+require('../app/triggers/municipality.triggers')();
+require('../app/triggers/polling.station.triggers')();
+require('../app/triggers/user.actionvation.triggers')();
+
 
 //mark the app to use the router 
 app.use('', app.appRouter);

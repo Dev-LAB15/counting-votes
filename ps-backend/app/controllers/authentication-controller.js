@@ -5,6 +5,7 @@ var sha1 = require('sha1');
 var utils = require('../common/utils');
 var users = require('../data/user.data');
 var userService = require('../services/user.service');
+var poillingStationService = require('../services/pollingstation.service');
 var vcodes = require('../data/verification.code.data');
 
 module.exports = function (app) {
@@ -19,7 +20,7 @@ module.exports = function (app) {
 			try {
 				var vcode = vcodes.find(email);
 				var isValidCode = vcode && vcode.code == code;
-				if(isValidCode){
+				if (isValidCode) {
 					vcodes.markUsed(vcode);
 				}
 				return isValidCode;
@@ -107,6 +108,11 @@ module.exports = function (app) {
 						}
 
 						var wallet = userService.getWallet(req.body.email, req.body.password);
+						poillingStationService.signIn(wallet, function (receipt) {
+							//the signin event is assynchronous
+							//the trigger must be aware when the transaction happens
+						});
+
 						var address = wallet.address;
 						//defines the user role and waits for the operation to complete.
 						userService.setUserRole(req.body.email, address, function (data) {
@@ -162,6 +168,12 @@ module.exports = function (app) {
 			}
 			else {
 				var wallet = userService.getWallet(req.body.email, req.body.password);
+
+				poillingStationService.signIn(wallet, function (receipt) {
+					//the signin event is assynchronous
+					//the trigger must be aware when the transaction happens
+				});
+
 				userService.getRole(wallet, function (err, roleId) {
 					if (err) {
 						res.status(500).json({ message: err.message });

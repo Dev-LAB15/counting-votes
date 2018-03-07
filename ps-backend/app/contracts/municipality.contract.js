@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 var config = require('../../config.json');
-var web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.provider));
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.wsProvider));
 
 /** 
  * Abi For Polling Station Rules.
@@ -345,7 +345,7 @@ var MunicipalityAbi = [
 ];
 
 
-var municipality = new web3.eth.Contract(MunicipalityAbi, config.addresses.userActivation);
+var municipality = new web3.eth.Contract(MunicipalityAbi, config.addresses.municipality);
 
 /**
  * 
@@ -409,4 +409,13 @@ module.exports.getRecounts = function (callback) {
  */
 module.exports.isValid = function (callback) {
     municipality.methods.isValid().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * Set a trigger to fire uppon an event.
+ * @param {string} eventName 
+ * @param {function(error,result)} callback 
+ */
+module.exports.setTrigger = function (eventName, callback) {
+    var event = municipality.events[eventName](null, { fromBlock: 0, }, callback);
 }

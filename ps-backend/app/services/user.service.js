@@ -62,7 +62,6 @@ exports.getWallet = function (email, password) {
     return wallet;
 }
 
-
 /**
  * Combines an email address with an ethereum address for further transactions.
  * @param {string} address 

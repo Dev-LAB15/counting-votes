@@ -45,3 +45,13 @@ module.exports.recordVote = function (voteOption, wallet, callback) {
     }
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
 }
+/**
+ * Signs in the current user assynchronously.
+ * @param {any} wallet 
+ * @param {function(any,any)} callback 
+ */
+module.exports.signIn = function(wallet, callback){
+    var _params =[];
+    var methodName = "signIn";
+    blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
+}

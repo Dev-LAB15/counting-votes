@@ -1,6 +1,6 @@
 window.addEventListener('load', function () {
 
-    if (this.window.localStorage.chairmanToken) {
+    if (this.window.localStorage.token) {
         this.window.location = 'tellerlogin.html';
     }
 

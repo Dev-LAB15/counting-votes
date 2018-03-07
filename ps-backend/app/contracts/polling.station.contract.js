@@ -1,7 +1,6 @@
 var Web3 = require('web3');
 var config = require('../../config.json');
-var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-var web3ws = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.wsProvider));
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.wsProvider));
 /** 
  * Abi For Polling Station Rules.
  */
@@ -426,7 +425,6 @@ var PollingStationAbi = [{
 ];
 
 var pollingStation = new web3.eth.Contract(PollingStationAbi, config.addresses.pollingStation);
-var pollingStationWs = new web3ws.eth.Contract(PollingStationAbi, config.addresses.pollingStation);
 
 /**
  * Requests if the user data is assigned to any role on the block.
@@ -434,7 +432,7 @@ var pollingStationWs = new web3ws.eth.Contract(PollingStationAbi, config.address
  * @param {function(any,any)} callback 
  */
 module.exports.getRole = function (callerAddress, callback) {
-    pollingStationWs.methods.getRole().call({ from: callerAddress }, callback);
+    pollingStation.methods.getRole().call({ from: callerAddress }, callback);
 }
 
 /**
@@ -499,7 +497,7 @@ module.exports.getReport = function (callback) {
  * @param {function(error,result)} callback 
  */
 module.exports.setTrigger = function (eventName, callback) {
-    var event = pollingStationWs.events[eventName](null, {
+    var event = pollingStation.events[eventName](null, {
         fromBlock: 0,
     }, callback);
 }
