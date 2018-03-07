@@ -24,3 +24,23 @@ module.exports.update = function (transaction, status, signature) {
         data.update(results[0]);
     }
 }
+/**
+ * Removes a pending transaction from the memory.
+ * @param {string} transaction 
+ */
+module.exports.remove = function (transaction) {
+    var results = data.find(({ 'transaction': transaction }));
+    if (results.length == 0) {
+        data.remove(result[0]);
+    }
+}
+/**
+ * Finds a transaction record by informing the transaction hash.
+ * @param {string} transaction 
+ */
+module.exports.find = function (transaction) {
+    var results = data.find(({ 'transaction': transaction }));
+    if (results.length == 0)
+        return results[0];
+    return null;
+}

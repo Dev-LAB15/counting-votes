@@ -12,22 +12,33 @@ module.exports = function (app) {
     app.post('/counting/vote', function (req, res) {
         var wallet = req.user.wallet;
         var option = req.body.option;
-        
-        pollingStationService.recordVote(option, wallet, function (data) {
-            if (data.status) {
+        //converted into a callback in case of retrial
+        //the timeout enables a single retrial recursively
+        //if the transaction is confirmed the setTimeout is ignored.
+        var recordVote = function (_option, _wallet, _callback) {
+            pollingStationService.recordVote(option, wallet, function (data) {
                 countingData.insert({
                     timestamp: utils.timestamp(),
                     transaction: data.message,
                     option: option,
                     status: 'waiting'
                 });
-                res.status(200).json({ message: 'ok' });
-            }
-            else {
-                res.status(422).json({ message: 'failed to record transaction' });
-            }
-
-        });
-
+                setTimeout(function () {
+                    var transactionRecord = countingData.find(data.message);
+                    if (transactionRecord && transactionRecord.status === 'waiting') {
+                        countingData.remove(data.message);
+                        recordVote(option, wallet, recordVote);
+                    }
+                }, 10 * 60 * 1000);
+            });
+        }
+        //call the recordVote again in case the transaction takes too long
+        //or is dropped by the node
+        //this will fire another recursive attempt
+        recordVote(option, wallet, recordVote);
+        res.status(200).json({ message: 'ok' });
     });
+
+
+
 }
