@@ -14,7 +14,7 @@
 	 crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="sass/main.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
-	<link rel="stylesheet" type="text/css" href="css/counting.min.css" />
+	<link rel="stylesheet" type="text/css" href="sass/counting.min.css" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -70,41 +70,41 @@
             <section class="cv-fullwidth has-header has-footer">
                 <div class="container-fluid">
                     <div class="page-title">
-                        <h5>Fill in the fields below</h5>
+                        <h5>{{$t('message.fillDataFieldsBelow')}}</h5>
                     </div>
 
                     <div class="row justify-content-md-center gutter-lg">
                         <div class="col">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control input-lg" placeholder="0" aria-label="0" id="polling-cards">
+                                <input type="text" class="form-control input-lg" v-model="model.pollingCards" placeholder="0" aria-label="0" id="polling-cards">
                                 <span class="input-border"></span>
                             </div>
-                            <label for="polling-cards">total amount of <strong>polling cards</strong></label>
+                            <label for="polling-cards">{{$t('message.totalAmount')}} <strong>{{$t('message.pollingCards')}}</strong></label>
                         </div>
 
                         <div class="col">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control input-lg" placeholder="0" aria-label="0" id="power-attorneys">
+                                <input type="text" class="form-control input-lg" v-model="model.powerOfAttorneys" placeholder="0" aria-label="0" id="power-attorneys">
                                 <span class="input-border"></span>
                             </div>
-                            <label for="power-attorneys">total amount of <strong>power attorneys</strong></label>
+                            <label for="power-attorneys">{{$t('message.totalAmount')}} <strong>{{$t('message.powerOfAttorneys')}}</strong></label>
                         </div>
 
                         <div class="col">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control input-lg" placeholder="0" aria-label="0" id="voter-passes">
+                                <input type="text" class="form-control input-lg" v-model="model.voterPasses" placeholder="0" aria-label="0" id="voter-passes">
                                 <span class="input-border"></span>
                             </div>
-                            <label for="voter-passes">total amount of <strong>voter passes</strong></label>
+                            <label for="voter-passes">{{$t('message.totalAmount')}} <strong>{{$t('message.voterPasses')}}</strong></label>
                         </div>
                     </div>
                 </div>
 
-                <span class="badge badge-primary toast"><i class="icon icon-check"></i> Data inserted</span>
+                <span class="badge badge-primary toast"><i class="icon icon-check"></i> {{$t('message.dataInserted')}}</span>
             </section>
 
             <footer>
-                <button type="submit" class="btn btn-primary btn-block btn-continue" disabled>continue
+                <button type="submit" v-on:click="inputControlNumbers" class="btn btn-primary btn-block btn-continue" disabled>{{$t('message.continue')}}
                     <i class="icon icon-arrow-right"></i>
                 </button>
             </footer>
@@ -124,9 +124,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<!-- /base -->
 
-	<script src="/lang/en.js"></script>
-	<script src="/js/config.js"></script>
-	<script src="/js/verification.js"></script>
+	<script src="./lang/en.js"></script>
+	<script src="./js/config.js"></script>
+	<script src="./js/verification.js"></script>
 </body>
 
 </html>

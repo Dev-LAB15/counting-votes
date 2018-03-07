@@ -50,8 +50,24 @@ module.exports.recordVote = function (voteOption, wallet, callback) {
  * @param {any} wallet 
  * @param {function(any,any)} callback 
  */
-module.exports.signIn = function (wallet, callback) {
-    var _params = [];
-    var methodName = "signIn";
+module.exports.signIn = function(wallet, callback){
+    let _params = [];
+    let methodName = "signIn";
+
+    blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
+}
+
+/**
+ * Registers the control numbers (step 1) for later verification (step 2).
+ * @param {any} wallet
+ * @param {number} pollingCards 
+ * @param {number} powerOfAttorneys 
+ * @param {number} voterPasses
+ * @param {function(any)} callback
+ */
+module.exports.inputControlNumbers = function (wallet, pollingCards, powerOfAttorneys, voterPasses, callback) {
+    let _params = [{ type: "uint256", value: pollingCards }, { type: "uint256", value: powerOfAttorneys}, { type: "uint256", value: voterPasses }];
+    let methodName = "inputControlNumbers";
+
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
 }

@@ -437,17 +437,6 @@ module.exports.getRole = function (callerAddress, callback) {
 
 /**
  * 
- * @param {string} qrCodeHash 
- * @param {number} voterType
- * @param {function(any,any)} callback 
- * @returns {void}
- */
-module.exports.recordVoter = function (qrCodeHash, voterType, callback) {
-    pollingStation.methods.recordVoter(qrCodeHash, voterType).call({ from: config.blockchain.owner.address }, callback);
-}
-
-/**
- * 
  * @param {function(any,any)} callback 
  * @returns {int}
  */

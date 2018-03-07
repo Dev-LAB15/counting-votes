@@ -48,8 +48,14 @@ const lang = {
                 voterPass: "voter pass",
                 votersPassRegisteredSuccessfyully: "Voter's pass registered successfully.",
                 writtenAuthorization: 'Written authorization',
-                yes: "Yes"
-
+                yes: "Yes",
+                fillDataFieldsBelow: "Fill in the fields below",
+                totalAmount: "total amount of",
+                pollingCards: "polling cards",
+                powerOfAttorneys: "power attorneys",
+                voterPasses: "voter passes",
+                dataInserted: "Data inserted",
+                continue: "continue"
             }
         }
     }

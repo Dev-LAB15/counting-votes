@@ -47,6 +47,7 @@ contract PollingStation is Permissions {
     event VotingFinished(address pollingStation);
     event StaffSignedOff(address staff);
     event VerificationAttempt(bool yes, bool no, bool blank, bool invalid);
+    event ControlNumbersAdded(uint256 pollingCards, uint256 powerOfAttorneys, uint256 voterPasses);
     
     function PollingStation(address mAddress, address uacAddress) Permissions(uacAddress) public {
         munContract = Municipality(mAddress);
@@ -266,6 +267,7 @@ contract PollingStation is Permissions {
         collectedPollingCardCount = pollingCards;
         collectedPowerOfAttorneyCount = powerOfAttorneys;
         collectedVoterPassCount = voterPasses;
+        ControlNumbersAdded(pollingCards, powerOfAttorneys, voterPasses);
     }
     
     function verifyVotes(uint yesCount, uint noCount, uint blankCount, uint invalidCount) public _verifyRole(Role.Chairman) returns (bool yesVerified, bool noVerified, bool blankVerified, bool invalidVerified) {

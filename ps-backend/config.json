@@ -10,8 +10,8 @@
     "port": 3000,
     "tokenExpiration": "14 days",
     "blockchain": {
-        "provider": "http://leaderlsuery.westeurope.cloudapp.azure.com:8545",
-        "wsProvider": "ws://leaderlsuery.westeurope.cloudapp.azure.com:8546",
+        "provider": "http://104.40.190.151:8545",
+        "wsProvider": "ws://104.40.190.151:8545",
         "owner": {
             "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
             "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"
@@ -19,9 +19,9 @@
         "defaultValueInEther": "10"
     },
     "addresses": {
-        "municipality": "0xb584e9a14cab9d0d497f5abac51620f054ff2e73",
-        "userActivation": "0x72e1abc56ddb9b94758a63ea5398fed061ed78ef",
-        "pollingStation": "0xfdcdadb28e636aaa5e1cdf8516254149edf88625"
+        "municipality": "0x3c6084ac04a81d39606936f28ae439750929ae91",
+        "userActivation": "0x192792337b39077c78f1e620a0643e62f4391a4c",
+        "pollingStation": "0x32b4cb2bddebcb4da0644df1d4e9e3bef43f9734"
     },
     "roles": {
         "Unknown": 0,
