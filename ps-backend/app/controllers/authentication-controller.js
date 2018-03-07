@@ -125,7 +125,7 @@ module.exports = function (app) {
 							}
 							var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
 							res.json({
-								user: user,
+								user: user.email,
 								token: token
 							});
 						});
