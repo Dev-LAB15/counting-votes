@@ -8,12 +8,13 @@ window.addEventListener('load', function () {
             model: { 
                 isVerifying: false,
                 empty: true,
-                success: false
+                success: false,
+                message: ''
             }
         },
         mounted: function() {
             if (vm) {
-                vm._data.model.message =  this.$t('message.verify');
+                vm.model.message =  this.$t('message.verify');
             }
         },
         methods: {
@@ -21,7 +22,17 @@ window.addEventListener('load', function () {
                 vm.model.isVerifying = true;
                 vm.model.message = this.$t('message.verifyingPleaseWait');
 
-                axios.post(apiEndpoint + '/verification/verifyVotes', vm.model, axiosHeaders)
+                if (vm.model.recount !== undefined) {
+                    if (vm.model.recount) {
+                        window.location = 'counting.html';
+                    } else {
+                        window.location = 'overview.html';
+                    }
+
+                    return;
+                }
+
+                axios.post(apiEndpoint + '/verification/verifyvotes', vm.model, axiosHeaders)
                     .then(resp => {
                         vm.model.isVerifying = false;
 
@@ -32,9 +43,11 @@ window.addEventListener('load', function () {
                         vm.model.success = true;
 
                         if (!vm.model.yes || !vm.model.no || !vm.model.blank || !vm.model.invalid) {
+                            vm.model.recount = true;
                             vm.model.message = this.$t('message.recount');
                         } else {
                             vm.model.message = this.$t('message.continue');
+                            vm.model.recount = false;
                         }
                     }
                     ).catch(error => {

@@ -47,7 +47,7 @@ module.exports = function (app) {
                         transactionReceiptPromise = web3.eth.getTransactionReceipt(data.message);
                         transactionReceiptPromise.then(function(data) {
                             transactionReceipt = data;
-                        }, 500);
+                        });
 
                         if (transactionReceipt != null) {
                             clearInterval(receiptAttempt);
@@ -59,7 +59,7 @@ module.exports = function (app) {
 
                             res.json(returnModel);
                         }
-                    });
+                    }, 500);
                 } else {
                     res.status(502).json();
                 }

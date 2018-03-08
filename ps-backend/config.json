@@ -1,6 +1,6 @@
 {
     "enableSecurityToken": true,
-    "useVerificationCode": true,
+    "useVerificationCode": false,
     "sendGridEmailFrom": "no-reply@lab15.io",
     "sendGridEmailFromName": "LAB15 - Counting Votes Verification Services",
     "sendGridApiKey": "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",

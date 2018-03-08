@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-close" v-show="model.success"></i>
+                        <i class="icon" v-bind:class="{ 'icon-check': model.yes, 'icon-close': !model.yes }" v-show="model.success"></i>
                     </div>
                 </div>
 
@@ -93,7 +93,7 @@
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-check" v-show="model.success"></i>
+                        <i class="icon" v-bind:class="{ 'icon-check': model.no, 'icon-close': !model.no }" v-show="model.success"></i>
                     </div>
                 </div>
 
@@ -110,7 +110,7 @@
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-check" v-show="model.success"></i>
+                        <i class="icon"  v-bind:class="{ 'icon-check': model.blank, 'icon-close': !model.blank }" v-show="model.success"></i>
                     </div>
                 </div>
 
@@ -127,7 +127,7 @@
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-check" v-show="model.success"></i>
+                        <i class="icon"  v-bind:class="{ 'icon-check': model.invalid, 'icon-close': !model.invalid }" v-show="model.success"></i>
                     </div>
                 </div>
             </div>
