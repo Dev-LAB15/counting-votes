@@ -26,7 +26,7 @@
 
 <body>
     <div id="scandit-barcode-picker" class="scanner"></div>
-    <div id="scandit-barcode-result" class="result-text"></div>
+    <div id="scandit-barcode-result" class="result-text" style="display:block;!important"></div>
 
     <div id="app" class="main scan">
         <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
@@ -255,7 +255,7 @@
     <script src="/js/config.js"></script>
     <script src="/js/scan.js"></script>
     <script>
-        ScanditSDK.configure("Aa2bzinFMtjDJWNhK0Q3ir8aLxUjNtOu+m+pYGxyADvpVIS96G6K/fMck4oJUEselWOJ6hwmS+Q4H0s26B45Gphd7R8jYao9hj0KGTlqFpzjVRFnazSSgoJ6NicTWANEGH4/nvhW1X1gMVwlfQUNMY5vXpSqxwpqtayXSOcWN1PRxOzjMO3BTy04by0XUq6cXUlaQzDHdI2biD8egNq9zc/F9af9KbO1cc+wR1NT6AmpotTb02nutcf7JFn1lUlr5dlt387XoFE2ZV30Z+alsytCrIpYkaNfts8SWAJGDOGckNkTBRhONNeGq/D3RaXzs774KFa1z0w1zEjLbrY99yvJ/yGwjKNaVygMS01hwUoNeGttgdxbjg2UzU8faXisZQfIIuTS7vUicmTFbW050m4UJaKv9YYoTNMb/qq+4P1vY384K79hpKXm4SBnoNMDDc35L/AguwI6hQRvzpPmKxA1TYx4qPCTlH1jS9pji09xkpTUQWdMBIRaps5aLWpOqVOU5u5gDLZps2zdi8cTYye05qlFzz8aN/RVRr0i1MQ7aMTmWlgwBqsoUBu1X6Gj/C+F8RyZRBUZ/ctZY9SvdDXr3QG6N5k29pMVjJGxfehjVXR/X96s3Z4Z5njyVNSeMus+gAN/N4hULfobPVgHMFNgAio1UfliFYSuydH00m29MkVJUVVohj/2J97DDIvOUJ3kzBLwzcFC2WmgCIka0jn6fzAKgu9l/xw5s9Z8mOFj57p9t9WMpF6CNsVwbHuxXAvmVCmjosRb2c/BEH97jq3ihmjm/466WQi3cAQR2BBoW527eG+tHRgI7bhX/Js=", {
+        ScanditSDK.configure("AeZLeVnFQmmLDSv+HhSiDM9FLzaOEj7bymQpv19+08+RaGxu/S0/Xast++uNJkUfjW09/O9aO/9CXFQWGk3uzPtKpJGuLzfwIh3eBUcFUbVrePN6NxgqUwBxgBsyaZTZnHhrzLhec7y6J3Oy9FAHGDzDQHOf7mpam1zypXH7qym+Tzi2TlcvmTNYMtw09ga1F1nvODmiqDZspZvHe/NTnV4yKkay2i8B0dy6UKNsm2kakpa5jE+RNZ2o6JoHq2NeUolUhTkRJPESE4WUHY5a4q2OOE8NteTFA4ReKdGG6i6+xihcp1zoNeUy+0vWU/mE8alM552i86sF+BUr7dgch4rV3DCTJFMQr4hD78Kq5fYisvzI/CAZoGhzmqvLGPNmDLqC/4bVeVDuylMvlpPEoYz1h0XSAThQ68F084KR/Uid8KwquVnDLuWQSl17EYD8MA9YGh7cSbBpAAfmCVdqSXlw8NveGYmLsXsggiGGLNALZ5QEqq15a+5O7Q+m1FePEUbhYZwIt8rYzXKefSw8R9BxKrniBf6x1m/QAaja/zK6AJAI3EH944osLBTAWSvkVETlmKiKNnOGiKlfLlqrD/5Z9zqiEOgRMKdpNVCJ8Oy2oRzo+fN+wk/ZElHIRaoh8k3iZoBEWvh17Qb/TBiJ//sXALD9lqBn0m3nVjaovzDU2oi5S6TSEbHSxc+paez/KiHcYtirToarHIc+zYbCZj01dlJRRztECFkkfSE36SVxyP0cT0wB2xhSIokeY7z3ej1EaivmmyPEg5uTbqO7VBLxLQmyw4XWjbpSLGUEvnFDlDpyEBZjyGNOwCk4", {
             engineLocation: "js"
         });
         ScanditSDK.BarcodePicker.create(document.getElementById("scandit-barcode-picker"), { playSoundOnScan: true, vibrateOnScan: true })
