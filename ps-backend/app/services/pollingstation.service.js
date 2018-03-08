@@ -7,8 +7,9 @@ var blockchainService = require('./blockchain.service');
  * @param {number} voterType 
  * @param {{function(any, any)}} callback
  */
-module.exports.recordVoter = function (qrCodeHash, voterType, callback) {
-    contract.recordVoter(qrCodeHash, voterType, callback);
+module.exports.recordVoter = function (wallet, qrCodeHash, voterType, callback) {
+    var _params = [{ type: 'bytes32', value: qrCodeHash }, { type: 'uint8', value: voterType }];    
+    blockchainService.executeFunction(wallet, config.addresses.pollingStation, 'recordVoter', _params, callback);
 }
 
 /**
@@ -50,7 +51,7 @@ module.exports.recordVote = function (voteOption, wallet, callback) {
  * @param {any} wallet 
  * @param {function(any,any)} callback 
  */
-module.exports.signIn = function(wallet, callback){
+module.exports.signIn = function (wallet, callback) {
     let _params = [];
     let methodName = "signIn";
 
@@ -58,7 +59,7 @@ module.exports.signIn = function(wallet, callback){
 }
 
 /**
- * Registers the control numbers (step 1) for later verification (step 2).
+ * Registers the control numbers to later verify if matches the total amount of registered votes.
  * @param {any} wallet
  * @param {number} pollingCards 
  * @param {number} powerOfAttorneys 
@@ -66,8 +67,24 @@ module.exports.signIn = function(wallet, callback){
  * @param {function(any)} callback
  */
 module.exports.inputControlNumbers = function (wallet, pollingCards, powerOfAttorneys, voterPasses, callback) {
-    let _params = [{ type: "uint256", value: pollingCards }, { type: "uint256", value: powerOfAttorneys}, { type: "uint256", value: voterPasses }];
+    let _params = [{ type: "uint256", value: pollingCards }, { type: "uint256", value: powerOfAttorneys }, { type: "uint256", value: voterPasses }];
     let methodName = "inputControlNumbers";
+
+    blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
+}
+
+/**
+ * Verifies the registered votes with the pile count (verification step 2).
+ * @param {any} wallet
+ * @param {number} yesCount 
+ * @param {number} noCount 
+ * @param {number} blankCount
+ * @param {number} invalidCount
+ * @param {function(any)} callback
+ */
+module.exports.verifyVotes = function (wallet, yesCount, noCount, blankCount, invalidCount, callback) {
+    let _params = [{ type: "uint256", value: yesCount }, { type: "uint256", value: noCount}, { type: "uint256", value: blankCount }, { type: "uint256", value: invalidCount }];
+    let methodName = "verifyVotes";
 
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
 }

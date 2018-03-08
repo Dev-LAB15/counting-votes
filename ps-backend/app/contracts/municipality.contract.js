@@ -419,3 +419,7 @@ module.exports.isValid = function (callback) {
 module.exports.setTrigger = function (eventName, callback) {
     var event = municipality.events[eventName](null, { fromBlock: 0, }, callback);
 }
+
+module.exports.getPastEvents = function (callback) {
+    municipality.getPastEvents('allEvents', { fromBlock: 0 }, callback);
+}

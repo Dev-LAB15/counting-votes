@@ -46,96 +46,96 @@
         <section class="cv-fullwidth has-header has-footer">
             <div class="container text-center">
                 <div class="page-title page-title-sm">
-                    <h5>Verify the counting</h5>
+                    <h5>{{$t('message.verifyTheCounting')}}</h5>
                 </div>
 
                 <div class="row justify-content-md-center gutter-lg">
                     <div class="col">
-                        <h3>vote type</h3>
+                        <h3>{{$t('message.voteType')}}</h3>
                     </div>
                     
                     <div class="col">
-                        <h3>counted votes</h3>
+                        <h3>{{$t('message.countedVotes')}}</h3>
                     </div>
 
                     <div class="col verification-check">
-                        <h3>verification</h3>
+                        <h3>{{$t('message.verification')}}</h3>
                     </div>
                 </div>
 
                 <div class="row justify-content-md-center gutter-lg">
                     <div class="col">
-                        <label for="yes">yes</label>
+                        <label for="yes">{{$t('message.yes')}}</label>
                     </div>
                     
                     <div class="col">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="0" aria-label="0" id="yes">
+                            <input type="text" class="form-control" v-model="model.yesCount" placeholder="0" aria-label="0" id="yes">
                             <span class="input-border"></span>
                         </div>
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-close"></i>
+                        <i class="icon icon-close" v-show="model.success"></i>
                     </div>
                 </div>
 
                 <div class="row justify-content-md-center gutter-lg">
                     <div class="col">
-                        <label for="no">no</label>
+                        <label for="no">{{$t('message.no')}}</label>
                     </div>
                     
                     <div class="col">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="0" aria-label="0" id="no">
+                            <input type="text" class="form-control" v-model="model.noCount" placeholder="0" aria-label="0" id="no">
                             <span class="input-border"></span>
                         </div>
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-check"></i>
+                        <i class="icon icon-check" v-show="model.success"></i>
                     </div>
                 </div>
 
                 <div class="row justify-content-md-center gutter-lg">
                     <div class="col">
-                        <label for="blank">blank</label>
+                        <label for="blank">{{$t('message.blank')}}</label>
                     </div>
                     
                     <div class="col">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="0" aria-label="0" id="blank">
+                            <input type="text" class="form-control" v-model="model.blankCount" placeholder="0" aria-label="0" id="blank">
                             <span class="input-border"></span>
                         </div>
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-check"></i>
+                        <i class="icon icon-check" v-show="model.success"></i>
                     </div>
                 </div>
 
                 <div class="row justify-content-md-center gutter-lg">
                     <div class="col">
-                        <label for="invalid">invalid</label>
+                        <label for="invalid">{{$t('message.invalid')}}</label>
                     </div>
                     
                     <div class="col">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="0" aria-label="0" id="invalid">
+                            <input type="text" class="form-control" v-model="model.invalidCount" placeholder="0" aria-label="0" id="invalid">
                             <span class="input-border"></span>
                         </div>
                     </div>
 
                     <div class="col verification-check">
-                        <i class="icon icon-check"></i>
+                        <i class="icon icon-check" v-show="model.success"></i>
                     </div>
                 </div>
             </div>
         </section>
 
         <footer>
-            <button type="button" class="btn btn-primary btn-block btn-verify" disabled>verify
-                <i class="icon icon-arrow-right"></i>
+            <button type="button" v-on:click="verifyVotes" class="btn btn-primary btn-block btn-verify" :disabled="model.isVerifying || model.empty">{{model.message}}
+                <i class="icon icon-arrow-right" v-show="!model.isVerifying"></i>
             </button>
         </footer>
 	</div>
@@ -153,9 +153,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<!-- /base -->
 
-	<script src="/lang/en.js"></script>
-	<script src="/js/config.js"></script>
-	<script src="/js/counting-verify.js"></script>
+	<script src="./lang/en.js"></script>
+	<script src="./js/config.js"></script>
+	<script src="./js/counting-verify.js"></script>
 </body>
 
 </html>

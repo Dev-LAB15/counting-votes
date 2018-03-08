@@ -4,4 +4,9 @@ module.exports = function () {
         console.log('pollingstation.sol trigger raised');
         console.log(result);
     });
+
+    contract.setTrigger('VerificationAttempt', function (err, result) {
+        console.log('VerificationAttempt trigger raised');
+        console.log(result);
+    });
 }

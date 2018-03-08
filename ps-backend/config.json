@@ -21,7 +21,7 @@
     "addresses": {
         "municipality": "0x3c6084ac04a81d39606936f28ae439750929ae91",
         "userActivation": "0x192792337b39077c78f1e620a0643e62f4391a4c",
-        "pollingStation": "0x32b4cb2bddebcb4da0644df1d4e9e3bef43f9734"
+        "pollingStation": "0x5631189b6c7629625bc7bd36fe128528c2f07e7d"
     },
     "roles": {
         "Unknown": 0,

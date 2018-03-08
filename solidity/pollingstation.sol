@@ -32,6 +32,8 @@ contract PollingStation is Permissions {
     bool private votingSessionClosed = true;
     string private deviationExplanation;
     bool private verificationSuccessful = false;
+    bool private needsRecount = true;
+    bool private beganCounting = false;
     
     //Mappings
     mapping (address => bool) private signedInChairmen;
@@ -76,6 +78,7 @@ contract PollingStation is Permissions {
         
         if (!isSessionOpen()) {
             NotAllowed("Voting Session is closed.");
+            return;
         }
         
         if ((currRole == Role.Chairman && signedInChairmenCount == 0) || (currRole == Role.Teller && signedInChairmenCount >= 0)) {
@@ -98,7 +101,7 @@ contract PollingStation is Permissions {
     
     modifier _canSessionStart() {
         
-        if (now > VOTING_START_TIMESTAMP && votingSessionClosed && !verificationSuccessful) {
+        if (block.timestamp > VOTING_START_TIMESTAMP && votingSessionClosed && !verificationSuccessful) {
             _;
         } else {
             NotAllowed("Not allowed before official start date.");
@@ -193,6 +196,7 @@ contract PollingStation is Permissions {
     
     function beginVotingSession() public _isOwner _canSessionStart() {
         votingSessionClosed = false;
+        needsRecount = false;
         votingRound++;
     }
     
@@ -227,21 +231,25 @@ contract PollingStation is Permissions {
     }
     
     function yes() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        beganCounting = true;
         yesLocal++;
         munContract.voteYes();
     }
     
     function no() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        beganCounting = true;
         noLocal++;
         munContract.voteNo();
     }
     
     function blank() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        beganCounting = true;
         blankLocal++;
         munContract.voteBlank();
     }
     
     function invalid() public _isSessionOpen() _verifyRole(Role.Chairman) {
+        beganCounting = true;
         invalidLocal++;
         munContract.voteInvalid();
     }
@@ -261,6 +269,7 @@ contract PollingStation is Permissions {
         noLocal = 0;
         blankLocal = 0;
         invalidLocal = 0;
+        needsRecount = false;
     }
     
     function inputControlNumbers(uint pollingCards, uint powerOfAttorneys, uint voterPasses) public _verifyRole(Role.Chairman) {
@@ -271,6 +280,20 @@ contract PollingStation is Permissions {
     }
     
     function verifyVotes(uint yesCount, uint noCount, uint blankCount, uint invalidCount) public _verifyRole(Role.Chairman) returns (bool yesVerified, bool noVerified, bool blankVerified, bool invalidVerified) {
+        if (needsRecount) {
+            NotAllowed("Recount necessary before new verification attempt.");
+        }
+        
+        if (beganCounting) {
+            NotAllowed("Cannot verify before counting began.");
+        }
+        
+        if (!beganCounting || !needsRecount) {
+            VerificationAttempt(false, false, false, false);
+            return (false, false, false, false);
+        }
+        
+        beganCounting = false;
         yesVerified = (yesCount == yesLocal);
         noVerified = (noCount == noLocal);
         blankVerified = (blankCount == blankLocal);
@@ -279,6 +302,8 @@ contract PollingStation is Permissions {
         VerificationAttempt(yesVerified, noVerified, blankVerified, invalidVerified);
         if (yesVerified && noVerified && blankVerified && invalidVerified) {
             verificationSuccessful = true;
+        } else {
+            needsRecount = true;
         }
         
         return (yesVerified, noVerified, blankVerified, invalidVerified);

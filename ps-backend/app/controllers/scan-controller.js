@@ -1,20 +1,19 @@
-let pollingstationService = require('../services/pollingstation.service');
+var util = require('../common/utils');
 var keccak256 = require('js-sha3').keccak256;
-let pollingStationContract = require('../contracts/polling.station.contract');
+var pollingstationService = require('../services/pollingstation.service');
+var pollingStationContract = require('../contracts/polling.station.contract');
 
 
 
-module.exports = function(app){
+module.exports = function (app) {
     //Registers a Scanned QR Code or Manually Inputed QR Code
     app.post('/scan/qrcode', function (req, res) {
-        try{
+        try {
+            var wallet = req.user.wallet;
             var hashedCode = keccak256(req.body.code);
-            pollingstationService.recordVoter(hashedCode, 1, function(err, data){
-                if(data){
-                    res.send('Ok');
-                } else {
-                    res.status(422).json({ message: 'QR Code Already Scanned!' });
-                }
+            hashedCode = `0x${hashedCode}`;
+            pollingstationService.recordVoter(wallet, hashedCode.valueOf(), 1, function (result) {
+                res.send('OK');
             });
 
         } catch (err) {
@@ -22,15 +21,26 @@ module.exports = function(app){
         }
 
     });
-    //Registers a power of attorney
+    //Registers a written power of attorney
     app.post('/scan/powerofattorney', function (req, res) {
-        try{
-            pollingstationService.recordVoter(null, 2, function(err, data){
-                if(data){
-                    res.send('Ok');
-                } else {
-                    res.status(422).json({ message: 'Failed to register Power of Attorney!' });
-                }
+        try {
+            var wallet = req.user.wallet;
+            //personal power of attorney
+            var hashedCode;
+            var powerOfAttorneyType = 3;
+            if (req.body.code) {
+                //written power of attorney from a polling card
+                hashedCode = req.body.code;
+                powerOfAttorneyType = 2;
+            }
+            else {
+                hashedCode = `POWEROFATTORNEY${util.generateCode(15)}`;
+            }
+
+            hashedCode = keccak256(hashedCode);
+            hashedCode = `0x${hashedCode}`;
+            pollingstationService.recordVoter(wallet, hashedCode, powerOfAttorneyType, function (result) {
+                res.send('OK');
             });
 
         } catch (err) {
@@ -39,13 +49,14 @@ module.exports = function(app){
     });
     //Registers a voter's pass
     app.post('/scan/voterspass', function (req, res) {
-        try{
-            pollingstationService.recordVoter(null, 3, function(err, data){
-                if(data){
-                    res.send('Ok');
-                } else {
-                    res.status(422).json({ message: "Failed to register Voter's Pass!" });
-                }
+        try {
+            var wallet = req.user.wallet;
+            var hashedCode = `VOTERPASS${util.generateCode(15)}`;
+            hashedCode = keccak256(hashedCode);
+            hashedCode = `0x${hashedCode}`;
+
+            pollingstationService.recordVoter(wallet, hashedCode, 4, function (result) {
+                res.send('OK');
             });
 
         } catch (err) {
@@ -53,14 +64,14 @@ module.exports = function(app){
         }
     });
     //Registers an objection to the pilot
-    app.post('/scan/objection', function(req, res){
-        try{
-            pollingstationService.recordVoter(null, 4, function(err, data){
-                if(data){
-                    res.send('Ok');
-                } else {
-                    res.status(422).json({ message: "Failed to register Objection!" });
-                }
+    app.post('/scan/objection', function (req, res) {
+        try {
+            var wallet = req.user.wallet;
+            var hashedCode = `OBJECTION${util.generateCode(15)}`;
+            hashedCode = keccak256(hashedCode);
+            hashedCode = `0x${hashedCode}`;
+            pollingstationService.recordVoter(wallet, hashedCode, 5, function (result) {
+                res.send('OK');
             });
 
         } catch (err) {
@@ -68,12 +79,12 @@ module.exports = function(app){
         }
     })
 
-    app.get('/scan/transactions', function(req, res) {
-        pollingStationContract.setTrigger('VoterAlreadyRecorded', function(e, r) {
+    app.get('/scan/transactions', function (req, res) {
+        pollingStationContract.setTrigger('VoterAlreadyRecorded', function (e, r) {
             console.log(e);
             console.log(r);
         });
-        pollingStationContract.setTrigger('VoterCleared', function(e, r) {
+        pollingStationContract.setTrigger('VoterCleared', function (e, r) {
             console.log(e);
             console.log(r);
         });

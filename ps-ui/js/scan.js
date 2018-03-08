@@ -1,20 +1,34 @@
+
 window.addEventListener('load', function () {
 
-
-
-    let tellers = getTellers();
+    /** 
+     * Used to refresh transactions every 5 seconds from the server.
+    */
+    function loadTransactions() {
+        axios.get(apiEndpoint + '/transaction/list', axiosHeaders)
+            .then(res => {
+                if (res.data) {
+                    for (let i = 0; i < res.data.length; i++) {
+                        vm._data.transactions.push(res.data[i]);
+                    }
+                }
+            });
+    }
 
 
     var vm = new Vue({
         i18n,
         el: '#app',
         data: {
-            paused: false,
             chairman: this.window.localStorage.chairman,
             tellers: getTellers(),
+            transactions: [],
             model: {
                 qrcode: ''
             }
+        },
+        mounted: function () {
+            setInterval(loadTransactions, 15000);
         },
         methods: {
             manualInput: function () {
@@ -35,21 +49,7 @@ window.addEventListener('load', function () {
                     });
             },
             privatePowerOfAttorney: function () {
-                axios.post(apiEndpoint + '/scan/powerofattorney', { type: "private" })
-                    .then(resp => {
-                        vm.$toasted.show(this.$t('message.powerOfAttorneyRegisteredSuccessfully'), {
-                            theme: "outline",
-                            position: "bottom-center",
-                            duration: 3000
-                        });
-                    })
-                    .catch(error => {
-                        this.$toasted.show(error.response.data.message, {
-                            theme: "bubble",
-                            position: "bottom-center",
-                            duration: 3000
-                        });
-                    });
+                
             },
             writtenPowerOfAttorney: function () {
                 axios.post(apiEndpoint + '/scan/powerofattorney', { type: "written" })
@@ -69,7 +69,7 @@ window.addEventListener('load', function () {
                     });
             },
             votersPass: function () {
-                axios.post(apiEndpoint + '/scan/voterspass')
+                axios.post(apiEndpoint + '/scan/voterspass', {}, axiosHeaders)
                     .then(resp => {
                         vm.$toasted.show(this.$t('message.votersPassRegisteredSuccessfyully'), {
                             theme: "outline",
@@ -86,7 +86,7 @@ window.addEventListener('load', function () {
                     });
             },
             objection: function () {
-                axios.post(apiEndpoint + '/scan/objection')
+                axios.post(apiEndpoint + '/scan/objection', {}, axiosHeaders)
                     .then(resp => {
                         vm.$toasted.show(this.$t('message.objectionToPilotRegisteredSuccessfully'), {
                             theme: "outline",
@@ -105,6 +105,7 @@ window.addEventListener('load', function () {
         }
 
     });
+    //vm.$mount('#app');
 
     $(function () {
         $('[data-attorney]').on('click', function () {

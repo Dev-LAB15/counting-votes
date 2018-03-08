@@ -10,7 +10,7 @@ window.addEventListener('load', function () {
             model: { }
         },
         methods: {
-            inputControlNumbers: function (pollingCards, powerOfAttorneys, voterPasses) {
+            inputControlNumbers: function () {
                 axios.post(apiEndpoint + '/verification/inputcontrolnumbers', vm.model, axiosHeaders)
                     .then(resp => {
 

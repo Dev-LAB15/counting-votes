@@ -23,7 +23,7 @@
             z-index: 1;
             width: 50%;
             height: calc(100% - 160px);
-            background: #000;
+            background: #000000;
         }
 
         .result-text {
@@ -59,6 +59,7 @@
 <body>
     <div id="scandit-barcode-picker" class="scanner"></div>
     <div id="scandit-barcode-result" class="result-text"></div>
+    
     <div id="app" class="main scan">
         <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
             <div class="col-md-3">
@@ -91,54 +92,10 @@
 
                     <div class="transactions-list">
                         <ul class="list-unstyled">
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-transactions"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-transactions"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-check"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-check"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-close"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-check"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-check"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-check"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-check"></i>
-                            </li>
-
-                            <li>
-                                <div>0xcffd7b48a95ad85812a1366a5b786d80478569c198ac1fe23994fb5dede004c5</div>
-                                <i class="icon icon-check"></i>
+                            <li v-for="t in transactions">
+                                <div>{{t.transactionHash}}</div>
+                                <i v-if="t.error" class="icon icon-close"></i>
+                                <i v-else class="icon icon-check"></i>
                             </li>
                         </ul>
                     </div>
@@ -336,21 +293,21 @@
                 barcodePicker.applyScanSettings(scanSettings);
                 barcodePicker.onScan(function (scanResult) {
                     document.getElementById("scandit-barcode-result").innerHTML = scanResult.barcodes.reduce(function (string, barcode) {
+
+
+
+
                         var _model = {
                             code: barcode.data
                         }
 
+
                         axios.post(apiEndpoint + '/scan/qrcode', _model, axiosHeaders)
                             .then(resp => {
-                                vm.$toasted.show(this.$t('message.qrCodeScannedSuccessfully'), {
-                                    theme: "outline",
-                                    position: "bottom-center",
-                                    duration: 3000
-                                });
+                                console.log(resp);
                             })
                             .catch(error => {
                                 console.log(error.response);
-                                //TODO fix 403 error accordingly.
                             });
 
                         console.log(barcode.data);

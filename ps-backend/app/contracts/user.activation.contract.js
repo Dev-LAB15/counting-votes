@@ -131,14 +131,11 @@ module.exports.getRoleId = function (email, callback) {
 	userActivation.methods.getRoleId(email).call({ from: config.blockchain.owner.address }, callback);
 }
 
-
 /**
  * Set a trigger to fire uppon an event
  * @param {string} eventName 
  * @param {function(error,result)} callback 
  */
 module.exports.setTrigger = function (eventName, callback) {
-    var event = userActivation.events[eventName](null, {
-        fromBlock: 0,
-    }, callback);
+	userActivation.events[eventName](null, { fromBlock: 0, }, callback);
 }
