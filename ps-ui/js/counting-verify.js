@@ -24,7 +24,10 @@ window.addEventListener('load', function () {
 
                 if (vm.model.recount !== undefined) {
                     if (vm.model.recount) {
-                        window.location = 'counting.html';
+                        axios.post(apiEndpoint + '/verification/recount', vm.model, axiosHeaders)
+                            .then(resp => {
+                                window.location = 'counting.html';
+                            });
                     } else {
                         window.location = 'overview.html';
                     }
@@ -36,10 +39,10 @@ window.addEventListener('load', function () {
                     .then(resp => {
                         vm.model.isVerifying = false;
 
-                        vm.model.yes = resp.yes;
-                        vm.model.no = resp.no;
-                        vm.model.blank = resp.blank;
-                        vm.model.invalid = resp.invalid;
+                        vm.model.yes = resp.data.yes;
+                        vm.model.no = resp.data.no;
+                        vm.model.blank = resp.data.blank;
+                        vm.model.invalid = resp.data.invalid;
                         vm.model.success = true;
 
                         if (!vm.model.yes || !vm.model.no || !vm.model.blank || !vm.model.invalid) {

@@ -31,7 +31,7 @@ module.exports = function (app) {
 
     app.post('/verification/verifyvotes', function (req, res) {
         try {
-            let wallet = config.blockchain.owner;//req.user.wallet;
+            let wallet = req.user.wallet;
             let yesCount = req.body.yesCount;
             let noCount = req.body.noCount;
             let blankCount = req.body.blankCount;
@@ -60,6 +60,23 @@ module.exports = function (app) {
                             res.json(returnModel);
                         }
                     }, 2000);
+                } else {
+                    res.status(502).json();
+                }
+            });
+        } catch (err) {
+            res.status(500).json({ message: 'Internal Server Error.' });
+        }
+
+    });
+
+    app.post('/verification/recount', function (req, res) {
+        try {
+            let wallet = req.user.wallet;
+
+            pollingstationService.recount(wallet, function (data) {
+                if (data.status) {
+                    res.send('Ok');
                 } else {
                     res.status(502).json();
                 }

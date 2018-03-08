@@ -88,6 +88,19 @@ module.exports.verifyVotes = function (wallet, yesCount, noCount, blankCount, in
 
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
 }
+
+/**
+ * Triggers a recount
+ * @param {any} wallet
+ * @param {function(any)} callback
+ */
+module.exports.recount = function (wallet, callback) {
+    let _params = [];
+    let methodName = "recount";
+
+    blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
+}
+
 /**
  * Signs the results
  * @param {any} wallet 

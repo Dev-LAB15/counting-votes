@@ -280,15 +280,20 @@ contract PollingStation is Permissions {
     }
     
     function verifyVotes(uint yesCount, uint noCount, uint blankCount, uint invalidCount) public _verifyRole(Role.Chairman) returns (bool yesVerified, bool noVerified, bool blankVerified, bool invalidVerified) {
+        if (verificationSuccessful) {
+            NotAllowed("Verification already happened and it was successful. Input disregarded.");
+            return (true, true, true, true);
+        }
+        
         if (needsRecount) {
             NotAllowed("Recount necessary before new verification attempt.");
         }
         
-        if (beganCounting) {
-            NotAllowed("Cannot verify before counting began.");
+        if (!beganCounting) {
+            NotAllowed("Counting must begin first.");
         }
         
-        if (!beganCounting || !needsRecount) {
+        if (!beganCounting || needsRecount) {
             VerificationAttempt(false, false, false, false);
             return (false, false, false, false);
         }
