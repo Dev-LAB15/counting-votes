@@ -9,38 +9,6 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="LAB15" />
-    <style>
-        /* body {
-          background-color: black;
-          color: white;
-        } */
-
-        .scanner {
-            position: absolute;
-            top: 160px;
-            left: 0;
-            bottom: 0;
-            z-index: 1;
-            width: 50%;
-            height: calc(100% - 160px);
-            background: #000000;
-        }
-
-        .result-text {
-            position: absolute;
-            bottom: 60px;
-            left: 0px;
-            z-index: 2;
-            width: 50%;
-            text-align: center;
-            font-size: 34px;
-            color: #fff;
-        }
-
-        .scandit-logo {
-            display: none !important;
-        }
-    </style>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -101,8 +69,9 @@
                     </div>
 
                     <div class="vote-options">
-                        <div id="private-power-of-attorney-cancellation" style="display:none">
-                            <button v-on:click="cancelPrivatePowerOfAttorney" class="btn btn-danger btn-lng">{{$t('message.cancel')}}</button>
+                        <div id="private-power-of-attorney-cancellation" class="private-wrapper">
+                            <p>Scan the <strong>{{$t('message.privateAuthorization')}}</strong> code.</p>
+                            <button v-on:click="cancelPrivatePowerOfAttorney" class="btn btn-info">{{$t('message.cancel')}}</button>
                         </div>
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voter-pass">{{$t('message.voterPass')}}</button>
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#power-attorney">{{$t('message.powerOfAttorney')}}</button>

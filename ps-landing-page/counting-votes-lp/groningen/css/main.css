@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *:focus {
   outline: none;
   box-shadow: none; }
@@ -112,22 +113,59 @@ p {
   .form-row > [class*=col-] {
     padding-right: 15px;
     padding-left: 15px; }
+  .form-row.select {
+    position: relative; }
+    .form-row.select:before {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 45px;
+      top: 22px;
+      z-index: -1;
+      font-family: "CV Icons" !important;
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transform: rotate(-90deg); }
+    .form-row.select .form-control:focus {
+      background: transparent; }
 
 .form-control {
   padding: 17px 30px;
   border-radius: 2rem;
   background: none;
   border-color: #D4D4D4;
+  resize: none;
   -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
   transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
   .form-control:focus {
-    box-shadow: none;
-    border-color: #D4D4D4; }
+    border-color: #734FC1;
+    box-shadow: 0 0 0 0.2rem rgba(115, 79, 193, 0.25); }
+
+select option.hide {
+  display: none; }
+select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  min-height: 60px;
+  line-height: 60px;
+  padding-top: 0px;
+  padding-bottom: 0px; }
 
 .page-title {
   padding: 0px;
   margin: 0 0 100px 0;
   border: 0px; }
+  .page-title h5 {
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin: 0; }
 
 #header {
   background: #fff;
@@ -516,6 +554,81 @@ footer {
         -moz-border-radius-bottomleft: 5px;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px; }
+  #fullpage .section.results {
+    padding: 180px 0 100px; }
+    #fullpage .section.results a {
+      color: #000; }
+      #fullpage .section.results a:before {
+        background: #000; }
+    #fullpage .section.results .ps-filter {
+      margin-top: 60px; }
+    #fullpage .section.results .report {
+      border-top: 1px solid #EAEAEA;
+      margin-top: 100px; }
+      #fullpage .section.results .report h2,
+      #fullpage .section.results .report h3 {
+        font-weight: 300;
+        text-transform: none;
+        letter-spacing: 0px;
+        color: #000;
+        margin: 0px;
+        line-height: 25px;
+        vertical-align: middle; }
+      #fullpage .section.results .report h2 {
+        font-size: 30px; }
+      #fullpage .section.results .report .page-title {
+        text-align: center;
+        margin: 100px 0 60px 0; }
+        #fullpage .section.results .report .page-title h5 {
+          color: #734FC1; }
+      #fullpage .section.results .report .row {
+        margin-bottom: 30px; }
+        #fullpage .section.results .report .row:last-child {
+          margin-bottom: 0px; }
+      #fullpage .section.results .report .total {
+        padding-top: 100px; }
+        #fullpage .section.results .report .total h3 {
+          text-align: right; }
+        #fullpage .section.results .report .total .progress {
+          height: 15px;
+          border-radius: 8px;
+          margin: 5px 13px;
+          background: none; }
+          #fullpage .section.results .report .total .progress .progress-bar {
+            border-radius: 8px;
+            min-width: 15px; }
+        #fullpage .section.results .report .total .yes .progress-bar {
+          background: #734FC1; }
+        #fullpage .section.results .report .total .yes h2 {
+          color: #734FC1; }
+        #fullpage .section.results .report .total .no .progress-bar {
+          background: #5BCBC3; }
+        #fullpage .section.results .report .total .no h2 {
+          color: #5BCBC3; }
+        #fullpage .section.results .report .total .blank .progress-bar {
+          background: #0052D0; }
+        #fullpage .section.results .report .total .blank h2 {
+          color: #0052D0; }
+        #fullpage .section.results .report .total .invalid .progress-bar {
+          background: #F3A36C; }
+        #fullpage .section.results .report .total .invalid h2 {
+          color: #F3A36C; }
+      #fullpage .section.results .report .total-bar {
+        padding: 26px 0;
+        border-top: 1px solid #EAEAEA;
+        border-bottom: 1px solid #EAEAEA;
+        margin-top: 100px; }
+        #fullpage .section.results .report .total-bar h2,
+        #fullpage .section.results .report .total-bar h3 {
+          color: #734FC1; }
+        #fullpage .section.results .report .total-bar h3 {
+          text-align: left; }
+      #fullpage .section.results .report .deviation {
+        padding-top: 80px;
+        text-align: center; }
+        #fullpage .section.results .report .deviation .badge strong {
+          margin-right: 15px;
+          font-weight: 400; }
 
 .cv-container {
   width: 100%;
@@ -577,12 +690,21 @@ footer {
     font-size: 16px;
     line-height: 22px; }
 
+  h4 {
+    font-size: 16px; }
+
   p {
     font-size: 15px;
     line-height: 28px; }
 
+  .form-control.form-control-lg {
+    font-size: 15px; }
+
   .page-title {
     margin-bottom: 60px; }
+    .page-title h5 {
+      font-size: 16px;
+      line-height: 22px; }
 
   #header {
     height: 60px; }
@@ -664,6 +786,26 @@ footer {
         padding: 20px; }
     #fullpage .section.faq #accordion .card-body {
       padding: 20px;
-      font-size: 14px; } }
+      font-size: 14px; }
+  #fullpage .section.results {
+    padding: 120px 0px 60px; }
+    #fullpage .section.results > .container {
+      padding-left: 30px;
+      padding-right: 30px; }
+    #fullpage .section.results .ps-filter {
+      margin-top: 30px; }
+    #fullpage .section.results .report {
+      margin-top: 60px; }
+      #fullpage .section.results .report h2 {
+        font-size: 22px; }
+      #fullpage .section.results .report .page-title {
+        margin-top: 60px; }
+      #fullpage .section.results .report .total {
+        padding-top: 60px; }
+        #fullpage .section.results .report .total .progress {
+          margin-left: 0px;
+          margin-right: 0px; }
+      #fullpage .section.results .report .total-bar {
+        margin-top: 60px; } }
 
 /*# sourceMappingURL=main.css.map */

@@ -238,6 +238,7 @@ p {
     padding-bottom: 36px;
     opacity: 0;
     visibility: hidden;
+    -webkit-transform: translate(-50%, 60px);
     transform: translate(-50%, 60px);
     -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
     transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
@@ -246,6 +247,7 @@ p {
     .badge.toast.show {
       opacity: 1;
       visibility: visible;
+      -webkit-transform: -webkit-translate(-50%, 0px);
       transform: translate(-50%, 0px); }
 
 .table {
@@ -675,6 +677,70 @@ footer {
 .mt-5 {
   margin-top: 8rem !important; }
 
+.scanner {
+  width: 50%;
+  height: calc(100% - 160px);
+  background: #000;
+  position: absolute;
+  top: 160px;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  overflow: hidden; }
+  .scanner .scandit-container {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    heighr: 100%;
+    overflow: initial !important; }
+    .scanner .scandit-container:before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      heighr: 100%;
+      border-top: 400px solid rgba(0, 0, 0, 0.6);
+      border-right: 300px solid rgba(0, 0, 0, 0.6);
+      border-bottom: 400px solid rgba(0, 0, 0, 0.6);
+      border-left: 300px solid rgba(0, 0, 0, 0.6); }
+    .scanner .scandit-container:after {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      height: 2px;
+      width: 768px;
+      margin: -1px 0 0 -384px;
+      background: #fff; }
+  .scanner .scandit-video {
+    -o-object-fit: none;
+    object-fit: none; }
+  .scanner .scandit-laser {
+    display: none; }
+
+.result-text {
+  position: absolute;
+  bottom: 60px;
+  left: 0px;
+  z-index: 2;
+  width: 50%;
+  text-align: center;
+  font-size: 34px;
+  color: #fff;
+  display: none; }
+
+.scandit-logo {
+  display: none !important; }
+
 .main.dashboard .section {
   border-right: 1px solid #EAEAEA;
   text-decoration: none;
@@ -751,35 +817,6 @@ footer {
   z-index: 2;
   background: #fff;
   overflow: hidden; }
-.main.scan .camera {
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  border-top: 400px solid rgba(0, 0, 0, 0.6);
-  border-right: 300px solid rgba(0, 0, 0, 0.6);
-  border-bottom: 400px solid rgba(0, 0, 0, 0.6);
-  border-left: 300px solid rgba(0, 0, 0, 0.6);
-  position: absolute;
-  z-index: 2; }
-  .main.scan .camera:before {
-    content: "";
-    height: 2px;
-    width: 768px;
-    margin: -1px 0 0 -384px;
-    background: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%; }
-.main.scan .capture-image {
-  width: 100%;
-  height: 100%;
-  background-position: 50% 50%;
-  position: relative;
-  z-index: 1; }
-  .main.scan .capture-image .qrcode-reader__camera {
-    width: 100%;
-    height: 100%;
-    background: #000; }
 .main.scan .vote-options {
   margin-right: -6px;
   position: absolute;
@@ -787,12 +824,26 @@ footer {
   bottom: -2px;
   left: 0;
   right: 0; }
-  .main.scan .vote-options .btn {
+  .main.scan .vote-options > .btn {
     width: 50%;
     border-radius: 0px;
     float: left;
     margin-top: -2px;
     margin-left: -2px; }
+  .main.scan .vote-options .private-wrapper {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    padding: 70px 60px;
+    background: #fff;
+    border-top: 1px solid #EAEAEA;
+    text-align: center; }
+    .main.scan .vote-options .private-wrapper .btn {
+      margin-top: 10px;
+      float: none; }
 .main.scan .transactions-list {
   position: relative;
   z-index: 1;
@@ -1037,14 +1088,30 @@ footer {
     margin-bottom: 120px; }
 
 #success {
-  background: #734FC1;
-  color: #fff; }
+  background: transparent;
+  color: #fff;
+  -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
+  transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
   #success h1 {
-    font-weight: 400; }
+    font-weight: 400;
+    margin-bottom: 0px; }
   #success .icon {
     font-size: 420px;
     display: block;
-    margin-bottom: 60px; }
+    margin-bottom: 60px;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
+    transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
+    -webkit-transform: scale3d(1.5, 1.5, 1);
+    transform: scale3d(1.5, 1.5, 1); }
+  #success.show {
+    background: #734FC1; }
+    #success.show h1 .icon {
+      opacity: 1;
+      visibility: visible;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1); }
 
 @keyframes menu_items {
   0% {
