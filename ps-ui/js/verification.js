@@ -13,7 +13,7 @@ window.addEventListener('load', function () {
             inputControlNumbers: function () {
                 axios.post(apiEndpoint + '/verification/inputcontrolnumbers', vm.model, axiosHeaders)
                     .then(resp => {
-
+                        window.location = 'counting.html';
                     }
                     ).catch(error => {
 
