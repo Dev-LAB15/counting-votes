@@ -59,7 +59,7 @@
 <body>
     <div id="scandit-barcode-picker" class="scanner"></div>
     <div id="scandit-barcode-result" class="result-text"></div>
-    
+
     <div id="app" class="main scan">
         <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
             <div class="col-md-3">
@@ -101,6 +101,9 @@
                     </div>
 
                     <div class="vote-options">
+                        <div id="private-power-of-attorney-cancellation" style="display:none">
+                            <button v-on:click="cancelPrivatePowerOfAttorney" class="btn btn-danger btn-lng">{{$t('message.cancel')}}</button>
+                        </div>
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voter-pass">{{$t('message.voterPass')}}</button>
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#power-attorney">{{$t('message.powerOfAttorney')}}</button>
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#manual-input">{{$t('message.manualInput')}}</button>
@@ -205,7 +208,7 @@
                                 <div class="col col-lg-12 text-center">
                                     <div class="btn-group-vertical">
                                         <button type="button" class="btn btn-info btn-block" v-on:click="privatePowerOfAttorney" data-attorney="private">{{$t('message.privateAuthorization')}}</button>
-                                        <button type="button" class="btn btn-info btn-block" v-on:click="writtenPowerOfAttorney" data-attorney="written">{{$t('message.writtenAuthorization')}}</button>
+                                        <button type="button" class="btn btn-info btn-block" data-attorney="written">{{$t('message.writtenAuthorization')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -235,10 +238,9 @@
                                 <div class="col col-lg-8 text-center">
                                     <p>do you want to register a
                                         <strong>written authorization</strong>?</p>
-
                                     <div class="btn-group-separated">
                                         <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">no</button>
-                                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">yes</button>
+                                        <button type="button" class="btn btn-primary btn-sm" v-on:click="writtenPowerOfAttorney" data-dismiss="modal">yes</button>
                                     </div>
                                 </div>
                             </div>
@@ -294,22 +296,32 @@
                 barcodePicker.onScan(function (scanResult) {
                     document.getElementById("scandit-barcode-result").innerHTML = scanResult.barcodes.reduce(function (string, barcode) {
 
+                        var postAction;
+                        if (window.powerOfAttorney) {
+                            postAction = '/scan/powerofattorney';
+                        }
+                        else {
+                            postAction = '/scan/qrcode';
+                        }
 
-
-
+                        alert(window.powerOfAttorney);
                         var _model = {
                             code: barcode.data
                         }
 
-
-                        axios.post(apiEndpoint + '/scan/qrcode', _model, axiosHeaders)
+                        axios.post(apiEndpoint + postAction, _model, axiosHeaders)
                             .then(resp => {
                                 console.log(resp);
+                                //must hide the cancellation form
+                                window.powerOfAttorney = false;
+                                $('#private-power-of-attorney-cancellation').hide();
                             })
                             .catch(error => {
                                 console.log(error.response);
+                                //must hide the cancellation form
+                                window.powerOfAttorney = false;
+                                $('#private-power-of-attorney-cancellation').hide();
                             });
-
                         console.log(barcode.data);
                         return string + ScanditSDK.Barcode.Symbology.toHumanizedName(barcode.symbology) + ": " + barcode.data + "<br>";
                     }, "");

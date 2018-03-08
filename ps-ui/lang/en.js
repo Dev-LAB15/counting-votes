@@ -63,7 +63,8 @@ const lang = {
                 verifyingPleaseWait: "verifying, please wait...",
                 recount: "recount",
                 tellers: "tellers",
-                chairman: "chairman"
+                chairman: "chairman",
+                cancel: "cancel"
             }
         }
     }

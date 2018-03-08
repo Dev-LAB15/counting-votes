@@ -1,34 +1,31 @@
-
 window.addEventListener('load', function () {
 
-    /** 
-     * Used to refresh transactions every 5 seconds from the server.
-    */
-    function loadTransactions() {
+    function fetchTransactions() {
         axios.get(apiEndpoint + '/transaction/list', axiosHeaders)
             .then(res => {
-                if (res.data) {
-                    for (let i = 0; i < res.data.length; i++) {
-                        vm._data.transactions.push(res.data[i]);
-                    }
+                for (var i = 0; i < res.data.length; i++) {
+                    vm.transactions.push(res.data[i]);
                 }
             });
     }
 
 
+    let tellers = getTellers();
     var vm = new Vue({
         i18n,
         el: '#app',
         data: {
+            paused: false,
+            powerOfAttorney: false,
+            transactions: [],
             chairman: this.window.localStorage.chairman,
             tellers: getTellers(),
-            transactions: [],
             model: {
                 qrcode: ''
             }
         },
         mounted: function () {
-            setInterval(loadTransactions, 15000);
+            setInterval(fetchTransactions, 15000);
         },
         methods: {
             manualInput: function () {
@@ -48,11 +45,17 @@ window.addEventListener('load', function () {
                         });
                     });
             },
+            cancelPrivatePowerOfAttorney: function () {
+                window.powerOfAttorney = false;
+                $('#private-power-of-attorney-cancellation').hide();
+            },
             privatePowerOfAttorney: function () {
+                window.powerOfAttorney = true;
+                $('#private-power-of-attorney-cancellation').show();
                 
             },
             writtenPowerOfAttorney: function () {
-                axios.post(apiEndpoint + '/scan/powerofattorney', { type: "written" })
+                axios.post(apiEndpoint + '/scan/powerofattorney', {}, axiosHeaders)
                     .then(resp => {
                         vm.$toasted.show(this.$t('message.powerOfAttorneyRegisteredSuccessfully'), {
                             theme: "outline",
@@ -69,7 +72,7 @@ window.addEventListener('load', function () {
                     });
             },
             votersPass: function () {
-                axios.post(apiEndpoint + '/scan/voterspass', {}, axiosHeaders)
+                axios.post(apiEndpoint + '/scan/voterspass')
                     .then(resp => {
                         vm.$toasted.show(this.$t('message.votersPassRegisteredSuccessfyully'), {
                             theme: "outline",
@@ -86,7 +89,7 @@ window.addEventListener('load', function () {
                     });
             },
             objection: function () {
-                axios.post(apiEndpoint + '/scan/objection', {}, axiosHeaders)
+                axios.post(apiEndpoint + '/scan/objection')
                     .then(resp => {
                         vm.$toasted.show(this.$t('message.objectionToPilotRegisteredSuccessfully'), {
                             theme: "outline",
@@ -105,19 +108,19 @@ window.addEventListener('load', function () {
         }
 
     });
-    //vm.$mount('#app');
 
     $(function () {
         $('[data-attorney]').on('click', function () {
             $('#power-attorney .btn-submit').attr('disabled', false);
-
             if ($(this).data('attorney') == 'written') {
-                console.log('written!');
                 $('#power-attorney .btn-submit').attr({ "data-toggle": "modal", "data-target": "#written-authorization" });
             } else {
-                console.log('remove written!');
                 $('#power-attorney .btn-submit').removeAttr("data-toggle data-target");
             }
         });
     });
+
+    $(function () {
+        $('#private-power-of-attorney-cancellation button')
+    })
 })
