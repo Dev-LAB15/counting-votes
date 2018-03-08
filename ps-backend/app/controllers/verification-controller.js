@@ -59,7 +59,7 @@ module.exports = function (app) {
 
                             res.json(returnModel);
                         }
-                    }, 500);
+                    }, 2000);
                 } else {
                     res.status(502).json();
                 }
