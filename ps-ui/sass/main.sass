@@ -54,6 +54,7 @@ strong
 h1
 	font-size: 60px
 	font-weight: 500
+	line-height: 80px
 
 h2
 
@@ -131,14 +132,14 @@ p
 		&:hover,
 		&:active:hover
 			background: none
-			color: $primary
+			color: darkgray
 			text-decoration: none
 
 		&:not(:disabled):not(.disabled):active,
 		&:not(:disabled):not(.disabled).active,
 		.show > &.dropdown-toggle
 			background: none
-			color: $darkgray
+			color: darkgray
 			text-decoration: none
 
 	&.btn-primary
@@ -553,18 +554,28 @@ footer
 		.sidebar-wrapper
 			position: absolute
 			right: 0
+			height: 100%
 
 			.sidebar
+				overflow-y: auto
+				display: block
 				position: relative
 				text-align: center
 				-webkit-transform: translate(25%,0%)
 				transform: translate(25%,0%)
-				transition: -webkit-transform .3s $easing
+				-webkit-transition: -webkit-transform .3s $easing
 				transition: transform .3s $easing
-				transition: transform .3s $easing,-webkit-transform .3s $easing
+
+				.page-title
+					color: $darkgray
+					border-top: 2px solid $lightgray
+
+					&:first-child
+						border-top: 0px
 
 				.teller-list
 					text-align: center
+					margin-bottom: 80px
 
 					li
 						margin-top: 80px
@@ -586,9 +597,14 @@ footer
 								right: -4px
 								width: 50px
 								height: 50px
+								line-height: 42px
+								vertical-align: middle
+								font-size: 20px
+								text-align: center
 								background: $valid
 								border-radius: 50%
 								border: 4px solid $white
+								color: $white
 
 						.name
 							margin-top: 30px
@@ -597,12 +613,49 @@ footer
 						&:first-child
 							margin-top: 0px
 
+			&:before,
+			&:after
+				content: ''
+				width: 100%
+				height: 100px
+				position: absolute
+				left: 2px
+				right: 2px
+				z-index: 2
+
+			&:before
+				top: 0px
+				background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)
+				background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)
+				background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%)
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 )
+
+			&:after
+				bottom: 0px
+				background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)
+				background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%)
+				background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%)
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 )
+
 			&.show
-				position: relative
+				z-index: 120
 
 				.sidebar
 					-webkit-transform: translate(0%,0%)
 					transform: translate(0%,0%)
+
+		.content-wrapper
+			&.show
+				padding-left: 10%
+				padding-right: 10%
+
+		&.counting
+			.content-wrapper
+				padding-top: 10%
+
+		footer
+			-webkit-transition: all .3s $easing
+			transition: all .3s $easing
 
 .sidebar
 	background: $white
@@ -715,6 +768,9 @@ footer
 	vertical-align: middle
 	width: 100%
 	height: 100%
+
+	.page-title
+		padding-top: 0px
 
 .modal
 	.modal-dialog
@@ -1046,6 +1102,24 @@ footer
 					background: $counting
 					border-color: $counting
 
+			&.btn-link
+				color: $counting
+
+				&:hover,
+				&:active:hover
+					color: $darkgray
+
+				&:not(:disabled):not(.disabled):active,
+				&:not(:disabled):not(.disabled).active,
+				.show > &.dropdown-toggle
+					color: $darkgray
+
+		.input-group
+			.form-control
+				+ .input-border
+					&:after
+						background: $counting
+
 		&.verify
 			h3
 				color: $black
@@ -1312,6 +1386,18 @@ footer
 			&:last-child
 				margin-bottom: 120px
 
+#success
+	background: $counting
+	color: $white
+
+	h1
+		font-weight: 400
+
+	.icon
+		font-size: 420px
+		display: block
+		margin-bottom: 60px
+
 @keyframes menu_items
 	0%
 		-webkit-transform: translate(100%,0%)
@@ -1326,6 +1412,15 @@ footer
 		max-width: 1430px
 
 @media (orientation: portrait)
+	.modal
+		.modal-body
+			.col-lg-8
+				-ms-flex: 0 0 100%
+				flex: 0 0 100%
+				max-width: 100%
+				padding-left: 10%
+				padding-right: 10%
+
 	.bg
 		top: 95%
 		right: -15%
@@ -1349,5 +1444,36 @@ footer
 
 			.transactions-list
 				height: 328px
+		
+		&.overview
+			.content-wrapper
+				display: block
+				height: 35%
+				-ms-flex: 0 0 100%
+				flex: 0 0 100%
+				max-width: 100%
+				padding-left: 10%
+				padding-right: 10%
 
-				
+			.sidebar-wrapper
+				display: block
+				bottom: 0
+				height: 65%
+				-ms-flex: 0 0 100%
+				flex: 0 0 100%
+				max-width: 100%
+
+				.sidebar
+					border-left: 0px
+					border-top: 2px solid $lightgray
+					-webkit-transform: translate(0%,25%)
+					transform: translate(0%,25%)
+
+				&.show
+					.sidebar
+						-webkit-transform: translate(0%,0%)
+						transform: translate(0%,0%)
+
+			&.counting
+				.content-wrapper
+					padding-top: 0%

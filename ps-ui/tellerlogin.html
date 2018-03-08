@@ -14,7 +14,6 @@
         crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="sass/main.min.css" />
     <link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
-    <link rel="stylesheet" type="text/css" href="sass/counting.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -37,7 +36,7 @@
                     </a>
                 </div>
 
-                <div class="col-md-6 text-center">
+                <div class="col-md-9 text-right">
                     <span class="signed-user">
                         {{$t("message.chairmanSignedIn")}}
                         <strong>{{chairman}}</strong>
@@ -46,104 +45,30 @@
             </header>
 
             <section class="cv-fullwidth has-header">
-                <div class="row justify-content-md-center">
+                <div class="row justify-content-md-center no-gutters">
                     <div class="col col-lg-8 content-wrapper">
-                        <div class="content">
-                            <div class="page-title">
-                                <h5>{{$t("message.tellerSignIn")}}</h5>
-                            </div>
-                            <div class="input-group mb-5">
-                                <input type="email" v-model="model.email" class="form-control" :placeholder="$t('message.emailAddress')">
-                                <span class="input-border"></span>
-                                <div class="input-group-append">
-                                    <button v-on:click="requestVerificationCode" type="button" class="btn btn-link">{{$t("message.signin")}}
-                                        <i class="icon icon-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="text-center mb-5">
-                                <div class="btn-group-separated">
-                                    <button type="button" v-on:click="toggleSignedInTellers" class="btn btn-info">{{$t("message.signedInTellers")}}</button>
-                                    <button type="button" v-on:click="goToDashboard" class="btn btn-primary">{{$t("message.goToDashBoard")}}</button>
-                                </div>
+                        <div class="page-title">
+                            <h5>{{$t("message.tellerSignIn")}}</h5>
+                        </div>
+                        <div class="input-group mb-5">
+                            <input type="email" v-model="model.email" class="form-control" :placeholder="$t('message.emailAddress')">
+                            <span class="input-border"></span>
+                            <div class="input-group-append">
+                                <button v-on:click="requestVerificationCode" type="button" class="btn btn-link">{{$t("message.signin")}}
+                                    <i class="icon icon-arrow-right"></i>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div id="create-password-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">{{$t('message.twoFactorAuthentication')}}</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container-fluid">
-                                        <form>
-                                            <div class="row justify-content-md-center">
-                                                <div class="col col-lg-8">
-                                                    <div class="input-group mb-5">
-                                                        <input type="password" class="form-control" v-model="model.password" :placeholder="$t('message.enterYourPassword')">
-                                                        <span class="input-border"></span>
-                                                    </div>
-                                                    <div class="input-group mb-5">
-                                                        <input type="password" class="form-control" v-model="model.passwordConfirmation" :placeholder="$t('message.enterYourPasswordConfirmation')">
-                                                        <span class="input-border"></span>
-                                                    </div>
-                                                    <div class="input-group mb-5">
-                                                        <input type="text" class="form-control" v-model="model.code" :placeholder="$t('message.enterYourActivationCode')">
-                                                        <span class="input-border"></span>
-                                                        <div class="input-group-append">
-                                                            <button type="button" v-on:click="requestCreatePassword" class="btn btn-info">
-                                                                {{$t('message.createPassword')}}
-                                                                <i class="icon icon-arrow-right"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="text-center">
+                            <button type="button" v-on:click="goToDashboard" class="btn btn-primary">{{$t("message.goToDashBoard")}}</button>
                         </div>
                     </div>
-                    <div id="sign-in-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">{{$t('message.twoFactorAuthentication')}}</h5>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="container-fluid">
-                                        <form>
-                                            <div class="row justify-content-md-center">
-                                                <div class="col col-lg-8">
-                                                    <div class="input-group mb-5">
-                                                        <input type="password" v-model="model.password" class="form-control" :placeholder="$t('message.enterYourPassword')">
-                                                        <span class="input-border"></span>
-                                                    </div>
-                                                    <div class="input-group mb-5">
-                                                        <input type="text" v-model="model.code" class="form-control" :placeholder="$t('message.enterYourActivationCode')">
-                                                        <span class="input-border"></span>
-                                                        <div class="input-group-append">
-                                                            <button type="button" v-on:click="requestSignIn" class="btn btn-info">
-                                                                {{$t('message.authenticate')}}
-                                                                <i class="icon icon-arrow-right"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     <!-- sidebar -->
                     <div class="col col-lg-4 sidebar-wrapper fade">
                         <aside class="sidebar">
-                            <div class="page-title">
-                                <h5>{{$t('message.signedInTellers')}}</h5>
+                            <div class="page-title page-title-sm">
+                                <h5>{{$t('message.tellers')}}</h5>
                             </div>
                             <ul class="teller-list list-unstyled">
                                 <li v-for="teller in tellers">
@@ -162,6 +87,71 @@
                     </div>
                 </div>
             </section>
+
+            <div id="create-password-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{$t('message.twoFactorAuthentication')}}</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row justify-content-md-center no-gutters">
+                                <div class="col col-lg-8">
+                                    <div class="input-group mb-5">
+                                        <input type="password" class="form-control" v-model="model.password" :placeholder="$t('message.enterYourPassword')">
+                                        <span class="input-border"></span>
+                                    </div>
+                                    <div class="input-group mb-5">
+                                        <input type="password" class="form-control" v-model="model.passwordConfirmation" :placeholder="$t('message.enterYourPasswordConfirmation')">
+                                        <span class="input-border"></span>
+                                    </div>
+                                    <div class="input-group mb-5">
+                                        <input type="text" class="form-control" v-model="model.code" :placeholder="$t('message.enterYourActivationCode')">
+                                        <span class="input-border"></span>
+                                        <div class="input-group-append">
+                                            <button type="button" v-on:click="requestCreatePassword" class="btn btn-link">
+                                                {{$t('message.createPassword')}}
+                                                <i class="icon icon-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sign-in-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{$t('message.twoFactorAuthentication')}}</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row justify-content-md-center no-gutters">
+                                <div class="col col-lg-8">
+                                    <div class="input-group mb-5">
+                                        <input type="password" v-model="model.password" class="form-control" :placeholder="$t('message.enterYourPassword')">
+                                        <span class="input-border"></span>
+                                    </div>
+                                    <div class="input-group mb-5">
+                                        <input type="text" v-model="model.code" class="form-control" :placeholder="$t('message.enterYourActivationCode')">
+                                        <span class="input-border"></span>
+                                        <div class="input-group-append">
+                                            <button type="button" v-on:click="requestSignIn" class="btn btn-link">
+                                                {{$t('message.authenticate')}}
+                                                <i class="icon icon-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /main -->

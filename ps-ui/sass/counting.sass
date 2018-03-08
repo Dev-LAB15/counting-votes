@@ -18,8 +18,8 @@ $path_svg: '../img/svg/'
 $easing: cubic-bezier(0.79, 0.1, 0.18, 0.88)
 
 .animate 
-    -webkit-transition: all .3s $easing
-    transition: all .3s $easing
+    //-webkit-transition: all .3s $easing
+    //transition: all .3s $easing
 
 .grid 
     margin: 0 auto
@@ -95,8 +95,7 @@ $easing: cubic-bezier(0.79, 0.1, 0.18, 0.88)
             cursor: -webkit-grabbing
             cursor: grabbing
 
-        &.highlight 
-            background: red
+        &.highlight
             -webkit-transform: scale3d(1,1,1)
             transform: scale3d(1,1,1)
 

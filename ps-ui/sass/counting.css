@@ -1,8 +1,4 @@
 @charset "UTF-8";
-.animate {
-  -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
-  transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
-
 .grid {
   margin: 0 auto;
   position: relative;
@@ -67,7 +63,6 @@
       cursor: -webkit-grabbing;
       cursor: grabbing; }
     .grid .grid__item.highlight {
-      background: red;
       -webkit-transform: scale3d(1, 1, 1);
       transform: scale3d(1, 1, 1); }
     .grid .grid__item.is-dragging {

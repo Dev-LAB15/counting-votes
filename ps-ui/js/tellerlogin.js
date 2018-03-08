@@ -46,6 +46,7 @@ window.addEventListener('load', function() {
                     addTeller(resp.data.user);
                     vm._data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
+                    $('section > .row').removeClass('justify-content-md-center');
                     $('#create-password-modal').modal('hide');
                 }
                 ).catch(error=>{
@@ -62,6 +63,7 @@ window.addEventListener('load', function() {
                     addTeller(resp.data.user);
                     vm._data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
+                    $('section > .row').removeClass('justify-content-md-center');
                     $('#sign-in-modal').modal('hide');
                 }
                 ).catch(error=>{
@@ -72,14 +74,6 @@ window.addEventListener('load', function() {
                     });
                 }
                 );
-            },
-            toggleSignedInTellers: function(event) {
-                if (!$('.sidebar-wrapper, .content-wrapper').hasClass('show')) {
-                    $('.sidebar-wrapper, .content-wrapper').addClass('show');
-                } else {
-                    $('.sidebar-wrapper, .content-wrapper').removeClass('show');
-                }
-
             },
             goToDashboard: function(event) {
                 window.location = 'dashboard.html';
