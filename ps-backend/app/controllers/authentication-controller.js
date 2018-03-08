@@ -5,8 +5,10 @@ var sha1 = require('sha1');
 var utils = require('../common/utils');
 var users = require('../data/user.data');
 var userService = require('../services/user.service');
-var poillingStationService = require('../services/pollingstation.service');
+var pollingStationService = require('../services/pollingstation.service');
+var pollingStationContract = require('../contracts/polling.station.contract');
 var vcodes = require('../data/verification.code.data');
+
 
 module.exports = function (app) {
 
@@ -108,7 +110,7 @@ module.exports = function (app) {
 						}
 
 						var wallet = userService.getWallet(req.body.email, req.body.password);
-						poillingStationService.signIn(wallet, function (receipt) {
+						pollingStationService.signIn(wallet, function (receipt) {
 							//the signin event is assynchronous
 							//the trigger must be aware when the transaction happens
 						});
@@ -169,7 +171,7 @@ module.exports = function (app) {
 			else {
 				var wallet = userService.getWallet(req.body.email, req.body.password);
 
-				poillingStationService.signIn(wallet, function (receipt) {
+				pollingStationService.signIn(wallet, function (receipt) {
 					//the signin event is assynchronous
 					//the trigger must be aware when the transaction happens
 				});
@@ -203,10 +205,93 @@ module.exports = function (app) {
 			}
 		});
 	});
+
+	/**
+	 * TODO: review signin page
+	 * Allows user signin by providing email, password and verification_code
+	 */
+	app.post('/authentication/signoff', function (req, res) {
+		var explanation = req.body.explanation;
+		if (!req.body.email) {
+			res.status(422).json({
+				message: 'Please inform an email address'
+			})
+			return;
+		}
+
+		if (!validateVerificationCode(req.body.email, req.body.code)) {
+			res.status(422).json({
+				message: "Invalid Verification Code"
+			});
+			return;
+		}
+
+		userService.getUsedEmail(req.body.email, function (err, active) {
+			if (err) {
+				res.status(500).json({ message: err.message });
+				return;
+			}
+			if (!active) {
+				res.status(422).json({
+					message: "Account isn't activated yet, please consider creating a password first"
+				});
+				return;
+			}
+			else {
+				var wallet = userService.getWallet(req.body.email, req.body.password);
+				userService.getRole(wallet, function (err, roleId) {
+					if (err) {
+						res.status(500).json({ message: err.message });
+						return;
+					}
+					if (!roleId || roleId == "0") {
+						res.status(403).json({
+							message: 'Invalid Credentials'
+						});
+					}
+					else {
+						pollingStationService.signOff(wallet, explanation, function (any) {
+							res.send({ message: 'Waiting for sign validation' });
+						});
+					}
+				});
+			}
+		});
+	});
+
+	/**
+	 * Performs a signoff check 
+	 */
+	app.get('/authentication/signoffcheck', function (req, res) {
+		pollingStationContract.getPastEvents(function (err, events) {
+			//the voter events can't exceed a maximum value of 10
+			var signEvents = [];
+			for (let i = 0; i < events.length; i++) {
+				let event = events[i];
+				switch (event.event) {
+					case "StaffSignedOff":
+						signEvents.push({ transactionHash: event.transactionHash, error: false });
+						break;
+					case "VotingFinished":
+						signEvents.push({ transactionHash: event.transactionHash, error: false });
+						break;
+					default:
+						break;
+				}
+			}
+			//reverses the array
+			signEvents.reverse();
+			res.json(signEvents);
+		});
+	});
+
 	/**
 	 * Executes the signout process
 	 */
 	app.get('/authentication/signout', function (req, res) {
+
 		res.send({ ok: "ok" });
 	});
+
+
 }

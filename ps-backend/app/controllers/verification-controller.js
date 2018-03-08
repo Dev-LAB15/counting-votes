@@ -43,9 +43,9 @@ module.exports = function (app) {
                     var transactionReceiptPromise = null;
                     var transactionReceipt = null;
 
-                    var receiptAttempt = setInterval(function() {
+                    var receiptAttempt = setInterval(function () {
                         transactionReceiptPromise = web3.eth.getTransactionReceipt(data.message);
-                        transactionReceiptPromise.then(function(data) {
+                        transactionReceiptPromise.then(function (data) {
                             transactionReceipt = data;
                         });
 

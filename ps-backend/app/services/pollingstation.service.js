@@ -8,7 +8,7 @@ var blockchainService = require('./blockchain.service');
  * @param {{function(any, any)}} callback
  */
 module.exports.recordVoter = function (wallet, qrCodeHash, voterType, callback) {
-    var _params = [{ type: 'bytes32', value: qrCodeHash }, { type: 'uint8', value: voterType }];    
+    var _params = [{ type: 'bytes32', value: qrCodeHash }, { type: 'uint8', value: voterType }];
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, 'recordVoter', _params, callback);
 }
 
@@ -83,8 +83,18 @@ module.exports.inputControlNumbers = function (wallet, pollingCards, powerOfAtto
  * @param {function(any)} callback
  */
 module.exports.verifyVotes = function (wallet, yesCount, noCount, blankCount, invalidCount, callback) {
-    let _params = [{ type: "uint256", value: yesCount }, { type: "uint256", value: noCount}, { type: "uint256", value: blankCount }, { type: "uint256", value: invalidCount }];
+    let _params = [{ type: "uint256", value: yesCount }, { type: "uint256", value: noCount }, { type: "uint256", value: blankCount }, { type: "uint256", value: invalidCount }];
     let methodName = "verifyVotes";
 
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, methodName, _params, callback, "0");
+}
+/**
+ * Signs the results
+ * @param {any} wallet 
+ * @param {string} explanation 
+ * @param {function(any)} callback 
+ */
+module.exports.signOff = function (wallet, explanation, callback) {
+    let _params = [{ type: "string", value: explanation }];
+    blockchainService.executeFunction(wallet, config.addresses.pollingStation, "signOff", _params, callback, "0");
 }
