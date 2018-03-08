@@ -9,6 +9,38 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta name="author" content="LAB15" />
+    <style>
+        /* body {
+          background-color: black;
+          color: white;
+        } */
+
+        .scanner {
+            position: absolute;
+            top: 160px;
+            left: 0;
+            bottom: 0;
+            z-index: 1;
+            width: 50%;
+            height: calc(100% - 160px);
+            background: #000;
+        }
+
+        .result-text {
+            position: absolute;
+            bottom: 60px;
+            left: 0px;
+            z-index: 2;
+            width: 50%;
+            text-align: center;
+            font-size: 34px;
+            color: #fff;
+        }
+
+        .scandit-logo {
+            display: none !important;
+        }
+    </style>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -25,6 +57,8 @@
 </head>
 
 <body>
+    <div id="scandit-barcode-picker" class="scanner"></div>
+    <div id="scandit-barcode-result" class="result-text"></div>
     <div id="app" class="main scan">
         <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
             <div class="col-md-3">
@@ -47,8 +81,7 @@
         <section class="cv-fullwidth has-header">
             <div class="row no-gutters">
                 <div class="col col-lg-6 camera-wrapper">
-                    <div class="camera"></div>
-                    <qrcode-reader @decode="onDecode" class="capture-image"></qrcode-reader>
+
                 </div>
 
                 <div class="col col-lg-6 transactions-wrapper">
@@ -135,7 +168,7 @@
                                         <strong>{{$t('message.voterPass')}}</strong>?</p>
                                     <div class="btn-group-separated">
                                         <button type="button" class="btn btn-info btn-sm" data-dismiss="modal">{{$t('message.no')}}</button>
-                                        <button type="button" class="btn btn-primary btn-sm" v-on:click='votersPass'  data-dismiss="modal">{{$t('message.yes')}}</button>
+                                        <button type="button" class="btn btn-primary btn-sm" v-on:click='votersPass' data-dismiss="modal">{{$t('message.yes')}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +190,7 @@
                         <div class="container-fluid">
                             <div class="row justify-content-md-center">
                                 <div class="col col-lg-8 text-center">
-                                        <p>{{$t('message.doYoutWantToRegister')}}
+                                    <p>{{$t('message.doYoutWantToRegister')}}
                                         <strong>{{$t('message.objectionToPilot')}}</strong>?</p>
 
                                     <div class="btn-group-separated">
@@ -289,11 +322,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!-- /base -->
-
+    <script src="js/scandit.base.min.js"></script>
     <script src="/lang/en.js"></script>
     <script src="/js/config.js"></script>
-    <script src="/js/vue-qrcode-reader.browser.js"></script>
     <script src="/js/scan.js"></script>
+    <script>
+        ScanditSDK.configure("Aa2bzinFMtjDJWNhK0Q3ir8aLxUjNtOu+m+pYGxyADvpVIS96G6K/fMck4oJUEselWOJ6hwmS+Q4H0s26B45Gphd7R8jYao9hj0KGTlqFpzjVRFnazSSgoJ6NicTWANEGH4/nvhW1X1gMVwlfQUNMY5vXpSqxwpqtayXSOcWN1PRxOzjMO3BTy04by0XUq6cXUlaQzDHdI2biD8egNq9zc/F9af9KbO1cc+wR1NT6AmpotTb02nutcf7JFn1lUlr5dlt387XoFE2ZV30Z+alsytCrIpYkaNfts8SWAJGDOGckNkTBRhONNeGq/D3RaXzs774KFa1z0w1zEjLbrY99yvJ/yGwjKNaVygMS01hwUoNeGttgdxbjg2UzU8faXisZQfIIuTS7vUicmTFbW050m4UJaKv9YYoTNMb/qq+4P1vY384K79hpKXm4SBnoNMDDc35L/AguwI6hQRvzpPmKxA1TYx4qPCTlH1jS9pji09xkpTUQWdMBIRaps5aLWpOqVOU5u5gDLZps2zdi8cTYye05qlFzz8aN/RVRr0i1MQ7aMTmWlgwBqsoUBu1X6Gj/C+F8RyZRBUZ/ctZY9SvdDXr3QG6N5k29pMVjJGxfehjVXR/X96s3Z4Z5njyVNSeMus+gAN/N4hULfobPVgHMFNgAio1UfliFYSuydH00m29MkVJUVVohj/2J97DDIvOUJ3kzBLwzcFC2WmgCIka0jn6fzAKgu9l/xw5s9Z8mOFj57p9t9WMpF6CNsVwbHuxXAvmVCmjosRb2c/BEH97jq3ihmjm/466WQi3cAQR2BBoW527eG+tHRgI7bhX/Js=", {
+            engineLocation: "js"
+        });
+        ScanditSDK.BarcodePicker.create(document.getElementById("scandit-barcode-picker"), { playSoundOnScan: true, vibrateOnScan: true })
+            .then(function (barcodePicker) {
+                var scanSettings = new ScanditSDK.ScanSettings({ enabledSymbologies: ["data-matrix",], codeDuplicateFilter: 1000 });
+                barcodePicker.applyScanSettings(scanSettings);
+                barcodePicker.onScan(function (scanResult) {
+                    document.getElementById("scandit-barcode-result").innerHTML = scanResult.barcodes.reduce(function (string, barcode) {
+                        var _model = {
+                            code: barcode.data
+                        }
+
+                        axios.post(apiEndpoint + '/scan/qrcode', _model, axiosHeaders)
+                            .then(resp => {
+                                vm.$toasted.show(this.$t('message.qrCodeScannedSuccessfully'), {
+                                    theme: "outline",
+                                    position: "bottom-center",
+                                    duration: 3000
+                                });
+                            })
+                            .catch(error => {
+                                console.log(error.response);
+                                //TODO fix 403 error accordingly.
+                            });
+
+                        console.log(barcode.data);
+                        return string + ScanditSDK.Barcode.Symbology.toHumanizedName(barcode.symbology) + ": " + barcode.data + "<br>";
+                    }, "");
+                });
+                barcodePicker.onScanError(function (error) {
+                    alert(error.message);
+                });
+            })
+            .catch(function (error) {
+                alert(error);
+            });
+    </script>
 </body>
 
 </html>

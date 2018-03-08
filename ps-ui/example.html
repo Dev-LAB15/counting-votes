@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Scandit Example Page</title>
+  <script src="js/scandit.base.min.js"></script>
+
+  <!-- The following is only an example style for the container element and other demo elements, it's not required -->
+  <style>
+    body {
+      background-color: black;
+      color: white;
+    }
+
+    .scanner {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      max-width: 20%;
+      max-height: 80%;
+    }
+
+    .result-text {
+      padding: 1rem;
+      text-align: center;
+      font-size: 18pt;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="scandit-barcode-picker" class="scanner"></div>
+  <div id="scandit-barcode-result" class="result-text"></div>
+
+  <script>
+    ScanditSDK.configure("Aa2bzinFMtjDJWNhK0Q3ir8aLxUjNtOu+m+pYGxyADvpVIS96G6K/fMck4oJUEselWOJ6hwmS+Q4H0s26B45Gphd7R8jYao9hj0KGTlqFpzjVRFnazSSgoJ6NicTWANEGH4/nvhW1X1gMVwlfQUNMY5vXpSqxwpqtayXSOcWN1PRxOzjMO3BTy04by0XUq6cXUlaQzDHdI2biD8egNq9zc/F9af9KbO1cc+wR1NT6AmpotTb02nutcf7JFn1lUlr5dlt387XoFE2ZV30Z+alsytCrIpYkaNfts8SWAJGDOGckNkTBRhONNeGq/D3RaXzs774KFa1z0w1zEjLbrY99yvJ/yGwjKNaVygMS01hwUoNeGttgdxbjg2UzU8faXisZQfIIuTS7vUicmTFbW050m4UJaKv9YYoTNMb/qq+4P1vY384K79hpKXm4SBnoNMDDc35L/AguwI6hQRvzpPmKxA1TYx4qPCTlH1jS9pji09xkpTUQWdMBIRaps5aLWpOqVOU5u5gDLZps2zdi8cTYye05qlFzz8aN/RVRr0i1MQ7aMTmWlgwBqsoUBu1X6Gj/C+F8RyZRBUZ/ctZY9SvdDXr3QG6N5k29pMVjJGxfehjVXR/X96s3Z4Z5njyVNSeMus+gAN/N4hULfobPVgHMFNgAio1UfliFYSuydH00m29MkVJUVVohj/2J97DDIvOUJ3kzBLwzcFC2WmgCIka0jn6fzAKgu9l/xw5s9Z8mOFj57p9t9WMpF6CNsVwbHuxXAvmVCmjosRb2c/BEH97jq3ihmjm/466WQi3cAQR2BBoW527eG+tHRgI7bhX/Js=", {
+      engineLocation: "js"
+    });
+    ScanditSDK.BarcodePicker.create(document.getElementById("scandit-barcode-picker"), { playSoundOnScan: true, vibrateOnScan: true })
+      .then(function (barcodePicker) {
+        var scanSettings = new ScanditSDK.ScanSettings({ enabledSymbologies: ["data-matrix",], codeDuplicateFilter: 1000 });
+        barcodePicker.applyScanSettings(scanSettings);
+        barcodePicker.onScan(function (scanResult) {
+          document.getElementById("scandit-barcode-result").innerHTML = scanResult.barcodes.reduce(function (string, barcode) {
+            return string + ScanditSDK.Barcode.Symbology.toHumanizedName(barcode.symbology) + ": " + barcode.data + "<br>";
+          }, "");
+        });
+        barcodePicker.onScanError(function (error) {
+          alert(error.message);
+        });
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+  </script>
+</body>
+
+</html>
