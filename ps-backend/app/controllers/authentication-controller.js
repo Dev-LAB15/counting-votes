@@ -110,10 +110,6 @@ module.exports = function (app) {
 						}
 
 						var wallet = userService.getWallet(req.body.email, req.body.password);
-						pollingStationService.signIn(wallet, function (receipt) {
-							//the signin event is assynchronous
-							//the trigger must be aware when the transaction happens
-						});
 
 						var address = wallet.address;
 						//defines the user role and waits for the operation to complete.
@@ -125,6 +121,13 @@ module.exports = function (app) {
 									privateKey: wallet.privateKey
 								}
 							}
+							setTimeout(() => {
+								pollingStationService.signIn(wallet, function (receipt) {
+									//the signin event is assynchronous
+									//the trigger must be aware when the transaction happens
+								});
+							}, 5 * 1000);
+
 							var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
 							res.json({
 								user: user.email,

@@ -38,7 +38,14 @@ window.addEventListener('load', function () {
                         });
                     })
                     .catch(error => {
-                        this.$toasted.show(error.response.data.message, {
+                        var msg;
+                        if (error) {
+                            msg = error.toString();
+                        }
+                        else {
+                            msg = 'unknown error';
+                        }
+                        this.$toasted.show(msg, {
                             theme: "bubble",
                             position: "bottom-center",
                             duration: 3000
@@ -52,7 +59,7 @@ window.addEventListener('load', function () {
             privatePowerOfAttorney: function () {
                 window.powerOfAttorney = true;
                 $('#private-power-of-attorney-cancellation').show();
-                
+
             },
             writtenPowerOfAttorney: function () {
                 axios.post(apiEndpoint + '/scan/powerofattorney', {}, axiosHeaders)
@@ -64,7 +71,14 @@ window.addEventListener('load', function () {
                         });
                     })
                     .catch(error => {
-                        this.$toasted.show(error.response.data.message, {
+                        var msg;
+                        if (error) {
+                            msg = error.toString();
+                        }
+                        else {
+                            msg = 'unknown error';
+                        }
+                        this.$toasted.show(msg, {
                             theme: "bubble",
                             position: "bottom-center",
                             duration: 3000
@@ -81,7 +95,14 @@ window.addEventListener('load', function () {
                         });
                     })
                     .catch(error => {
-                        this.$toasted.show(error.response.data.message, {
+                        var msg;
+                        if (error) {
+                            msg = error.toString();
+                        }
+                        else {
+                            msg = 'unknown error';
+                        }
+                        this.$toasted.show(msg, {
                             theme: "bubble",
                             position: "bottom-center",
                             duration: 3000
@@ -98,7 +119,14 @@ window.addEventListener('load', function () {
                         });
                     })
                     .catch(error => {
-                        this.$toasted.show(error.response.data.message, {
+                        var msg;
+                        if (error) {
+                            msg = error.toString();
+                        }
+                        else {
+                            msg = 'unknown error';
+                        }
+                        this.$toasted.show(msg, {
                             theme: "bubble",
                             position: "bottom-center",
                             duration: 3000

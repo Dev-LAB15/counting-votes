@@ -76,6 +76,7 @@ require('../app/controllers/scan-controller')(app);
 require('../app/controllers/counting-controller')(app);
 require('../app/controllers/verification-controller')(app);
 require('../app/controllers/transaction-controller')(app);
+require('../app/controllers/overview-controller')(app);
 
 require('../app/triggers/municipality.triggers')();
 require('../app/triggers/polling.station.triggers')();
