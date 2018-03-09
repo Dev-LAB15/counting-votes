@@ -10,8 +10,12 @@ module.exports = function () {
         console.log('municipality.sol trigger raised');
         console.log(result);
         var events = ['YesVoted', 'NoVoted', 'InvalidVoted', 'BlankVoted'];
-        if (events.indexOf(result.event) >= 0) {
-            countingData.update(result.transactionHash, 'confirmed', result.signature);
+        try {
+            if (events.indexOf(result.event) >= 0) {
+                countingData.update(result.transactionHash, 'confirmed', result.signature);
+            }
+        } catch (err) {
+
         }
     });
 }
