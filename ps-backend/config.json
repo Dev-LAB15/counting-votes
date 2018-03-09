@@ -19,9 +19,9 @@
         "defaultValueInEther": "10"
     },
     "addresses": {
-        "municipality": "0x3c6084ac04a81d39606936f28ae439750929ae91",
+        "municipality": "0xe644ec3286ca95c6b17fa5d8a57ab1954e3791c5",
         "userActivation": "0x192792337b39077c78f1e620a0643e62f4391a4c",
-        "pollingStation": "0x3a82f361b9c845ac33169d1315e5620c5a1c92fc",
+        "pollingStation": "0xcbcbe460b4b8381e5d42444793d5724499fcd106",
         "pollingStation1": "0xfe164b641252b091ed524dc2d2743d68c0c888ae",
         "pollingStation2": "0xc73d4fd4b5388f3f519a17d5709b6e28a8eb01bb",
         "pollingStation3": "0xf80b744b3e90f41bb2494e450df12f9c1d5a3e25",
