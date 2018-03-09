@@ -34,7 +34,7 @@ module.exports = function (app) {
                 powerOfAttorneyType = 2;
             }
             else {
-                hashedCode = `POWEROFATTORNEY${util.generateCode(15)}`;
+                hashedCode = `POWEROFATTORNEY${util.timestamp()}`;
             }
 
             hashedCode = keccak256(hashedCode);
@@ -51,7 +51,7 @@ module.exports = function (app) {
     app.post('/scan/voterspass', function (req, res) {
         try {
             var wallet = req.user.wallet;
-            var hashedCode = `VOTERPASS${util.generateCode(15)}`;
+            var hashedCode = `VOTERPASS${util.timestamp()}`;
             hashedCode = keccak256(hashedCode);
             hashedCode = `0x${hashedCode}`;
 
@@ -67,7 +67,7 @@ module.exports = function (app) {
     app.post('/scan/objection', function (req, res) {
         try {
             var wallet = req.user.wallet;
-            var hashedCode = `OBJECTION${util.generateCode(15)}`;
+            var hashedCode = `OBJECTION${util.timestamp()}`;
             hashedCode = keccak256(hashedCode);
             hashedCode = `0x${hashedCode}`;
             pollingstationService.recordVoter(wallet, hashedCode, 5, function (result) {
