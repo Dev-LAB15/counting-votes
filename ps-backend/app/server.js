@@ -44,7 +44,9 @@ app.use(function (req, res, next) {
   var anonymousServices = [
     "/authentication/verification",
     "/authentication/createpassword",
-    "/authentication/signin"
+    "/authentication/signin",
+    "/authentication/signofftest",
+    "/authentication/signoff"
   ]
 
   if (anonymousServices.indexOf(req.path) >= 0) {

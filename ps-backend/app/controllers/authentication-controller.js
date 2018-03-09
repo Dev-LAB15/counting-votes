@@ -209,6 +209,22 @@ module.exports = function (app) {
 		});
 	});
 
+	app.post('/authentication/signofftest', function(req, res){
+		if (!req.body.email) {
+			res.status(422).json({
+				message: 'Please inform an email address'
+			})
+			return;
+		}
+		if(!req.body.password){
+			res.status(422).json({
+				message: 'Please inform an email address'
+			})
+			return;
+		}
+		res.json({message: 'ok'});
+	});
+
 	/**
 	 * TODO: review signin page
 	 * Allows user signin by providing email, password and verification_code
@@ -221,14 +237,7 @@ module.exports = function (app) {
 			})
 			return;
 		}
-
-		if (!validateVerificationCode(req.body.email, req.body.code)) {
-			res.status(422).json({
-				message: "Invalid Verification Code"
-			});
-			return;
-		}
-
+		
 		userService.getUsedEmail(req.body.email, function (err, active) {
 			if (err) {
 				res.status(500).json({ message: err.message });

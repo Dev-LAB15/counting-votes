@@ -1,189 +1,200 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>Counting Votes</title>
-        <meta name="description" content="" />
-        <meta name="keywords" content="" />
-        <meta name="author" content="LAB15" />
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-            crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="sass/main.min.css" />
-        <link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Counting Votes</title>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="LAB15" />
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="sass/main.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
             <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-    </head>
+</head>
 
-	<body>
-        <div id="app" class="cv-fullwidth">
-            <div class="main counting overview">
-                <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
-                    <div class="col-md-3">
-                        <a class="nav" href="overview.html">
-                            <i class="icon icon-chevron-left"></i>
-                        </a>
-                    </div>
-        
-                    <div class="col-md-6 text-center">
-                        <h1 class="title">signing off</h1>
-                    </div>
-        
-                    <div class="col-md-3">
-                        <a href="dashboard.html" class="navbar-toggler">
-                            <i class="icon icon-menu"></i>
-                        </a>
-                    </div>
-                </header>
+<body>
+    <div id="app" class="cv-fullwidth">
+        <div class="main counting overview">
+            <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
+                <div class="col-md-3">
+                    <a class="nav" href="overview.html">
+                        <i class="icon icon-chevron-left"></i>
+                    </a>
+                </div>
 
-                <section class="cv-fullwidth has-header">
-                    <div class="row justify-content-md-center no-gutters">
-                        <div class="col col-lg-8 content-wrapper">
-                            <div class="page-title">
-                                <h5>sign off to submit the results</h5>
+                <div class="col-md-6 text-center">
+                    <h1 class="title">signing off</h1>
+                </div>
+
+                <div class="col-md-3">
+                    <a href="dashboard.html" class="navbar-toggler">
+                        <i class="icon icon-menu"></i>
+                    </a>
+                </div>
+            </header>
+
+            <section class="cv-fullwidth has-header">
+                <div class="row justify-content-md-center no-gutters">
+                    <div class="col col-lg-8 content-wrapper">
+                        <div class="page-title">
+                            <h5>sign off to submit the results</h5>
+                        </div>
+
+                        <div class="input-group">
+                            <input type="email" v-model="model.email" class="form-control" placeholder="e-mail address" aria-label="e-mail address">
+                            <span class="input-border"></span>
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#two-auth">sign off
+                                    <i class="icon icon-arrow-right"></i>
+                                </button>
                             </div>
-
-                            <div class="input-group">
-                                <input type="email" class="form-control" placeholder="e-mail address" aria-label="e-mail address">
-                                <span class="input-border"></span>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#two-auth">sign off <i class="icon icon-arrow-right"></i></button>
-                                </div>
-                            </div>
-                        </div><!-- /content -->
-    
-                        <!-- sidebar -->
-                        <div class="col col-lg-4 sidebar-wrapper fade">
-                            <aside class="sidebar">
-                                <div class="page-title page-title-sm">
-                                    <h5>{{$t('message.chairman')}}</h5>
-                                </div>
-    
-                                <ul class="teller-list list-unstyled">
-                                    <li>
-                                        <div class="pic">
-                                            <div class="mask">
-                                                <img src="img/user-pic.png">
-                                            </div>
-                                            <span class="icon">
-                                                <i class="icon icon-check"></i>
-                                            </span>
-                                        </div>
-                                        <span class="name">Donald M. Scott</span>
-                                    </li>
-                                </ul>
-                                
-                                <div class="page-title page-title-sm">
-                                    <h5>{{$t('message.tellers')}}</h5>
-                                </div>
-    
-                                <ul class="teller-list list-unstyled">
-                                    <li>
-                                        <div class="pic">
-                                            <div class="mask">
-                                                <img src="img/user-pic.png">
-                                            </div>
-                                            <span class="icon">
-                                                <i class="icon icon-check"></i>
-                                            </span>
-                                        </div>
-                                        <span class="name">Albert H. Schumann</span>
-                                    </li>
-    
-                                    <li>
-                                        <div class="pic">
-                                            <div class="mask">
-                                                <img src="img/user-pic.png">
-                                            </div>
-                                            <span class="icon">
-                                                <i class="icon icon-check"></i>
-                                            </span>
-                                        </div>
-                                        <span class="name">Robert J. Johnson</span>
-                                    </li>
-    
-                                    <li>
-                                        <div class="pic">
-                                            <div class="mask">
-                                                <img src="img/user-pic.png">
-                                            </div>
-                                            <span class="icon">
-                                                <i class="icon icon-check"></i>
-                                            </span>
-                                        </div>
-                                        <span class="name">Michael S. Scaletti</span>
-                                    </li>
-                                </ul>
-                            </aside>
                         </div>
                     </div>
-                </section>
+                    <!-- /content -->
 
-                <footer class="fade">
-                    <button type="button" class="btn btn-primary btn-block btn-submit" data-toggle="modal" data-target="#success">submit result
-                        <i class="icon icon-arrow-right"></i>
-                    </button>
-                </footer>
-
-                <div class="modal fade" id="two-auth" tabindex="-1" role="dialog" aria-labelledby="TwoFactorAuthentication" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Two-Factor Authentication</h5>
+                    <!-- sidebar -->
+                    <div class="col col-lg-4 sidebar-wrapper fade">
+                        <aside class="sidebar">
+                            <div class="page-title page-title-sm">
+                                <h5>{{$t('message.chairman')}}</h5>
                             </div>
-    
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center no-gutters">
-                                    <div class="col col-lg-8">
-                                        <div class="input-group mb-5">
-                                            <input type="text" class="form-control" placeholder="enter your sign off code" aria-label="enter your sign off code">
-                                            <span class="input-border"></span>
-                                            <div class="input-group-append">
-                                                <button type="button" class="btn btn-link btn-authenticate" data-dismiss="modal">authenticate <i class="icon icon-arrow-right"></i></button>
-                                            </div>
+
+                            <ul class="teller-list list-unstyled">
+                                <li>
+                                    <div class="pic">
+                                        <div class="mask">
+                                            <img src="img/user-pic.png">
+                                        </div>
+                                        <span class="icon">
+                                            <i class="icon icon-check"></i>
+                                        </span>
+                                    </div>
+                                    <span class="name">{{chairman}}</span>
+                                </li>
+                            </ul>
+
+                            <div class="page-title page-title-sm">
+                                <h5>{{$t('message.tellers')}}</h5>
+                            </div>
+
+                            <ul class="teller-list list-unstyled">
+                                <li>
+                                    <div class="pic">
+                                        <div class="mask">
+                                            <img src="img/user-pic.png">
+                                        </div>
+                                        <span class="icon">
+                                            <i class="icon icon-check"></i>
+                                        </span>
+                                    </div>
+                                    <span class="name">Albert H. Schumann</span>
+                                </li>
+
+                                <li>
+                                    <div class="pic">
+                                        <div class="mask">
+                                            <img src="img/user-pic.png">
+                                        </div>
+                                        <span class="icon">
+                                            <i class="icon icon-check"></i>
+                                        </span>
+                                    </div>
+                                    <span class="name">Robert J. Johnson</span>
+                                </li>
+
+                                <li>
+                                    <div class="pic">
+                                        <div class="mask">
+                                            <img src="img/user-pic.png">
+                                        </div>
+                                        <span class="icon">
+                                            <i class="icon icon-check"></i>
+                                        </span>
+                                    </div>
+                                    <span class="name">Michael S. Scaletti</span>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="fade">
+                <button type="button" class="btn btn-primary btn-block btn-submit" data-toggle="modal" data-target="#success">submit result
+                    <i class="icon icon-arrow-right"></i>
+                </button>
+            </footer>
+
+            <div class="modal fade" id="two-auth" tabindex="-1" role="dialog" aria-labelledby="TwoFactorAuthentication" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Password</h5>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row justify-content-md-center no-gutters">
+                                <div class="col col-lg-8">
+                                    <div class="input-group mb-5">
+                                        <input type="password" v-model="model.password" class="form-control" placeholder="enter your password" aria-label="enter your password">
+                                        <span class="input-border"></span>
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-link btn-authenticate" data-dismiss="modal">authenticate
+                                                <i class="icon icon-arrow-right"></i>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div><!-- /modal -->
-
-                <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="success" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                    <div class="modal-dialog cv-fullwidth" role="document">
-                        <div class="cv-vertical-align text-center">
-                            <h1><i class="icon icon-verification"></i>election results<br> succesfully submitted!</h1>
-                        </div>
-                    </div>
-                </div><!-- /modal -->
+                </div>
             </div>
+            <!-- /modal -->
+
+            <div class="modal fade" id="success" tabindex="-1" role="dialog" aria-labelledby="success" aria-hidden="true" data-backdrop="static"
+                data-keyboard="false">
+                <div class="modal-dialog cv-fullwidth" role="document">
+                    <div class="cv-vertical-align text-center">
+                        <h1>
+                            <i class="icon icon-verification"></i>election results
+                            <br> succesfully submitted!</h1>
+                    </div>
+                </div>
+            </div>
+            <!-- /modal -->
         </div>
-        <!-- /main -->
-        
-		<!-- base -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/7.4.2/vue-i18n.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-toasted/1.1.24/vue-toasted.min.js"></script>
+    </div>
+    <!-- /main -->
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
-		<!-- /base -->
+    <!-- base -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/7.4.2/vue-i18n.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-toasted/1.1.24/vue-toasted.min.js"></script>
 
-		<script src="/lang/en.js"></script>
-		<script src="/js/config.js"></script>
-        <script src="/js/signoff.js"></script>
-	</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <!-- /base -->
+
+    <script src="/lang/en.js"></script>
+    <script src="/js/config.js"></script>
+    <script src="/js/signoff.js"></script>
+</body>
 
 </html>
