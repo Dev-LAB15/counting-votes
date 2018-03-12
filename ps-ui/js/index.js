@@ -13,12 +13,11 @@ window.addEventListener('load', function () {
                 password: '',
                 passwordConfirmation: '',
                 code: '',
-                role: 'Chairman'
+                role: '3'
             }
         },
         methods: {
             requestVerification: function (event) {
-
                 if (!vm.model.email || vm.model.email == '') {
                     this.$toasted.show(this.$t('message.errorEmailCannotBeEmpty'), {
                         theme: "bubble",

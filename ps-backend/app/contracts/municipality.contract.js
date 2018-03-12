@@ -423,3 +423,11 @@ module.exports.setTrigger = function (eventName, callback) {
 module.exports.getPastEvents = function (callback) {
     municipality.getPastEvents('allEvents', { fromBlock: 0 }, callback);
 }
+
+/**
+ * Queries for the VoterCleared event for a defined polling card.
+ * @param {function(error, result)} callback 
+ */
+module.exports.getVoterClearedEvents = function (callback) {
+    municipality.getPastEvents('VoterCleared', { fromBlock: 0 }, callback);
+}

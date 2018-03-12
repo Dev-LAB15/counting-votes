@@ -7,7 +7,7 @@ var mnContract = require('../contracts/municipality.contract');
 
 module.exports = function (app) {
     app.get('/transaction/list', function (req, res) {
-        mnContract.getPastEvents(function (err, events) {
+        psContract.getPastEvents(function (err, events) {
             //the voter events can't exceed a maximum value of 10
             var voterEvents = [];
             for (let i = 0; i < events.length; i++) {

@@ -2,6 +2,11 @@ var util = require('../common/utils');
 var keccak256 = require('js-sha3').keccak256;
 var pollingstationService = require('../services/pollingstation.service');
 var pollingStationContract = require('../contracts/polling.station.contract');
+var mnContract = require('../contracts/municipality.contract');
+
+
+
+
 
 
 
@@ -9,13 +14,38 @@ module.exports = function (app) {
     //Registers a Scanned QR Code or Manually Inputed QR Code
     app.post('/scan/qrcode', function (req, res) {
         try {
-            var wallet = req.user.wallet;
-            var hashedCode = keccak256(req.body.code);
-            hashedCode = `0x${hashedCode}`;
-            pollingstationService.recordVoter(wallet, hashedCode.valueOf(), 1, function (result) {
-                res.send('OK');
-            });
 
+            var code = req.body.code;
+            if (!code) {
+                code = req.body.qrcode;
+            }
+
+            var hashedCode = keccak256(code);
+            var wallet = req.user.wallet;
+            hashedCode = `0x${hashedCode}`;
+            mnContract.getVoterClearedEvents(function (error, result) {
+                if (result && result instanceof Array && result.length > 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        if (result[i].returnValues && result[i].returnValues.qrCodeHash) {
+                            if (hashedCode === result[i].returnValues.qrCodeHash) {
+                                try {
+                                    res.status(422).json({ message: 'Polling card already registered!' });
+                                } catch (err) {
+                                    console.log(err);
+                                }
+                            }
+                        }
+                    }
+                }
+                //always record
+                pollingstationService.recordVoter(wallet, hashedCode.valueOf(), 1, function (result) {
+                    try {
+                        res.send('OK');
+                    } catch (err) {
+                        console.log(err);
+                    }
+                });
+            });
         } catch (err) {
             res.status(500).json({ message: 'Internal Server Error' });
         }

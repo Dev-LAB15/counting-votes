@@ -54,7 +54,12 @@ module.exports = function (app) {
 					return;
 				}
 				if (!roleId || roleId == "0") {
-					res.status(403).json({ message: 'Invalid credentials' });
+					res.status(403).json({ message: 'Unauthorized access' });
+					return;
+				}
+
+				if(roleId != req.body.role){
+					res.status(403).json({ message: 'Invalid role or assignment'});
 					return;
 				}
 				var code = utils.generateCode();

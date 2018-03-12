@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
                 password: '',
                 passwordConfirmation: '',
                 code: '',
-                role: 'Teller'
+                role: '4'
             }
         },
         methods: {

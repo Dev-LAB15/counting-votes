@@ -618,9 +618,9 @@ module.exports.setTrigger = function (eventName, callback) {
 }
 
 module.exports.allEvents = function (callback) {
-	pollingStationContract.events.allEvents({ fromBlock: 0 }, callback);
+	pollingStation.events.allEvents({ fromBlock: 0 }, callback);
 }
 
 module.exports.getPastEvents = function (callback) {
-	pollingStationContract.getPastEvents('allEvents', { fromBlock: 0 }, callback);
+	pollingStation.getPastEvents('allEvents', { fromBlock: 0 }, callback);
 }
