@@ -20,9 +20,6 @@ window.addEventListener('load', function () {
 
                     }
                     );
-
-
-                console.log('vote id reached vue vm: ' + voteId);
             }
         }
     });

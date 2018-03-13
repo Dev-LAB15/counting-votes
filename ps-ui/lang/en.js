@@ -65,7 +65,7 @@ const lang = {
                 tellers: "tellers",
                 chairman: "chairman",
                 cancel: "cancel",
-                scan: "Scan was successfull"
+                scanSuccessfull: "Scan was successfull"
             }
         }
     }

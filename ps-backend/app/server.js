@@ -39,6 +39,8 @@ app.jwt = require('jsonwebtoken');
 
 /**
  * Token Protection
+ * This is a persistent solution that keeps track of the transported token
+ * while it's valid through the application process.
  */
 app.use(function (req, res, next) {
   var anonymousServices = [

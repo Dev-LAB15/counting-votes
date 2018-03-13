@@ -111,3 +111,12 @@ module.exports.signOff = function (wallet, explanation, callback) {
     let _params = [{ type: "string", value: explanation }];
     blockchainService.executeFunction(wallet, config.addresses.pollingStation, "signOff", _params, callback, "0");
 }
+/**
+ * Fires the beginVotingSession smart contract funcion in order to enable polling station transactions on
+ * the block.
+ * @param {function(any)} callback 
+ */
+module.exports.beginVotingSession = function (callback) {
+    let _params = [];
+    blockchainService.executeFunction(config.blockchain.owner, config.addresses.pollingStation, "beginVotingSession", _params, callback, "0");
+}

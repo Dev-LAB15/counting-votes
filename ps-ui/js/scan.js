@@ -178,7 +178,7 @@ window.addEventListener('load', function () {
                         }
                         axios.post(apiEndpoint + postAction, _model, axiosHeaders)
                             .then(resp => {
-                                vm.$toasted.show(vm.$t('message.scan'), {
+                                vm.$toasted.show(vm.$t('message.scanSuccessfull'), {
                                     theme: "outline",
                                     position: "bottom-center",
                                     duration: 3000

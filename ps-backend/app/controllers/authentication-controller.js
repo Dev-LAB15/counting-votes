@@ -58,8 +58,8 @@ module.exports = function (app) {
 					return;
 				}
 
-				if(roleId != req.body.role){
-					res.status(403).json({ message: 'Invalid role or assignment'});
+				if (roleId != req.body.role) {
+					res.status(403).json({ message: 'Invalid role or assignment' });
 					return;
 				}
 				var code = utils.generateCode();
@@ -126,12 +126,32 @@ module.exports = function (app) {
 									privateKey: wallet.privateKey
 								}
 							}
+
+							
+							/**
+							 * TODO: Listen to events
+							 * Since there are no events to watch
+							 * we need to rely on the block to wait for the transaction 
+							 * to take place.
+							 * Therefore a setTimeout must be started to countdown 
+							 * for the beginVotingSession.
+							 * After that another setTimeout must take place in order to request the signin.
+							 */
 							setTimeout(() => {
-								pollingStationService.signIn(wallet, function (receipt) {
-									//the signin event is assynchronous
-									//the trigger must be aware when the transaction happens
+								//the begin voting session must be fired by the owner
+								pollingStationService.beginVotingSession(function (receipt) {
+									setTimeout(() => {
+										// after the voting session is fired, we need to make sure the 
+										// chairman sign in is made
+										// a timeout is required to be waiting for that
+										pollingStationService.signIn(wallet, function (receipt) {
+											// the signin event is assynchronous
+											// the trigger must be aware when the transaction happens
+										});
+									}, parseInt(config.maxLedgerShareTimeInSeconds) * 1000);
+
 								});
-							}, 5 * 1000);
+							}, parseInt(config.maxLedgerShareTimeInSeconds) * 1000);
 
 							var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
 							res.json({
@@ -214,20 +234,20 @@ module.exports = function (app) {
 		});
 	});
 
-	app.post('/authentication/signofftest', function(req, res){
+	app.post('/authentication/signofftest', function (req, res) {
 		if (!req.body.email) {
 			res.status(422).json({
 				message: 'Please inform an email address'
 			})
 			return;
 		}
-		if(!req.body.password){
+		if (!req.body.password) {
 			res.status(422).json({
 				message: 'Please inform an email address'
 			})
 			return;
 		}
-		res.json({message: 'ok'});
+		res.json({ message: 'ok' });
 	});
 
 	/**
@@ -242,7 +262,7 @@ module.exports = function (app) {
 			})
 			return;
 		}
-		
+
 		userService.getUsedEmail(req.body.email, function (err, active) {
 			if (err) {
 				res.status(500).json({ message: err.message });

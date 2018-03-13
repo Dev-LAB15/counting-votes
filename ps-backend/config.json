@@ -6,6 +6,7 @@
     "sendGridApiKey": "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",
     "verification_code_characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
     "verification_code_length": 4,
+    "maxLedgerShareTimeInSeconds": 8,
     "secret": "app-secret",
     "port": 3000,
     "tokenExpiration": "14 days",
