@@ -50,6 +50,7 @@ contract PollingStation is Permissions {
     event StaffSignedOff(address staff);
     event VerificationAttempt(bool yes, bool no, bool blank, bool invalid);
     event ControlNumbersAdded(uint256 pollingCards, uint256 powerOfAttorneys, uint256 voterPasses);
+    event VotingSessionBegan(address pollingStation);
     
     function PollingStation(address mAddress, address uacAddress) Permissions(uacAddress) public {
         munContract = Municipality(mAddress);
@@ -198,6 +199,7 @@ contract PollingStation is Permissions {
         votingSessionClosed = false;
         needsRecount = false;
         votingRound++;
+        VotingSessionBegan(this);
     }
     
     function recordVoter(bytes32 qrCodeHash, VoterType voterType) public _verifyRole(Role.Chairman) _noRevote(qrCodeHash) returns(bool) {
