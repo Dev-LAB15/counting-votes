@@ -1,3 +1,4 @@
+var addressConfig = require('../../address.config.json');
 const web3 = require('web3');
 var config = require('../../config.json');
 var blockchainService = require('./blockchain.service');
@@ -59,6 +60,8 @@ exports.getWallet = function (email, password) {
     //sets back the private key to the wallet in case of future uses
     wallet.privateKey = privateKey;
     //captures the address from the wallet
+    //wallet.address = "0xf17f52151EbEF6C7334FAD080c5704D77216b732";
+    //wallet.privateKey = "ae6ae8e5ccbfb04590405997ee2d52d2b330726137b875053c36d94e974d162f";     
     return wallet;
 }
 
@@ -70,5 +73,5 @@ exports.getWallet = function (email, password) {
  */
 exports.setUserRole = function (email, address, callback) {
     let _params = [{ type: "address", value: address }, { type: "string", value: email }];
-    blockchainService.executeFunction(config.blockchain.owner, config.addresses.pollingStation, "setUserRole", _params, callback, config.blockchain.defaultValueInEther);
+    blockchainService.executeFunction(config.blockchain.owner, addressConfig.PollingStation, "setUserRole", _params, callback, config.blockchain.defaultValueInEther);
 }

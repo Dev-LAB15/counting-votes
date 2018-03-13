@@ -3,7 +3,7 @@ let pollingStationContract = require('../contracts/polling.station.contract');
 let decoder = require('abi-decoder');
 let config = require('../../config.json');
 var Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.wsProvider));
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
 decoder.addABI(pollingStationContract.Abi);
 
 

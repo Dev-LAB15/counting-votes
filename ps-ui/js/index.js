@@ -35,7 +35,10 @@ window.addEventListener('load', function () {
                     }
                 }
                 ).catch(error => {
-                    this.$toasted.show(error.response.data.message, {
+                    var msg = 'Unknown error, check if the application is running there is access to the node';
+                    if (error && error.response && error.response.data && error.response.data.message)
+                        msg = error.response.data.message;
+                    this.$toasted.show(msg, {
                         theme: "bubble",
                         position: "bottom-center",
                         duration: 3000
@@ -67,6 +70,7 @@ window.addEventListener('load', function () {
                     );
             },
             requestSignIn: function (event) {
+                               
                 axios.post(apiEndpoint + '/authentication/signin', vm.model)
                     .then(resp => {
                         window.localStorage.chairman = resp.data.user;

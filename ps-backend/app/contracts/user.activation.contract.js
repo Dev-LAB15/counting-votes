@@ -1,111 +1,16 @@
-var Web3 = require('web3');
 var config = require('../../config.json');
-var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.wsProvider));
+var addressConfig = require('../../address.config.json');
+var UserActivationJson = require('./abi/UserActivation.json');
+var Web3 = require('web3');
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
 
 /**
  * ABI for UserActivation Contract.
  * Only able to call readonly methods.
  */
-var UserActivationAbi = [
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "email",
-				"type": "string"
-			},
-			{
-				"name": "assignedUserRole",
-				"type": "uint8"
-			}
-		],
-		"name": "addEmail",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "email",
-				"type": "string"
-			}
-		],
-		"name": "setUsedEmail",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getOwner",
-		"outputs": [
-			{
-				"name": "a",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "email",
-				"type": "string"
-			}
-		],
-		"name": "getUsedEmail",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "email",
-				"type": "string"
-			}
-		],
-		"name": "getRoleId",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint8"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [],
-		"name": "NotAllowed",
-		"type": "event"
-	}
-];
+var UserActivationAbi = UserActivationJson.abi;
 //instance of the contract
-var userActivation = new web3.eth.Contract(UserActivationAbi, config.addresses.userActivation);
+var userActivation = new web3.eth.Contract(UserActivationAbi, addressConfig.UserActivation);
 
 /**
  * Requests information if the getUsedEmail is 

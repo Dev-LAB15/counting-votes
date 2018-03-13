@@ -14,8 +14,9 @@ module.exports = function (app) {
         var option = req.body.option;
         //converted into a callback in case of retrial
         //the timeout enables a single retrial recursively
-        //if the transaction is confirmed the setTimeout is ignored.
-        var recordVote = function (_option, _wallet, _callback) {
+        //if the transaction is confirmed the setTimeout is ignored.     
+        
+        var recordVote = function (_option, _wallet, _callback) {            
             pollingStationService.recordVote(option, wallet, function (data) {
                 countingData.insert({
                     timestamp: utils.timestamp(),

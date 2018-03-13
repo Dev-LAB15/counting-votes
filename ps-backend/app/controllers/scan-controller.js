@@ -39,11 +39,20 @@ module.exports = function (app) {
                 }
                 //always record
                 pollingstationService.recordVoter(wallet, hashedCode.valueOf(), 1, function (result) {
+
                     try {
-                        res.send('OK');
+                        if (result.status) {
+                            res.send('OK');
+                        }
+                        else {
+                            res.status(422).json({ message: result.message.message });
+                        }
+
                     } catch (err) {
                         console.log(err);
                     }
+
+
                 });
             });
         } catch (err) {
@@ -107,16 +116,5 @@ module.exports = function (app) {
         } catch (err) {
             res.status(500).json({ message: 'Internal Server Error' });
         }
-    })
-
-    app.get('/scan/transactions', function (req, res) {
-        pollingStationContract.setTrigger('VoterAlreadyRecorded', function (e, r) {
-            console.log(e);
-            console.log(r);
-        });
-        pollingStationContract.setTrigger('VoterCleared', function (e, r) {
-            console.log(e);
-            console.log(r);
-        });
     })
 }

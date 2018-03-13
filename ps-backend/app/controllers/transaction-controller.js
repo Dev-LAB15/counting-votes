@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 var config = require('../../config.json');
-var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.wsProvider));
+var web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.Provider));
 
 var psContract = require('../contracts/polling.station.contract');
 var mnContract = require('../contracts/municipality.contract');

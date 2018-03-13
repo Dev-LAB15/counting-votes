@@ -2,7 +2,7 @@ var web3raw = require('web3js-raw');
 var config = require('../../config.json');
 var W3JSR = new web3raw();
 
-W3JSR.setProvider(config.blockchain.provider);
+W3JSR.setProvider(config.blockchain.httpProvider);
 /**
  * Executes a raw transaction on the block.
  * @param {{address:string,privateKey:string}} userData 

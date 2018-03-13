@@ -86,7 +86,6 @@ require('../app/triggers/municipality.triggers')();
 require('../app/triggers/polling.station.triggers')();
 require('../app/triggers/user.actionvation.triggers')();
 
-
 //mark the app to use the router 
 app.use('', app.appRouter);
 //start app on the configured port

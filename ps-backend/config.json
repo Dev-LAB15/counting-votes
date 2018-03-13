@@ -1,6 +1,6 @@
 {
     "enableSecurityToken": true,
-    "useVerificationCode": true,
+    "useVerificationCode": false,
     "sendGridEmailFrom": "no-reply@lab15.io",
     "sendGridEmailFromName": "LAB15 - Counting Votes Verification Services",
     "sendGridApiKey": "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",
@@ -11,11 +11,11 @@
     "port": 3000,
     "tokenExpiration": "14 days",
     "blockchain": {
-        "provider": "http://104.40.190.151:8545",
-        "wsProvider": "ws://104.40.190.151:8546",
+        "provider": "ws://127.0.0.1:8545",
+        "httpProvider": "http://127.0.0.1:8545",
         "owner": {
-            "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
-            "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"
+            "address": "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+            "privateKey": "c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3"
         },
         "defaultValueInEther": "10"
     },

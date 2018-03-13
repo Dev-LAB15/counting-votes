@@ -30,7 +30,7 @@ contract Permissions {
     event UserAdded(Role role);
     event UserCreationFailed(address uAddress, string email);
     event NotAllowed(string message);
-    
+   
     function Permissions(address userActivationAddress) public {
         owner = msg.sender;
         userActivationContract = UserActivation(userActivationAddress);

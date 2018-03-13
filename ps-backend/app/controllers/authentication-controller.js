@@ -119,6 +119,10 @@ module.exports = function (app) {
 						var address = wallet.address;
 						//defines the user role and waits for the operation to complete.
 						userService.setUserRole(req.body.email, address, function (data) {
+							if (!data.status) {
+								res.status(422).json({ message: data.message.stack });
+								return;
+							}
 							var user = {
 								email: req.body.email,
 								wallet: {
@@ -127,37 +131,40 @@ module.exports = function (app) {
 								}
 							}
 
-							
-							/**
-							 * TODO: Listen to events
-							 * Since there are no events to watch
-							 * we need to rely on the block to wait for the transaction 
-							 * to take place.
-							 * Therefore a setTimeout must be started to countdown 
-							 * for the beginVotingSession.
-							 * After that another setTimeout must take place in order to request the signin.
-							 */
-							setTimeout(() => {
-								//the begin voting session must be fired by the owner
-								pollingStationService.beginVotingSession(function (receipt) {
-									setTimeout(() => {
-										// after the voting session is fired, we need to make sure the 
-										// chairman sign in is made
-										// a timeout is required to be waiting for that
-										pollingStationService.signIn(wallet, function (receipt) {
-											// the signin event is assynchronous
-											// the trigger must be aware when the transaction happens
-										});
-									}, parseInt(config.maxLedgerShareTimeInSeconds) * 1000);
+							pollingStationService.beginVotingSession(function (receipt) {
 
-								});
-							}, parseInt(config.maxLedgerShareTimeInSeconds) * 1000);
-
-							var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
-							res.json({
-								user: user.email,
-								token: token
 							});
+
+							var signInDel = function () {
+
+								pollingStationService.getSignedInEvent(function (err, sngEvt) {
+									if (sngEvt && sngEvt instanceof Array && sngEvt.length > 0) {
+										var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
+										res.json({
+											user: user.email,
+											token: token
+										});
+									}
+									else {
+										signInDel();
+									}
+								});
+							}
+
+							var beginVotingSessionDel = function () {
+								pollingStationService.getVotingSessionBeganEvent(function (err, vsbEvt) {
+									if (vsbEvt && vsbEvt instanceof Array && vsbEvt.length > 0) {
+										pollingStationService.signIn(wallet, function (receipt) {
+
+										});
+										signInDel();
+									}
+									else {
+										beginVotingSessionDel();
+									}
+								});
+							}
+							beginVotingSessionDel();
 						});
 					}
 				});
@@ -200,8 +207,7 @@ module.exports = function (app) {
 				var wallet = userService.getWallet(req.body.email, req.body.password);
 
 				pollingStationService.signIn(wallet, function (receipt) {
-					//the signin event is assynchronous
-					//the trigger must be aware when the transaction happens
+
 				});
 
 				userService.getRole(wallet, function (err, roleId) {
