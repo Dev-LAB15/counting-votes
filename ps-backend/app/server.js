@@ -26,16 +26,16 @@ app.appRouter = express.Router();
 app.jwt = require('jsonwebtoken');
 
 
-
-// //simple cors headers
-// app.use(function (req, res, next) {
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
-// //  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-// //  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
-// //  res.setHeader('Access-Control-Allow-Credentials', true);
-//   next();
-// });
-
+/**
+ * This request pipe will restablish connections to the contracts in case the connection
+ * is lost by a node sleeping or timeout  request.
+ */
+app.use(function (req, res, next) {
+  require('./contracts/user.activation.contract').reconnect();
+  require('./contracts/municipality.contract').reconnect();
+  require('./contracts/polling.station.contract').reconnect();
+  next();
+})
 
 /**
  * Token Protection

@@ -65,7 +65,15 @@ const lang = {
                 tellers: "tellers",
                 chairman: "chairman",
                 cancel: "cancel",
-                scanSuccessfull: "Scan was successfull"
+                scanSuccessfull: "Scan was successfull",
+                unknownError: "Unknown error",
+                electionResults: "election results",
+                sucessfullySubmited: "successfully submitted!",
+                signingOff: "signing off",
+                signOffToSubmitResults: "sign off to submit the results",
+                signOff:"sign off",
+                submitResult: "submit result",
+                deviationExplanation: "deviation explanation"
             }
         }
     }

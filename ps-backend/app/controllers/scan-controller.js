@@ -1,13 +1,7 @@
 var util = require('../common/utils');
 var keccak256 = require('js-sha3').keccak256;
 var pollingstationService = require('../services/pollingstation.service');
-var pollingStationContract = require('../contracts/polling.station.contract');
 var mnContract = require('../contracts/municipality.contract');
-
-
-
-
-
 
 
 module.exports = function (app) {

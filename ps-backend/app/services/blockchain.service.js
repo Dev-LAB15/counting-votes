@@ -1,8 +1,5 @@
 var web3raw = require('web3js-raw');
 var config = require('../../config.json');
-var W3JSR = new web3raw();
-
-W3JSR.setProvider(config.blockchain.httpProvider);
 /**
  * Executes a raw transaction on the block.
  * @param {{address:string,privateKey:string}} userData 
@@ -13,6 +10,9 @@ W3JSR.setProvider(config.blockchain.httpProvider);
  * @param {string} valueInEther
  */
 module.exports.executeFunction = function (userData, contractAddress, functionName, params, callback, valueInEther) {
+    //avoid leak
+    var W3JSR = new web3raw();
+    W3JSR.setProvider(config.blockchain.httpProvider);
     var privateKey = new Buffer(userData.privateKey, 'hex');
     var types = [];
     var args = [];

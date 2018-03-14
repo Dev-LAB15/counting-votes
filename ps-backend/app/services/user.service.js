@@ -1,6 +1,5 @@
-var addressConfig = require('../../address.config.json');
-const web3 = require('web3');
 var config = require('../../config.json');
+var addressConfig = require('../../address.config.json');
 var blockchainService = require('./blockchain.service');
 var contract = require('../contracts/user.activation.contract');
 var pollingStationContract = require('../contracts/polling.station.contract');
@@ -8,12 +7,13 @@ var crypto = require('crypto');
 var ethwallet = require('ethereumjs-wallet');
 
 /**
- * Verifies the role of a user on the block.
- * @param {any} wallet
- * @param {function(any)} callback 
+ * Requests the contract if the email is registered.
+ * @param {string} email 
+ * @param {function(error, boolean)} callback 
+ * @returns {void}
  */
-exports.getRole = function (wallet, callback) {
-    pollingStationContract.getRole(wallet.address, callback);
+exports.getUsedEmail = function (email, callback) {
+    contract.getUsedEmail(email, callback);
 }
 
 /**
@@ -30,15 +30,18 @@ exports.getRole = function (wallet, callback) {
 exports.getRoleId = function (email, callback) {
     contract.getRoleId(email, callback);
 }
+
 /**
- * Requests the contract if the email is registered.
- * @param {string} email 
- * @param {function(error, boolean)} callback 
- * @returns {void}
+ * Verifies the role of a user on the block.
+ * @param {any} wallet
+ * @param {function(any)} callback 
  */
-exports.getUsedEmail = function (email, callback) {
-    contract.getUsedEmail(email, callback);
+exports.getRole = function (wallet, callback) {
+    pollingStationContract.getRole(wallet.address, callback);
 }
+
+
+
 /**
  * Generates an Ethereum wallet for the user based on the email and password.
  * @param {string } email 

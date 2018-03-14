@@ -34,7 +34,7 @@
                 </div>
 
                 <div class="col-md-6 text-center">
-                    <h1 class="title">signing off</h1>
+                    <h1 class="title">{{$t('message.signingOff')}}</h1>
                 </div>
 
                 <div class="col-md-3">
@@ -48,18 +48,24 @@
                 <div class="row justify-content-md-center no-gutters">
                     <div class="col col-lg-8 content-wrapper">
                         <div class="page-title">
-                            <h5>sign off to submit the results</h5>
+                            <h5>{{$t('message.signOffToSubmitResults')}}</h5>
                         </div>
 
+                        <div id="deviationExplanation" class="input-group" style="display:none">
+                            <input type="text" v-model="model.explanation" class="form-control" :placeholder="$t('message.deviationExplanation')">
+                            <span class="input-border"></span>
+                        </div>
+                        
                         <div class="input-group">
-                            <input type="email" v-model="model.email" class="form-control" placeholder="e-mail address" aria-label="e-mail address">
+                            <input type="email" v-model="model.email" class="form-control" :placeholder="$t('message.emailAddress')" aria-label="e-mail address">
                             <span class="input-border"></span>
                             <div class="input-group-append">
-                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#two-auth">sign off
+                                <button type="button" class="btn btn-link" data-toggle="modal" data-target="#two-auth">{{$t('message.signOff')}}
                                     <i class="icon icon-arrow-right"></i>
                                 </button>
                             </div>
                         </div>
+
                     </div>
                     <!-- /content -->
 
@@ -89,7 +95,7 @@
                             </div>
 
                             <ul class="teller-list list-unstyled">
-                                <li>
+                                <li v-for="item in tellers">
                                     <div class="pic">
                                         <div class="mask">
                                             <img src="img/user-pic.png">
@@ -98,31 +104,7 @@
                                             <i class="icon icon-check"></i>
                                         </span>
                                     </div>
-                                    <span class="name">Albert H. Schumann</span>
-                                </li>
-
-                                <li>
-                                    <div class="pic">
-                                        <div class="mask">
-                                            <img src="img/user-pic.png">
-                                        </div>
-                                        <span class="icon">
-                                            <i class="icon icon-check"></i>
-                                        </span>
-                                    </div>
-                                    <span class="name">Robert J. Johnson</span>
-                                </li>
-
-                                <li>
-                                    <div class="pic">
-                                        <div class="mask">
-                                            <img src="img/user-pic.png">
-                                        </div>
-                                        <span class="icon">
-                                            <i class="icon icon-check"></i>
-                                        </span>
-                                    </div>
-                                    <span class="name">Michael S. Scaletti</span>
+                                    <span class="name">{{item}}</span>
                                 </li>
                             </ul>
                         </aside>
@@ -131,7 +113,7 @@
             </section>
 
             <footer class="fade">
-                <button type="button" class="btn btn-primary btn-block btn-submit" data-toggle="modal" data-target="#success">submit result
+                <button type="button" class="btn btn-primary btn-block btn-submit" v-on:click="canSubmit">{{$t('message.submitResult')}}
                     <i class="icon icon-arrow-right"></i>
                 </button>
             </footer>
@@ -140,7 +122,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Password</h5>
+                            <h5 class="modal-title">{{$t('message.enterYourPassword')}}</h5>
                         </div>
 
                         <div class="modal-body">
@@ -150,7 +132,7 @@
                                         <input type="password" v-model="model.password" class="form-control" placeholder="enter your password" aria-label="enter your password">
                                         <span class="input-border"></span>
                                         <div class="input-group-append">
-                                            <button type="button" class="btn btn-link btn-authenticate" data-dismiss="modal">authenticate
+                                            <button type="button" class="btn btn-link btn-authenticate" data-dismiss="modal">{{$t('message.authenticate')}}
                                                 <i class="icon icon-arrow-right"></i>
                                             </button>
                                         </div>
@@ -168,8 +150,9 @@
                 <div class="modal-dialog cv-fullwidth" role="document">
                     <div class="cv-vertical-align text-center">
                         <h1>
-                            <i class="icon icon-verification"></i>election results
-                            <br> succesfully submitted!</h1>
+                            <i class="icon icon-verification"></i>{{$t('message.electionResults')}}
+                            <br>{{$t('message.sucessfullySubmited')}}
+                        </h1>
                     </div>
                 </div>
             </div>

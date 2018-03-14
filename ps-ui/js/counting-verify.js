@@ -5,16 +5,16 @@ window.addEventListener('load', function () {
         data: {
             chairman: this.window.localStorage.chairman,
             tellers: getTellers(),
-            model: { 
+            model: {
                 isVerifying: false,
                 empty: true,
                 success: false,
                 message: ''
             }
         },
-        mounted: function() {
+        mounted: function () {
             if (vm) {
-                vm.model.message =  this.$t('message.verify');
+                vm.model.message = this.$t('message.verify');
             }
         },
         methods: {
@@ -38,18 +38,19 @@ window.addEventListener('load', function () {
                 axios.post(apiEndpoint + '/verification/verifyvotes', vm.model, axiosHeaders)
                     .then(resp => {
                         vm.model.isVerifying = false;
-
                         vm.model.yes = resp.data.yes;
                         vm.model.no = resp.data.no;
                         vm.model.blank = resp.data.blank;
                         vm.model.invalid = resp.data.invalid;
-                        vm.model.success = true;
+                        vm.model.success = resp.data.success;
+                        vm.model.recount = resp.data.needsRecount;
 
-                        if (!vm.model.yes || !vm.model.no || !vm.model.blank || !vm.model.invalid) {
+
+                        if (resp.data.needsRecount) {
                             vm.model.recount = true;
                             vm.model.message = this.$t('message.recount');
                         } else {
-                            vm.model.message = this.$t('message.continue');
+                            vm.model.message = resp.data.message;
                             vm.model.recount = false;
                         }
                     }

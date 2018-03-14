@@ -132,6 +132,47 @@ module.exports.getVotingSessionBeganEvent = function (callback) {
  * Captures the UserSignedIn event
  * @param {function(error,any)} callback 
  */
-module.exports.getSignedInEvent = function(callback){
+module.exports.getSignedInEvent = function (callback) {
     contract.getSignedInEvent(callback);
+}
+
+/**
+ * Watches the ControlNumbersAdded event when it happens.
+ * @param {function(error, any)} callback 
+ */
+module.exports.getControlNumbersAddedEvent = function (callback) {
+    contract.getControlNumbersAddedEvent(callback);
+}
+/**
+ * Watches the vote event for any kind of vote
+ */
+module.exports.getVoteCountedEvent = function (callback) {
+    contract.getVoteCountedEvent(callback);
+}
+
+module.exports.getUserAddedEvent = function (callback) {
+    contract.getUserAddedEvent(callback);
+}
+/**
+ * Get the ammount of signed in tellers from the polling station
+ * @param {function(any, number)} callback 
+ */
+module.exports.getSignedInTellers = function (callback) {
+    contract.getSignedInTellers(callback);
+}
+
+module.exports.getVerificationDoneEvent = function (callback) {
+    contract.getVerificationDoneEvent(callback);
+}
+
+module.exports.getSignedOffEvent = function (callback) {
+    contract.getSignedOffEvent(callback);
+}
+
+module.exports.canSubmit = function (callback) {
+    contract.canSubmit(callback);
+}
+
+module.exports.getDeviation = function (callback) {
+    contract.getDeviation(callback);
 }

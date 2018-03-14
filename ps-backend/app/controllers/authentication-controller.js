@@ -9,7 +9,6 @@ var pollingStationService = require('../services/pollingstation.service');
 var pollingStationContract = require('../contracts/polling.station.contract');
 var vcodes = require('../data/verification.code.data');
 
-
 module.exports = function (app) {
 
 	/**
@@ -39,6 +38,10 @@ module.exports = function (app) {
 	 * TODO: remove LokiJS and add blockchain signin.
 	 */
 	app.post('/authentication/verification', function (req, res) {
+		if (!app.config.useVerificationCode) {
+			res.json({ message: 'Verification Code is Inactive' });
+			return;
+		}
 		if (!req.body.email || req.body.email == '') {
 			res.status(422).json({ message: "Email can't be empty" });
 			return;
@@ -92,7 +95,6 @@ module.exports = function (app) {
 						});
 					}
 					else {
-
 						if (!validateVerificationCode(req.body.email, req.body.code)) {
 							res.status(422).json({
 								message: "Invalid Verification Code"
@@ -114,57 +116,86 @@ module.exports = function (app) {
 							return;
 						}
 
-						var wallet = userService.getWallet(req.body.email, req.body.password);
-
-						var address = wallet.address;
-						//defines the user role and waits for the operation to complete.
-						userService.setUserRole(req.body.email, address, function (data) {
-							if (!data.status) {
-								res.status(422).json({ message: data.message.stack });
-								return;
-							}
-							var user = {
-								email: req.body.email,
-								wallet: {
-									address: wallet.address,
-									privateKey: wallet.privateKey
+						var getSignedInEvent = function (receipt) {
+							pollingStationService.getSignedInEvent(function (err, userSignedInEvent) {
+								var signedInConfirmed = false;
+								if (userSignedInEvent && userSignedInEvent instanceof Array && userSignedInEvent.length > 0) {
+									for (let i = 0; i < userSignedInEvent.length; i++) {
+										if (userSignedInEvent[i].transactionHash == receipt) {
+											signedInConfirmed = true;
+										}
+									}
 								}
-							}
-
-							pollingStationService.beginVotingSession(function (receipt) {
-
+								if (!signedInConfirmed) {
+									getSignedInEvent(receipt);
+								} else {
+									var user = {
+										email: req.body.email,
+										wallet: {
+											address: wallet.address,
+											privateKey: wallet.privateKey
+										}
+									}
+									var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
+									res.json({
+										success: true,
+										user: user.email,
+										token: token
+									});
+								}
 							});
+						}
 
-							var signInDel = function () {
+						var getVotingSessionBeganEvent = function (receipt) {
+							pollingStationService.getVotingSessionBeganEvent(function (err, votingSessionBeganEvent) {
+								if (votingSessionBeganEvent && votingSessionBeganEvent instanceof Array && votingSessionBeganEvent.length > 0) {
+									pollingStationService.signIn(wallet, function (signInReceipt) {
+										getSignedInEvent(signInReceipt.message);
+									});
+								}
+								else {
+									getVotingSessionBeganEvent();
+								}
+							});
+						}
 
-								pollingStationService.getSignedInEvent(function (err, sngEvt) {
-									if (sngEvt && sngEvt instanceof Array && sngEvt.length > 0) {
-										var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
-										res.json({
-											user: user.email,
-											token: token
-										});
+						var getUserAddedEvent = function (receipt) {
+							pollingStationService.getUserAddedEvent(function (err, userAddedEvent) {
+								let confirmed = false;
+								if (userAddedEvent && userAddedEvent instanceof Array && userAddedEvent.length > 0) {
+									for (var i = 0; i < userAddedEvent.length; i++) {
+										let event = userAddedEvent[i];
+										if (event.transactionHash === receipt) {
+											confirmed = true;
+										}
+									}
+									if (!confirmed) {
+										getUserAddedEvent(receipt);
 									}
 									else {
-										signInDel();
+										if (req.body.role == '3') {
+											pollingStationService.beginVotingSession(function (beginVotingSessionReceipt) {
+												getVotingSessionBeganEvent(beginVotingSessionReceipt.message);
+											});
+										} else {
+											pollingStationService.signIn(wallet, function (signInReceipt) {
+												getSignedInEvent(signInReceipt.message);
+											});
+										}
 									}
-								});
-							}
 
-							var beginVotingSessionDel = function () {
-								pollingStationService.getVotingSessionBeganEvent(function (err, vsbEvt) {
-									if (vsbEvt && vsbEvt instanceof Array && vsbEvt.length > 0) {
-										pollingStationService.signIn(wallet, function (receipt) {
+								}
+							});
+						}
 
-										});
-										signInDel();
-									}
-									else {
-										beginVotingSessionDel();
-									}
-								});
+						var wallet = userService.getWallet(req.body.email, req.body.password);
+						userService.setUserRole(req.body.email, wallet.address, function (setUserRoleReceipt) {
+							if (!setUserRoleReceipt.status) {
+								res.status(422).json({ message: userRoleReceipt.message.stack });
+								return;
+							} else {
+								getUserAddedEvent(setUserRoleReceipt.message);
 							}
-							beginVotingSessionDel();
 						});
 					}
 				});
@@ -261,7 +292,7 @@ module.exports = function (app) {
 	 * Allows user signin by providing email, password and verification_code
 	 */
 	app.post('/authentication/signoff', function (req, res) {
-		var explanation = req.body.explanation;
+		var explanation = req.body.explanation || "";
 		if (!req.body.email) {
 			res.status(422).json({
 				message: 'Please inform an email address'
@@ -293,11 +324,55 @@ module.exports = function (app) {
 						});
 					}
 					else {
-						pollingStationService.signOff(wallet, explanation, function (any) {
-							res.send({ message: 'Waiting for sign validation' });
+
+						var getSignedOffEvent = function (receipt) {
+							pollingStationService.getSignedOffEvent(function (error, signedOffEvents) {
+								var confirmed = false;
+								var result = null;
+								if (signedOffEvents && signedOffEvents instanceof Array && signedOffEvents.length > 0) {
+									for (let i = 0; i < signedOffEvents.length; i++) {
+										if (signedOffEvents[i].transactionHash == receipt) {
+											confirmed = true;
+											result = signedOffEvents[i];
+										}
+									}
+								}
+								if (!confirmed) {
+									getSignedOffEvent(receipt);
+								}
+								else {
+									if (result.returnValues.success) {
+										res.send(result.returnValues);
+									} else {
+										res.status(422).json({ message: result.returnValues.message });
+									}
+								}
+							});
+						}
+
+						pollingStationService.signOff(wallet, explanation, function (signOffReceipt) {
+							if (signOffReceipt.status) {
+								getSignedOffEvent(signOffReceipt.message);
+							}
+							else {
+								res.status(422).json({ message: signOffReceipt.message });
+							}
 						});
 					}
 				});
+			}
+		});
+	});
+
+	/**
+	 * Submit to finish the voting session.
+	 */
+	app.get('/authentication/submit', function (req, res) {
+		pollingStationService.canSubmit(function (err, result) {
+			if (result) {
+				res.send('ok');
+			} else {
+				res.status(422).json({ message: 'All members must sign off in order to finish the voting session.' });
 			}
 		});
 	});

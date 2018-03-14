@@ -14,21 +14,10 @@
         "provider": "ws://127.0.0.1:8545",
         "httpProvider": "http://127.0.0.1:8545",
         "owner": {
-            "address": "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-            "privateKey": "c87509a1c067bbde78beb793e6fa76530b6382a4c0241e5e4a9ec0a0f44dc0d3"
+            "address": "0x70c0D1904aa32a40d146c9C45a7CB883ea7fE84C",
+            "privateKey": "8115bf21f49fd36bd384827a830e843c9b4951dd663d9f60196a3bbea2237619"
         },
         "defaultValueInEther": "10"
-    },
-    "addresses": {
-        "municipality": "0xe644ec3286ca95c6b17fa5d8a57ab1954e3791c5",
-        "userActivation": "0x192792337b39077c78f1e620a0643e62f4391a4c",
-        "pollingStation": "0xcbcbe460b4b8381e5d42444793d5724499fcd106",
-        "pollingStation1": "0xfe164b641252b091ed524dc2d2743d68c0c888ae",
-        "pollingStation2": "0xc73d4fd4b5388f3f519a17d5709b6e28a8eb01bb",
-        "pollingStation3": "0xf80b744b3e90f41bb2494e450df12f9c1d5a3e25",
-        "pollingStation4": "0x5109b3c661abe1c30fdf08e9026f42d0de8b07ae",
-        "pollingStation5": "0x5238855b2377673a8b29cef45615efc947101895"
-
     },
     "roles": {
         "Unknown": 0,

@@ -50,11 +50,7 @@ module.exports = function (app) {
                         break;
                 }
             }
-            
-
             res.json(voterEvents);
         });
     });
-
-    
 }

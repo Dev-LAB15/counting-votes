@@ -2,17 +2,15 @@ var config = require('../../config.json');
 var addressConfig = require('../../address.config.json');
 var PollingStationJson = require('./abi/PollingStation.json');
 var Web3 = require('web3');
-
-
-var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-/** 
- * Abi For Polling Station Rules.
- */
 var PollingStationAbi = PollingStationJson.abi;
 
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
 var pollingStation = new web3.eth.Contract(PollingStationAbi, addressConfig.PollingStation);
 
-module.exports.Abi = PollingStationAbi;
+module.exports.reconnect = function () {
+	web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
+	pollingStation = new web3.eth.Contract(PollingStationAbi, addressConfig.PollingStation);
+}
 
 /**
  * Requests if the user data is assigned to any role on the block.
@@ -49,6 +47,17 @@ module.exports.getVerification = function (callback) {
 module.exports.getVotingRound = function (callback) {
 	pollingStation.methods.getVotingRound().call({ from: config.blockchain.owner.address }, callback);
 }
+/**
+ * Checks if session is enabled to be finished.
+ * @param {*} callback 
+ */
+module.exports.canSubmit = function (callback) {
+	pollingStation.methods.canSubmit().call({ from: config.blockchain.owner.address }, callback);
+}
+
+module.exports.getDeviation = function (callback) {
+	pollingStation.methods.getDeviation().call({ from: config.blockchain.owner.address }, callback);
+}
 
 /**
  * 
@@ -78,6 +87,16 @@ module.exports.allEvents = function (callback) {
 module.exports.getPastEvents = function (callback) {
 	pollingStation.getPastEvents('allEvents', { fromBlock: 0 }, callback);
 }
+
+/**
+ * Set a trigger to fire uppon an event
+ * @param {string} eventName 
+ * @param {function(error,result)} callback 
+ */
+module.exports.setTrigger = function (eventName, callback) {
+	var event = pollingStation.events[eventName](null, { fromBlock: 0, }, callback);
+}
+
 /**
  * Captures the VotingSessionBegan event
  * @param {function(error, any)} callback 
@@ -93,10 +112,43 @@ module.exports.getSignedInEvent = function (callback) {
 	pollingStation.getPastEvents('UserSignedIn', { fromBlock: 0 }, callback);
 }
 /**
- * Set a trigger to fire uppon an event
- * @param {string} eventName 
- * @param {function(error,result)} callback 
+ * Watches the ControlNumbersAdded event when it happens.
+ * @param {function(error, any)} callback 
  */
-module.exports.setTrigger = function (eventName, callback) {
-	var event = pollingStation.events[eventName](null, { fromBlock: 0, }, callback);
+module.exports.getControlNumbersAddedEvent = function (callback) {
+	pollingStation.getPastEvents('ControlNumbersAdded', { fromBlock: 0 }, callback);
+}
+
+/**
+ * Watches the ControlNumbersAdded event when it happens.
+ * @param {function(error, any)} callback 
+ */
+module.exports.getControlNumbersAddedEvent = function (callback) {
+	pollingStation.getPastEvents('ControlNumbersAdded', { fromBlock: 0 }, callback);
+}
+/**
+ * Captures the vote counted event
+ * @param {function(error,any)} callback 
+ */
+module.exports.getVoteCountedEvent = function (callback) {
+	pollingStation.getPastEvents('VoteCounted', { fromBlock: 0 }, callback);
+}
+
+module.exports.getUserAddedEvent = function (callback) {
+	pollingStation.getPastEvents('UserAdded', { fromBlock: 0 }, callback);
+}
+/**
+ * Get's signed in tellers from the polling station
+ * @param {function(any, number)} callback 
+ */
+module.exports.getSignedInTellers = function (callback) {
+	pollingStation.methods.getSignedInTellers().call({ from: config.blockchain.owner.address }, callback);
+}
+
+module.exports.getVerificationDoneEvent = function (callback) {
+	pollingStation.getPastEvents('VerificationDone', { fromBlock: 0 }, callback);
+}
+
+module.exports.getSignedOffEvent = function (callback) {
+	pollingStation.getPastEvents('SignedOff', { fromBlock: 0 }, callback);
 }

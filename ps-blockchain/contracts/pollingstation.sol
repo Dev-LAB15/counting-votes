@@ -48,9 +48,11 @@ contract PollingStation is Permissions {
     event UserSignedOut(address userAddress, Role role);
     event VotingFinished(address pollingStation);
     event StaffSignedOff(address staff);
-    event VerificationAttempt(bool yes, bool no, bool blank, bool invalid);
+    event SignedOff(address staff, bool success, string message);
+    event VerificationDone(bool success, string message, bool needsRecount, bool yes, bool no, bool blank, bool invalid);
     event ControlNumbersAdded(uint256 pollingCards, uint256 powerOfAttorneys, uint256 voterPasses);
     event VotingSessionBegan(address pollingStation);
+    event VoteCounted(uint voteCode);
     
     function PollingStation(address mAddress, address uacAddress) Permissions(uacAddress) public {
         munContract = Municipality(mAddress);
@@ -71,6 +73,14 @@ contract PollingStation is Permissions {
             NotAllowed("Session is closed.");
         } else {
             _;
+        }
+    }
+
+    modifier _isNotVerified() {
+        if (!verificationSuccessful) {
+            _;
+        } else {
+            NotAllowed("Verification already happened, vote counting is closed.");
         }
     }
     
@@ -112,7 +122,7 @@ contract PollingStation is Permissions {
     
     modifier _canSignOff() {
         if (votingSessionClosed) {
-            NotAllowed("Can only sign off during open voting session.");
+            SignedOff(msg.sender, false, "Can only sign off during open voting session.");
             return;
         }
         
@@ -121,19 +131,19 @@ contract PollingStation is Permissions {
         }
         
         if (signedOffStaff[msg.sender] != 0) {
-            NotAllowed("Staff memeber already signed off.");
+            SignedOff(msg.sender, false, "Staff memeber already signed off.");
             return;
         }
         
         Role currRole = Role(roles[msg.sender]);
         
         if (currRole == Role.Teller && signedInTellers[msg.sender] != true) {
-            NotAllowed("Only signed in Tellers can sign off.");
+            SignedOff(msg.sender, false, "Only signed in Tellers can sign off.");
             return;
         }
         
         if (currRole == Role.Chairman && signedInChairmen[msg.sender] != true) {
-            NotAllowed("Only signed in Chairmen can sign off.");
+            SignedOff(msg.sender, false, "Only signed in Chairmen can sign off.");
             return;
         }
         
@@ -141,7 +151,7 @@ contract PollingStation is Permissions {
             (currRole == Role.Teller && signedOffTellerCount < signedInTellerCount && signedOffChairmenCount == 0)) {
             _;
         } else {
-            NotAllowed("All Tellers must sign off, then chairman can sign off. No other role can sign off.");
+            SignedOff(msg.sender, false, "All Tellers must sign off, then chairman can sign off. No other role can sign off.");
         }
     }
     
@@ -153,11 +163,11 @@ contract PollingStation is Permissions {
         super.setUsedEmail(email);
         if (user.balance <= 1) {
             user.send(msg.value);
-        }        
+        }    
     }
     
     function isSessionOpen() public view returns (bool) {
-        return !votingSessionClosed && !verificationSuccessful;
+        return !votingSessionClosed;
     }
     
     function signIn() public _canSignIn() {
@@ -175,6 +185,10 @@ contract PollingStation is Permissions {
         }
         
         UserSignedIn(msg.sender, role);
+    }
+
+    function getSignedInTellers() public view returns(uint8) {
+        return signedInTellerCount;
     }
     
     function signOut() public _canSignOut { 
@@ -232,28 +246,32 @@ contract PollingStation is Permissions {
         return (scannedPollingCardCount, registeredVoterPassCount, scannedPowerOfAttorneyCount, registeredPowerOfAttorneyCount, registeredObjectionCount, collectedPollingCardCount, collectedVoterPassCount, collectedPowerOfAttorneyCount, yesLocal, noLocal, blankLocal, invalidLocal);
     }
     
-    function yes() public _isSessionOpen() _verifyRole(Role.Chairman) {
+    function yes() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         yesLocal++;
         munContract.voteYes();
+        VoteCounted(1);
     }
     
-    function no() public _isSessionOpen() _verifyRole(Role.Chairman) {
+    function no() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         noLocal++;
         munContract.voteNo();
+        VoteCounted(2);
     }
     
-    function blank() public _isSessionOpen() _verifyRole(Role.Chairman) {
+    function blank() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         blankLocal++;
         munContract.voteBlank();
+        VoteCounted(3);
     }
     
-    function invalid() public _isSessionOpen() _verifyRole(Role.Chairman) {
+    function invalid() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         invalidLocal++;
         munContract.voteInvalid();
+        VoteCounted(4);
     }
     
     function getVerification() public view returns (bool) {
@@ -281,39 +299,34 @@ contract PollingStation is Permissions {
         ControlNumbersAdded(pollingCards, powerOfAttorneys, voterPasses);
     }
     
-    function verifyVotes(uint yesCount, uint noCount, uint blankCount, uint invalidCount) public _verifyRole(Role.Chairman) returns (bool yesVerified, bool noVerified, bool blankVerified, bool invalidVerified) {
+    function verifyVotes(uint yesCount, uint noCount, uint blankCount, uint invalidCount) public _verifyRole(Role.Chairman) {
         if (verificationSuccessful) {
-            NotAllowed("Verification already happened and it was successful. Input disregarded.");
-            return (true, true, true, true);
+            VerificationDone(verificationSuccessful, "Verification already happened and it was successful. Input disregarded.", false, false, false, false, false);
+            return;
         }
         
         if (needsRecount) {
-            NotAllowed("Recount necessary before new verification attempt.");
+            VerificationDone(verificationSuccessful, "Recount necessary before new verification attempt.", needsRecount, false, false, false, false);
+            return;
         }
         
         if (!beganCounting) {
-            NotAllowed("Counting must begin first.");
-        }
-        
-        if (!beganCounting || needsRecount) {
-            VerificationAttempt(false, false, false, false);
-            return (false, false, false, false);
+            VerificationDone(verificationSuccessful, "Counting must begin first.", false, false, false, false, false);
+            return;
         }
         
         beganCounting = false;
-        yesVerified = (yesCount == yesLocal);
-        noVerified = (noCount == noLocal);
-        blankVerified = (blankCount == blankLocal);
-        invalidVerified = (invalidCount == invalidLocal);
-        
-        VerificationAttempt(yesVerified, noVerified, blankVerified, invalidVerified);
+        bool yesVerified = (yesCount == yesLocal);
+        bool noVerified = (noCount == noLocal);
+        bool blankVerified = (blankCount == blankLocal);
+        bool invalidVerified = (invalidCount == invalidLocal);
         if (yesVerified && noVerified && blankVerified && invalidVerified) {
             verificationSuccessful = true;
+            VerificationDone(verificationSuccessful, "", needsRecount, yesVerified, noVerified, blankVerified, invalidVerified);
         } else {
             needsRecount = true;
+            VerificationDone(verificationSuccessful, "needs recount", needsRecount, yesVerified, noVerified, blankVerified, invalidVerified);
         }
-        
-        return (yesVerified, noVerified, blankVerified, invalidVerified);
     }
     
     // Returns the deviation of all votes against the number of collected cards
@@ -327,33 +340,43 @@ contract PollingStation is Permissions {
         return uint(deviation);
     }
     
-    function signOff(string explanation) public _canSignOff() returns(bool) {
-        if (getDeviation() != 0 && bytes(explanation).length <= 5) {
-            NotAllowed("You should supply an explanation when a deviation occurs.");
-            return false;
-        }
-        
-        if (bytes(explanation).length > 140) {
-            NotAllowed("Explanation is longer than 140 characters.");
-            return false;
-        } else if (getDeviation() != 0) {
-            deviationExplanation = explanation;
-        }
-        
+    function signOff(string explanation) public _canSignOff() returns(bool) {       
         Role role = Role(roles[msg.sender]);
-        if (role == Role.Chairman) {
+        if (role == Role.Teller) {
+            signedOffTellerCount++;
+            signedOffStaff[msg.sender] = 1;
+            SignedOff(msg.sender, true, "");
+        } else if (role == Role.Chairman) {
+            if (signedInTellerCount != signedOffTellerCount) {
+                SignedOff(msg.sender, false, "All tellers must signoff first");
+                return false;
+            }
+            if (getDeviation() != 0 && bytes(explanation).length <= 5) {
+                SignedOff(msg.sender, false, "You should supply an explanation when a deviation occurs.");
+                return false;
+            }
+
+            if (bytes(explanation).length > 140) {
+                SignedOff(msg.sender, false, "Explanation is longer than 140 characters.");
+                return false;
+            } else if (getDeviation() != 0) {
+                deviationExplanation = explanation;
+            }
             signedOffChairmenCount++;
             if (signedOffChairmenCount >= signedInChairmenCount) {
                 votingSessionClosed = true;
+                signedOffStaff[msg.sender] = 1;
+                SignedOff(msg.sender, true, "");
                 VotingFinished(this);
+                return true;
             }
+        } else {
+            SignedOff(msg.sender, false, "Role violation.");
         }
-        
-        if (role == Role.Teller) {
-            signedOffTellerCount++;
-        }
-        
-        StaffSignedOff(msg.sender);
-        return true;
+        return false;                
+    }
+
+    function canSubmit() public view returns (bool) {
+        return signedOffTellerCount > 0 && signedInTellerCount == signedOffTellerCount && signedOffChairmenCount > 0 && signedOffChairmenCount == signedInChairmenCount;
     }
 }

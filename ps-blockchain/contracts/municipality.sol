@@ -14,6 +14,7 @@ contract Municipality is Permissions {
     
     //Voter Registration
     uint private scannedPollingCardCount = 0;
+    uint private scannedPowerOfAttorneyCount = 0;
     uint private registeredPowerOfAttorneyCount = 0;
     uint private registeredVoterPassCount = 0;
     uint private registeredObjectionCount = 0;
@@ -130,6 +131,8 @@ contract Municipality is Permissions {
         
         if (voterType == VoterType.PollingCard) {
             scannedPollingCardCount++;
+        } else if (voterType == VoterType.PowerOfAttorneyPollingCard) {
+            scannedPowerOfAttorneyCount++;
         } else if (voterType == VoterType.PowerOfAttorney) {
             registeredPowerOfAttorneyCount++;
         } else if (voterType == VoterType.VoterPass) {

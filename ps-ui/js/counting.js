@@ -20,6 +20,18 @@ window.addEventListener('load', function () {
 
                     }
                     );
+            },
+            validateIfCanFinish: function () {
+                axios.get(apiEndpoint + '/counting/canfinish', axiosHeaders)
+                    .then(resp => {
+                        window.location = 'counting-verify.html';
+                    }).catch(error => {
+                        this.$toasted.show('Please wait all the counting is confirmed', {
+                            theme: "bubble",
+                            position: "bottom-center",
+                            duration: 3000
+                        });
+                    });
             }
         }
     });

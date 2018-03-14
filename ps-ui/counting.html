@@ -64,9 +64,11 @@
 		</section>
 
 		<footer>
-			<a href="counting-verify.html" class="btn btn-primary btn-block">{{$t('message.finishCountingVotes')}}
+			<button type="button" class="btn btn-primary btn-block" v-on:click="validateIfCanFinish">
+				{{$t('message.finishCountingVotes')}}
 				<i class="icon icon-arrow-right"></i>
-			</a>
+			</button>
+
 		</footer>
 	</div>
 	<!-- /main -->

@@ -7,7 +7,12 @@ module.exports = function () {
      * from the block.
      */
     contract.setTrigger('allEvents', function (err, result) {
+
         console.log('municipality.sol trigger raised');
+        if(err){
+            console.log(err.reason);
+            return;
+        }
         console.log(result);
         var events = ['YesVoted', 'NoVoted', 'InvalidVoted', 'BlankVoted'];
         try {

@@ -1,11 +1,4 @@
 let pollingstationService = require('../services/pollingstation.service');
-let pollingStationContract = require('../contracts/polling.station.contract');
-let decoder = require('abi-decoder');
-let config = require('../../config.json');
-var Web3 = require('web3');
-var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-decoder.addABI(pollingStationContract.Abi);
-
 
 module.exports = function (app) {
     //Inputs the control numbers required by verification step 2.
@@ -15,14 +8,28 @@ module.exports = function (app) {
             let pollingCards = req.body.pollingCards;
             let powerOfAttorneys = req.body.powerOfAttorneys;
             let voterPasses = req.body.voterPasses;
-
-            pollingstationService.inputControlNumbers(wallet, pollingCards, powerOfAttorneys, voterPasses, function (data) {
-                if (data.status) {
-                    res.send('Ok');
-                } else {
-                    res.status(502).json();
-                }
+            var ControlNumbersAdded_Event = function (receipt) {
+                pollingstationService.getControlNumbersAddedEvent(function (err, controlNumbersEvents) {
+                    var confirmed = false;
+                    if (controlNumbersEvents && controlNumbersEvents instanceof Array && controlNumbersEvents.length > 0) {
+                        for (let i = 0; i < controlNumbersEvents.length; i++) {
+                            let controlNumbersEvent = controlNumbersEvents[i];
+                            if (controlNumbersEvent.transactionHash == receipt)
+                                confirmed = true;
+                        }
+                    }
+                    if (confirmed) {
+                        res.send({ message: 'ok' });
+                    }
+                    else {
+                        ControlNumbersAdded_Event(receipt);
+                    }
+                });
+            }
+            pollingstationService.inputControlNumbers(wallet, pollingCards, powerOfAttorneys, voterPasses, function (inputControlNumbersReceipt) {
+                ControlNumbersAdded_Event(inputControlNumbersReceipt.message);
             });
+
         } catch (err) {
             res.status(500).json({ message: 'Internal Server Error.' });
         }
@@ -37,29 +44,31 @@ module.exports = function (app) {
             let blankCount = req.body.blankCount;
             let invalidCount = req.body.invalidCount;
 
-            pollingstationService.verifyVotes(wallet, yesCount, noCount, blankCount, invalidCount, function (data) {
-                if (data.status) {
-                    var returnModel = {};
-                    var transactionReceiptPromise = null;
-                    var transactionReceipt = null;
+            var getVerificationDoneEvent = function (receipt) {
+                pollingstationService.getVerificationDoneEvent(function (err, verificationDoneEvents) {
+                    var confirmed = false;
+                    var result;
+                    if (verificationDoneEvents && verificationDoneEvents instanceof Array && verificationDoneEvents.length > 0) {
+                        for (let i = 0; i < verificationDoneEvents.length; i++) {
+                            if (verificationDoneEvents[i].transactionHash == receipt) {
+                                confirmed = true;
+                                result = verificationDoneEvents[i];
+                            }
 
-                    var receiptAttempt = setInterval(function () {
-                        transactionReceiptPromise = web3.eth.getTransactionReceipt(data.message);
-                        transactionReceiptPromise.then(function (data) {
-                            transactionReceipt = data;
-                        });
-
-                        if (transactionReceipt != null) {
-                            clearInterval(receiptAttempt);
-
-                            const decodedLogs = decoder.decodeLogs(transactionReceipt.logs);
-                            decodedLogs[0].events.forEach(element => {
-                                returnModel[element.name] = element.value;
-                            });
-
-                            res.json(returnModel);
                         }
-                    }, 2000);
+                    }
+                    if (confirmed) {
+                        res.json(result.returnValues);
+                    }
+                    else {
+                        getVerificationDoneEvent(receipt);
+                    }
+                });
+            }
+
+            pollingstationService.verifyVotes(wallet, yesCount, noCount, blankCount, invalidCount, function (verifyVotesReceipt) {
+                if (verifyVotesReceipt.status) {
+                    getVerificationDoneEvent(verifyVotesReceipt.message);
                 } else {
                     res.status(502).json();
                 }
@@ -73,7 +82,6 @@ module.exports = function (app) {
     app.post('/verification/recount', function (req, res) {
         try {
             let wallet = req.user.wallet;
-
             pollingstationService.recount(wallet, function (data) {
                 if (data.status) {
                     res.send('Ok');
@@ -85,6 +93,12 @@ module.exports = function (app) {
             res.status(500).json({ message: 'Internal Server Error.' });
         }
 
+    });
+
+    app.get('/verification/getdeviation', function (req, res) {
+        pollingstationService.getDeviation(function (err, result) {
+            res.json({ deviation: result });
+        });
     });
 
 }

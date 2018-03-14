@@ -53,7 +53,7 @@
 
 						<div class="col col-lg-8">
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.yes" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.yes" aria-valuemin="0" aria-valuemax="100" v-bind:style="model.yesProgress"></div>
 							</div>
 						</div>
 
@@ -69,7 +69,7 @@
 
 						<div class="col col-lg-8">
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.no" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.no" aria-valuemin="0" aria-valuemax="100" v-bind:style="model.noProgress"></div>
 							</div>
 						</div>
 
@@ -85,7 +85,7 @@
 
 						<div class="col col-lg-8">
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.blank" aria-valuemin="0" aria-valuemax="100" style="width: 15%"></div>
+								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.blank" aria-valuemin="0" aria-valuemax="100" v-bind:style="model.blankProgress"></div>
 							</div>
 						</div>
 
@@ -101,7 +101,7 @@
 
 						<div class="col col-lg-8">
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.invalid" aria-valuemin="0" aria-valuemax="100" style="width: 5%"></div>
+								<div class="progress-bar" role="progressbar" v-bind:aria-valuenow="model.invalid" aria-valuemin="0" aria-valuemax="100" v-bind:style="model.invalidProgress"></div>
 							</div>
 						</div>
 
@@ -208,27 +208,27 @@
 						</div>
 
 						<div class="col col-lg-2">
+							<h2>{{model.scannedPollingCards}}</h2>
+						</div>
+					</div>
+
+					<div class="row justify-content-md-center">
+						<div class="col col-lg-10">
+							<h4>power of attorneys (private)</h4>
+						</div>
+
+						<div class="col col-lg-2">
 							<h2>{{model.scannedPowerOfAttorneys}}</h2>
 						</div>
 					</div>
 
 					<div class="row justify-content-md-center">
 						<div class="col col-lg-10">
-							<h4>power of attorneys</h4>
+							<h4>power of attorneys (written)</h4>
 						</div>
 
 						<div class="col col-lg-2">
 							<h2>{{model.registeredPowerOfAttorneys}}</h2>
-						</div>
-					</div>
-
-					<div class="row justify-content-md-center">
-						<div class="col col-lg-10">
-							<h4>objections to pilot</h4>
-						</div>
-
-						<div class="col col-lg-2">
-							<h2>{{model.registeredObjections}}</h2>
 						</div>
 					</div>
 
@@ -239,6 +239,16 @@
 
 						<div class="col col-lg-2">
 							<h2>{{model.registeredVoterPasses}}</h2>
+						</div>
+					</div>
+
+					<div class="row justify-content-md-center">
+						<div class="col col-lg-10">
+							<h4>objections to pilot</h4>
+						</div>
+
+						<div class="col col-lg-2">
+							<h2>{{model.registeredObjections}}</h2>
 						</div>
 					</div>
 				</div>

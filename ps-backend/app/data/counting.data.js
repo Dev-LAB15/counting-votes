@@ -44,3 +44,12 @@ module.exports.find = function (transaction) {
         return results[0];
     return null;
 }
+/**
+ * Informs the controller if there is any transaction pending.
+ */
+module.exports.hasAnyPending = function () {
+    if (data.length == 0)
+        return false;
+    var results = data.find(({ 'status': 'waiting' }));
+    return results.length > 0;
+}
