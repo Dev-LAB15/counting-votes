@@ -1,0 +1,48 @@
+{
+    "contractName": "Router",
+    "abi": [
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "pollingStationId",
+                    "type": "string"
+                }
+            ],
+            "name": "getAddress",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [
+                {
+                    "name": "pollingStationId",
+                    "type": "string"
+                },
+                {
+                    "name": "contractAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "setAddress",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        }
+    ]
+}

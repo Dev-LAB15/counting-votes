@@ -40,7 +40,7 @@ contract PollingStation is Permissions {
     mapping (address => bool) private signedInTellers;
     mapping (address => uint256) private signedOffStaff;
     
-    Municipality public munContract;
+    Municipality private munContract;
     
     event VoterAlreadyRecorded(bytes32 qrCodeHash);
     event VoterCleared(bytes32 qrCodeHash);
@@ -153,6 +153,10 @@ contract PollingStation is Permissions {
         } else {
             SignedOff(msg.sender, false, "All Tellers must sign off, then chairman can sign off. No other role can sign off.");
         }
+    }
+    
+    function getMunicipalityAddress() public view returns (address municipalityAddress) {
+        return munContract;
     }
     
     // this will record the roles locally and into the municipality

@@ -152,3 +152,12 @@ module.exports.getVerificationDoneEvent = function (callback) {
 module.exports.getSignedOffEvent = function (callback) {
 	pollingStation.getPastEvents('SignedOff', { fromBlock: 0 }, callback);
 }
+
+/**
+ * Gets the address for the associated municipality
+ * @param {function(any,any)} callback 
+ * @returns {string address}
+ */
+module.exports.getMunicipalityAddress = function (callback) {
+	pollingStation.methods.getMunicipalityAddress().call({ from: config.blockchain.owner.address }, callback);
+}

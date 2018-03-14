@@ -10,9 +10,10 @@
     "secret": "app-secret",
     "port": 3000,
     "tokenExpiration": "14 days",
+    "pollingStationId": "ptest",
     "blockchain": {
-        "provider": "ws://127.0.0.1:8545",
-        "httpProvider": "http://127.0.0.1:8545",
+        "provider": "ws://104.40.190.151:8546",
+        "httpProvider": "http://104.40.190.151:8545",
         "owner": {
             "address": "0x70c0D1904aa32a40d146c9C45a7CB883ea7fE84C",
             "privateKey": "8115bf21f49fd36bd384827a830e843c9b4951dd663d9f60196a3bbea2237619"
