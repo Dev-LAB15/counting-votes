@@ -71,9 +71,11 @@ const lang = {
                 sucessfullySubmited: "successfully submitted!",
                 signingOff: "signing off",
                 signOffToSubmitResults: "sign off to submit the results",
-                signOff:"sign off",
+                signOff: "sign off",
                 submitResult: "submit result",
-                deviationExplanation: "deviation explanation"
+                deviationExplanation: "deviation explanation",
+                unhandledError: "Unhandled error",
+                voteRecorded: "Vote recorded"
             }
         }
     }

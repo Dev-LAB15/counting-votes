@@ -52,7 +52,7 @@ contract PollingStation is Permissions {
     event VerificationDone(bool success, string message, bool needsRecount, bool yes, bool no, bool blank, bool invalid);
     event ControlNumbersAdded(uint256 pollingCards, uint256 powerOfAttorneys, uint256 voterPasses);
     event VotingSessionBegan(address pollingStation);
-    event VoteCounted(uint voteCode);
+    event VoteCounted(uint voteCode, bool success, string message);
     
     function PollingStation(address mAddress, address uacAddress) Permissions(uacAddress) public {
         munContract = Municipality(mAddress);
@@ -80,7 +80,7 @@ contract PollingStation is Permissions {
         if (!verificationSuccessful) {
             _;
         } else {
-            NotAllowed("Verification already happened, vote counting is closed.");
+            VoteCounted(0, false, "Verification already happened, vote counting is closed.");
         }
     }
     
@@ -250,28 +250,28 @@ contract PollingStation is Permissions {
         beganCounting = true;
         yesLocal++;
         munContract.voteYes();
-        VoteCounted(1);
+        VoteCounted(1, true, "");
     }
     
     function no() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         noLocal++;
         munContract.voteNo();
-        VoteCounted(2);
+        VoteCounted(2, true, "");
     }
     
     function blank() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         blankLocal++;
         munContract.voteBlank();
-        VoteCounted(3);
+        VoteCounted(3, true, "");
     }
     
     function invalid() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         invalidLocal++;
         munContract.voteInvalid();
-        VoteCounted(4);
+        VoteCounted(4, true, "");
     }
     
     function getVerification() public view returns (bool) {

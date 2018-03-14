@@ -14,12 +14,23 @@ window.addEventListener('load', function () {
                 var vote = { option: voteId };
                 axios.post(apiEndpoint + '/counting/vote', vote, axiosHeaders)
                     .then(resp => {
-
-                    }
-                    ).catch(error => {
-
-                    }
-                    );
+                        var msg = vm.$t('message.voteRecorded');
+                        this.$toasted.show(msg, {
+                            theme: "outline",
+                            position: "bottom-center",
+                            duration: 3000
+                        });
+                    }).catch(error => {
+                        var msg = vm.$t('message.');
+                        if (error && error.response && error.response.data && error.response.data.message) {
+                            msg = error.response.data.message;
+                        }
+                        this.$toasted.show(msg, {
+                            theme: "bubble",
+                            position: "bottom-center",
+                            duration: 3000
+                        });
+                    });
             },
             validateIfCanFinish: function () {
                 axios.get(apiEndpoint + '/counting/canfinish', axiosHeaders)
