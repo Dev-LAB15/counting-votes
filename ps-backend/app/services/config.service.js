@@ -10,7 +10,7 @@ module.exports.initializeConfig = function (host, owner, pollingStationAddress, 
         var isMunicipalityResolved = true;
         var isUserActivationResolved = true;
 
-        let computerName = utils.getComputerName();
+        let computerName = utils.getComputerName().replace("PS", "");
 
         if (host) {
             config.blockchain.provider = `ws://${host}`;
