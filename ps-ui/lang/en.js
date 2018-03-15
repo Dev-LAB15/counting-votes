@@ -75,7 +75,18 @@ const lang = {
                 submitResult: "submit result",
                 deviationExplanation: "deviation explanation",
                 unhandledError: "Unhandled error",
-                voteRecorded: "Vote recorded"
+                voteRecorded: "Vote recorded",
+                verificationAlreadyHappened: "Verification already happened and it was successful. Input disregarded.",
+                recountNecessaryBeforeNewVerificationAttempt: "Recount necessary before new verification attempt.",
+                countingMustBeginFirst: "Counting must begin first.",
+                needsRecount: "Needs Recount.",
+                scannedPollingCards: "scanned polling cards",
+                registeredVotes: "registered votes",
+                hash: "hash",
+                dateTime: "date/time",
+                voteType: "vote type"
+
+
             }
         }
     }

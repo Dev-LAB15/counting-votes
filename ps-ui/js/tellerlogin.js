@@ -1,6 +1,9 @@
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
 
-
+    if (!this.window.localStorage.token) {
+        this.window.location = 'index.html';
+        return;
+    }
 
     var vm = new Vue({
         i18n,
@@ -17,15 +20,15 @@ window.addEventListener('load', function() {
             }
         },
         methods: {
-            requestVerificationCode: function(event) {
-                axios.post(apiEndpoint + '/authentication/verification', vm.model).then(resp=>{
+            requestVerificationCode: function (event) {
+                axios.post(apiEndpoint + '/authentication/verification', vm.model).then(resp => {
                     if (resp.data.isActive) {
                         this.showModalSignIn(event);
                     } else {
                         this.showModalCreatePassword(event);
                     }
                 }
-                ).catch(error=>{
+                ).catch(error => {
                     this.$toasted.show(error.response.data.message, {
                         theme: "bubble",
                         position: "bottom-center",
@@ -35,21 +38,21 @@ window.addEventListener('load', function() {
                 );
 
             },
-            showModalCreatePassword: function(event) {
+            showModalCreatePassword: function (event) {
                 $('#create-password-modal').modal();
             },
-            showModalSignIn: function(event) {
+            showModalSignIn: function (event) {
                 $('#sign-in-modal').modal();
             },
-            requestCreatePassword: function(event) {
-                axios.post(apiEndpoint + '/authentication/createpassword', vm.model).then(resp=>{
+            requestCreatePassword: function (event) {
+                axios.post(apiEndpoint + '/authentication/createpassword', vm.model).then(resp => {
                     addTeller(resp.data.user);
                     vm._data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('section > .row').removeClass('justify-content-md-center');
                     $('#create-password-modal').modal('hide');
                 }
-                ).catch(error=>{
+                ).catch(error => {
                     this.$toasted.show(error.response.data.message, {
                         theme: "bubble",
                         position: "bottom-center",
@@ -58,15 +61,15 @@ window.addEventListener('load', function() {
                 }
                 );
             },
-            requestSignIn: function(event) {
-                axios.post(apiEndpoint + '/authentication/signin', vm.model).then(resp=>{
+            requestSignIn: function (event) {
+                axios.post(apiEndpoint + '/authentication/signin', vm.model).then(resp => {
                     addTeller(resp.data.user);
                     vm._data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('section > .row').removeClass('justify-content-md-center');
                     $('#sign-in-modal').modal('hide');
                 }
-                ).catch(error=>{
+                ).catch(error => {
                     this.$toasted.show(error.response.data.message, {
                         theme: "bubble",
                         position: "bottom-center",
@@ -75,7 +78,7 @@ window.addEventListener('load', function() {
                 }
                 );
             },
-            goToDashboard: function(event) {
+            goToDashboard: function (event) {
                 window.location = 'dashboard.html';
             }
         }
@@ -84,8 +87,8 @@ window.addEventListener('load', function() {
     vm.$mount('#app');
 
     var tellers = getTellers();
-    if(tellers){
-        for(var i = 0; i < tellers.length; i++)
+    if (tellers) {
+        for (var i = 0; i < tellers.length; i++)
             vm.tellers.push(tellers[i]);
     }
 });

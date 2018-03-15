@@ -2,7 +2,7 @@ var config = require('../../config.json');
 var utils = require('../common/utils.js');
 var routerContract = require('../contracts/router.contract');
 
-module.exports.initializeConfig = function (pollingStationAddress, municipalityAddress, userActivationAddress, routerAddress) {
+module.exports.initializeConfig = function (host, owner, pollingStationAddress, municipalityAddress, userActivationAddress, routerAddress) {
     var promise = new Promise(function (resolve, reject) {
 
         var isResolved = true;
@@ -11,6 +11,16 @@ module.exports.initializeConfig = function (pollingStationAddress, municipalityA
         var isUserActivationResolved = true;
 
         let computerName = utils.getComputerName();
+
+        if (host) {
+            config.blockchain.provider = `ws://${host}`;
+            config.blockchain.httpProvider = `http://${host}`;
+        }
+
+        if (owner) {
+            config.blockchain.owner = owner;
+        }
+
         config.blockchain.pollingStationId = computerName;
 
         if (routerAddress) {

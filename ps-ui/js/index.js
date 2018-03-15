@@ -2,7 +2,9 @@ window.addEventListener('load', function () {
 
     if (this.window.localStorage.token) {
         this.window.location = 'tellerlogin.html';
+        return;
     }
+    
 
     var vm = new Vue({
         i18n,
@@ -70,7 +72,7 @@ window.addEventListener('load', function () {
                     );
             },
             requestSignIn: function (event) {
-                               
+
                 axios.post(apiEndpoint + '/authentication/signin', vm.model)
                     .then(resp => {
                         window.localStorage.chairman = resp.data.user;

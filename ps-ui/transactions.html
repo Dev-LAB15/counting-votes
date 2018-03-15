@@ -46,40 +46,20 @@
         <section class="cv-fullwidth has-header scroll">
             <article>
                 <div class="page-title page-title-sm">
-                    <h5>Scanned polling cards</h5>
+                    <h5>{{$t('message.scannedPollingCards')}}</h5>
                 </div>
 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">hash</th>
-                            <th scope="col" width="20%">polling station ID</th>
-                            <th scope="col" width="25%" class="text-right">date/time</th>
+                            <th scope="col">{{$t('message.hash')}}</th>
+                            <th scope="col" width="25%" class="text-right">{{$t('message.dateTime')}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>0xcffd7b48a95ad85812a1366a5b786d80478569198ac1fe23994fb5dede004c5</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 09:03:10</td>
-                        </tr>
-
-                        <tr>
-                            <td>0xcffd7b48a95ad85812a1366a5b786d80478569198ac1fe23994fb5dede004c5</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 09:03:10</td>
-                        </tr>
-
-                        <tr>
-                            <td>0xcffd7b48a95ad85812a1366a5b786d80478569198ac1fe23994fb5dede004c5</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 09:03:10</td>
-                        </tr>
-
-                        <tr>
-                            <td>0xcffd7b48a95ad85812a1366a5b786d80478569198ac1fe23994fb5dede004c5</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 09:03:10</td>
+                        <tr v-for="item in scans">
+                            <td>{{item.transactionHash}}</td>
+                            <td class="text-right">{{item.timestamp}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -87,86 +67,22 @@
 
             <article>
                 <div class="page-title page-title-sm">
-                    <h5>Registered Votes</h5>
+                    <h5>{{$t('message.registeredVotes')}}</h5>
                 </div>
 
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">vote ID</th>
-                            <th scope="col">vote type</th>
-                            <th scope="col" width="20%">polling station ID</th>
-                            <th scope="col" width="25%" class="text-right">date/time</th>
+                            <th scope="col">{{$t('message.hash')}}</th>
+                            <th scope="col">{{$t('message.voteType')}}</th>
+                            <th scope="col" width="25%" class="text-right">{{$t('message.dateTime')}}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>123456</td>
-                            <td>yes</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 10:14:19</td>
-                        </tr>
-
-                        <tr>
-                            <td>123456</td>
-                            <td>no</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 10:14:19</td>
-                        </tr>
-
-                        <tr>
-                            <td>123456</td>
-                            <td>blank</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 10:14:19</td>
-                        </tr>
-
-                        <tr>
-                            <td>123456</td>
-                            <td>invalid</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 10:14:19</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
-
-            <article>
-                <div class="page-title page-title-sm">
-                    <h5>signed results</h5>
-                </div>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">signed by (account ID)</th>
-                            <th scope="col" width="20%">polling station ID</th>
-                            <th scope="col" width="25%" class="text-right">date/time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>123456</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 11:39:23</td>
-                        </tr>
-
-                        <tr>
-                            <td>123456</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 11:39:23</td>
-                        </tr>
-
-                        <tr>
-                            <td>123456</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 11:39:23</td>
-                        </tr>
-
-                        <tr>
-                            <td>123456</td>
-                            <td>123456</td>
-                            <td class="text-right">10/03/2018 - 11:39:23</td>
+                        <tr v-for="item in votes">
+                            <td>{{item.transactionHash}}</td>
+                            <td>{{item.voteType}}</td>
+                            <td class="text-right">{{item.timestamp}}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,4 +1,8 @@
 window.addEventListener('load', function () {
+    if (!this.window.localStorage.token) {
+        this.window.location = 'index.html';
+        return;
+    }
     var tellers = getTellers();
     var vm = new Vue({
         i18n,
@@ -55,9 +59,7 @@ window.addEventListener('load', function () {
                 axios.get(apiEndpoint + '/authentication/submit', axiosHeaders)
                     .then(res => {
                         $('#success').modal();
-                        window.localStorage.chairman = null;
-                        window.localStorage.tellers = null;
-                        window.localStorage.token = null;
+                        window.localStorage.clear();
                     })
                     .catch(err => {
                         var msg = vm.$t('message.unknownError');

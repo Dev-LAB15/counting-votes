@@ -1,5 +1,10 @@
 window.addEventListener('load', function () {
 
+    if (!this.window.localStorage.token) {
+        this.window.location = 'index.html';
+        return;
+    }
+
     function fetchTransactions() {
 
         axios.get(apiEndpoint + '/transaction/list', axiosHeaders)

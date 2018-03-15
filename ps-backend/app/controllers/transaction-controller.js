@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 var config = require('../../config.json');
-var web3 = new Web3(new Web3.providers.HttpProvider(config.blockchain.Provider));
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
 
 var psContract = require('../contracts/polling.station.contract');
 var mnContract = require('../contracts/municipality.contract');
@@ -30,7 +30,93 @@ module.exports = function (app) {
         });
     });
 
+
+
+    app.get('/transaction/scans', function (req, res) {
+        var maxLength = 10;
+        var result = [];
+        psContract.getVoterClearedEvent(function (err, voterClearedEvents) {
+            var result = [];
+            if (voterClearedEvents && voterClearedEvents instanceof Array && voterClearedEvents.length > 0) {
+                voterClearedEvents.reverse();
+                if (voterClearedEvents.length <= 10)
+                    maxLength = voterClearedEvents.length;
+                for (let i = maxLength - 1; i >= 0; i--) {
+                    let evt = voterClearedEvents[i];
+                    let blockHash = evt.blockHash;
+                    let transactionHash = evt.transactionHash;
+                    let timestamp = null;
+                    var scan = {
+                        blockHash: blockHash,
+                        transactionHash: transactionHash,
+                        timestamp: timestamp
+                    }
+                    result.push(scan);
+                }
+            }
+
+            for (let i = 0; i < result.length; i++) {
+                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                    result[i].timestamp = blockResult.timestamp;
+                    console.log(i);
+                    if (i == result.length - 1)
+                        res.json(result);
+                });
+            }
+        });
+    });
+
+    app.get('/transaction/votes', function (req, res) {
+        var maxLength = 10;
+        var result = [];
+        psContract.getVoteCountedEvent(function (err, voteCountedEvents) {
+            var result = [];
+            if (voteCountedEvents && voteCountedEvents instanceof Array && voteCountedEvents.length > 0) {
+                voteCountedEvents.reverse();
+                if (voteCountedEvents.length <= 10)
+                    maxLength = voteCountedEvents.length;
+                for (let i = maxLength - 1; i >= 0; i--) {
+                    let evt = voteCountedEvents[i];
+                    let blockHash = evt.blockHash;
+                    let transactionHash = evt.transactionHash;
+                    let timestamp = null;
+                    var scan = {
+                        blockHash: blockHash,
+                        transactionHash: transactionHash,
+                        voteCode: evt.returnValues.voteCode,
+                        timestamp: timestamp
+                    }
+                    result.push(scan);
+                }
+            }
+
+            for (let i = 0; i < result.length; i++) {
+                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                    result[i].timestamp = blockResult.timestamp;
+                    console.log(i);
+                    if (i == result.length - 1)
+                        res.json(result);
+                });
+            }
+        });
+    });
+
     app.get('/transaction/log', function (req, res) {
+
+        var block = web3.eth.getBlock('latest', function (err, res) {
+            console.log(res);
+            for (var i = 0; i < res.transactions.length; i++) {
+                var tx = res.transactions[i];
+                console.log(tx)
+                var receipt = web3.eth.getTransactionReceipt(tx, function (_err, _res) {
+                    console.log(_res);
+                });
+            }
+        });
+
+
+
+
 
         mnContract.getPastEvents(function (err, events) {
             var sendBack = true;

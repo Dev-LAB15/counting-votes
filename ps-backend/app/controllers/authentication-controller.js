@@ -38,10 +38,6 @@ module.exports = function (app) {
 	 * TODO: remove LokiJS and add blockchain signin.
 	 */
 	app.post('/authentication/verification', function (req, res) {
-		if (!app.config.useVerificationCode) {
-			res.json({ message: 'Verification Code is Inactive' });
-			return;
-		}
 		if (!req.body.email || req.body.email == '') {
 			res.status(422).json({ message: "Email can't be empty" });
 			return;
@@ -72,7 +68,9 @@ module.exports = function (app) {
 					email: req.body.email
 				}
 				vcodes.save(vcode);
-				mailService.sendVerificationCode(req.body.email, "", code);
+				if (app.config.useVerificationCode) {
+					mailService.sendVerificationCode(req.body.email, "", code);
+				}			
 				res.json({ message: 'Please check your email address to get the verification code', isActive: active });
 			});
 		});
@@ -191,7 +189,7 @@ module.exports = function (app) {
 						var wallet = userService.getWallet(req.body.email, req.body.password);
 						userService.setUserRole(req.body.email, wallet.address, function (setUserRoleReceipt) {
 							if (!setUserRoleReceipt.status) {
-								res.status(422).json({ message: userRoleReceipt.message.stack });
+								res.status(422).json({ message: setUserRoleReceipt.message.stack });
 								return;
 							} else {
 								getUserAddedEvent(setUserRoleReceipt.message);

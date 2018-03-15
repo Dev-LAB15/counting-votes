@@ -38,20 +38,36 @@ window.addEventListener('load', function () {
                 axios.post(apiEndpoint + '/verification/verifyvotes', vm.model, axiosHeaders)
                     .then(resp => {
                         vm.model.isVerifying = false;
-                        vm.model.yes = resp.data.yes;
-                        vm.model.no = resp.data.no;
-                        vm.model.blank = resp.data.blank;
-                        vm.model.invalid = resp.data.invalid;
-                        vm.model.success = resp.data.success;
-                        vm.model.recount = resp.data.needsRecount;
+                        vm.model.yes = resp.data.yes || false;
+                        vm.model.no = resp.data.no || false;
+                        vm.model.blank = resp.data.blank || false;
+                        vm.model.invalid = resp.data.invalid || false;
+                        vm.model.success = true;
+                        vm.model.recount = resp.data.needsRecount || false;
 
+                        switch (resp.data.message) {
+                            case "Verification already happened and it was successful. Input disregarded.":
+                                vm.model.recount = false;
+                                vm.model.message = this.$t('message.verificationAlreadyHappened');
+                                return;
+                            case "Recount necessary before new verification attempt.":
+                                vm.model.message = this.$t('message.recountNecessaryBeforeNewVerificationAttempt');
+                                break;
+                            case "Counting must begin first.":
+                                vm.model.message = this.$t('message.countingMustBeginFirst');
+                                break;
+                            case "Needs Recount.":
+                                vm.model.message = this.$t('message.needsRecount');
+                                break;
+                            default:
+                                vm.model.message = this.$t('message.unhandledError');
+                                break;
+                        }
 
-                        if (resp.data.needsRecount) {
-                            vm.model.recount = true;
-                            vm.model.message = this.$t('message.recount');
-                        } else {
-                            vm.model.message = resp.data.message;
+                        if (resp.data.success) {
                             vm.model.recount = false;
+                            vm.model.message = this.$t('message.continue');
+                            return;
                         }
                     }
                     ).catch(error => {

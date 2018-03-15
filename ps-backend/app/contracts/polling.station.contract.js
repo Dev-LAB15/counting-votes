@@ -169,3 +169,11 @@ module.exports.getMunicipalityAddress = function (callback) {
 module.exports.getUacAddress = function (callback) {
 	pollingStation.methods.getUacAddress().call({ from: config.blockchain.owner.address }, callback);
 }
+
+module.exports.getVoterClearedEvent = function (callback) {
+	pollingStation.getPastEvents('VoterCleared', { fromBlock: 0 }, callback);
+}
+
+module.exports.getVoterAlreadyRecordedEvent = function (callback) {
+	pollingStation.getPastEvents('VoterAlreadyRecorded', { fromBlock: 0 }, callback);
+}

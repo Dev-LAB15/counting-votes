@@ -1,5 +1,8 @@
 window.addEventListener('load', function () {
-
+    if (!this.window.localStorage.token) {
+        this.window.location = 'index.html';
+        return;
+    }
     let tellers = getTellers();
 
     var vm = new Vue({

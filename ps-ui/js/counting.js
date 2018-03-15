@@ -1,6 +1,8 @@
-var vm;
-
 window.addEventListener('load', function () {
+    if (!this.window.localStorage.token) {
+        this.window.location = 'index.html';
+        return;
+    }
     vm = new Vue({
         i18n,
         el: '#app',

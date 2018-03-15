@@ -13,7 +13,7 @@ var morgan = require('morgan');
 var app = express();
 var configService = require('./services/config.service');
 
-app.use(cors())
+app.use(cors());
 
 //load config specs
 app.config = require('../config.json');
@@ -30,7 +30,20 @@ app.jwt = require('jsonwebtoken');
  * This will initialize the blockchain address configrations.
  */
 process.env.ALLOW_CONFIG_MUTATIONS = "true";
-var promise = configService.initializeConfig();
+
+var promise;
+var ganache = process.env.GANACHE;
+
+if (ganache) {
+  var addresses = require('../address.config.json');
+  var owner = {
+    address: "0x70c0D1904aa32a40d146c9C45a7CB883ea7fE84C",
+    privateKey: "8115bf21f49fd36bd384827a830e843c9b4951dd663d9f60196a3bbea2237619"
+  }
+  promise = configService.initializeConfig("localhost:8545", owner, addresses.PollingStation, addresses.Municipality, addresses.UserActivation, addresses.Router);
+} else {
+  promise = configService.initializeConfig();
+}
 
 promise.then(() => {
 
