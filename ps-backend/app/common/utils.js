@@ -1,4 +1,5 @@
 var config = require('../../config.json');
+var os = require('os');
 
 exports.generateRandom = function (length) {
     var code = "";
@@ -6,7 +7,6 @@ exports.generateRandom = function (length) {
         code += config.verification_code_characters.charAt(Math.floor(Math.random() * length));
     return code;
 }
-
 
 exports.generateCode = function () {
     var code = "";
@@ -18,4 +18,8 @@ exports.generateCode = function () {
 exports.timestamp = function () {
     var ts = Math.round((new Date()).getTime() / 1000);
     return ts;
+}
+
+exports.getComputerName = function () {
+    return os.hostname();
 }

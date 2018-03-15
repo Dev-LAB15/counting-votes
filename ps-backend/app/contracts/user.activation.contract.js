@@ -1,15 +1,14 @@
 var config = require('../../config.json');
-var addressConfig = require('../../address.config.json');
 var UserActivationJson = require('./abi/UserActivation.json');
 var Web3 = require('web3');
 
 var UserActivationAbi = UserActivationJson.abi;
 var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-var userActivation = new web3.eth.Contract(UserActivationAbi, addressConfig.UserActivation);
+var userActivation = new web3.eth.Contract(UserActivationAbi, config.blockchain.userActivationAddress);
 
 module.exports.reconnect = function () {
 	web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-	userActivation = new web3.eth.Contract(UserActivationAbi, addressConfig.UserActivation);
+	userActivation = new web3.eth.Contract(UserActivationAbi, config.blockchain.userActivationAddress);
 }
 
 /**

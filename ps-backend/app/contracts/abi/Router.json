@@ -9,10 +9,67 @@
                     "type": "string"
                 }
             ],
-            "name": "getAddress",
+            "name": "getUacAddress",
             "outputs": [
                 {
-                    "name": "",
+                    "name": "userActivationAddress",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "pollingStationAddress",
+                    "type": "address"
+                }
+            ],
+            "name": "getPollingStationId",
+            "outputs": [
+                {
+                    "name": "pollingStationId",
+                    "type": "string"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "pollingStationId",
+                    "type": "string"
+                }
+            ],
+            "name": "getPollingStationAddress",
+            "outputs": [
+                {
+                    "name": "pollingStationAddress",
+                    "type": "address"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "pollingStationId",
+                    "type": "string"
+                }
+            ],
+            "name": "getMunicipalityAddress",
+            "outputs": [
+                {
+                    "name": "municipalityAddress",
                     "type": "address"
                 }
             ],

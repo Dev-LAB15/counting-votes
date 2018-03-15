@@ -68,4 +68,8 @@ contract Permissions {
             NotAllowed("Unauthorized access.");
         }
     }
+    
+    function getUacAddress() public view returns (address userActivationAddress) {
+        return address(userActivationContract);
+    }
 }

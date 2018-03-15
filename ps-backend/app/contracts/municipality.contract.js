@@ -1,15 +1,14 @@
 var config = require('../../config.json');
-var addressConfig = require('../../address.config.json');
 var MunicipalityJson = require('./abi/Municipality.json');
 var Web3 = require('web3');
 var MunicipalityAbi = MunicipalityJson.abi;
 
 var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-var municipality = new web3.eth.Contract(MunicipalityAbi, addressConfig.Municipality);
+var municipality = new web3.eth.Contract(MunicipalityAbi, config.blockchain.municipalityAddress);
 
 module.exports.reconnect = function () {
     web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-    municipality = new web3.eth.Contract(MunicipalityAbi, addressConfig.Municipality);
+    municipality = new web3.eth.Contract(MunicipalityAbi, config.blockchain.municipalityAddress);
 }
 
 /**

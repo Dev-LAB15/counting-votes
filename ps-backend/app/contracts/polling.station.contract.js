@@ -1,15 +1,14 @@
 var config = require('../../config.json');
-var addressConfig = require('../../address.config.json');
 var PollingStationJson = require('./abi/PollingStation.json');
 var Web3 = require('web3');
 var PollingStationAbi = PollingStationJson.abi;
 
 var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-var pollingStation = new web3.eth.Contract(PollingStationAbi, addressConfig.PollingStation);
+var pollingStation = new web3.eth.Contract(PollingStationAbi, config.blockchain.pollingStationAddress);
 
 module.exports.reconnect = function () {
 	web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
-	pollingStation = new web3.eth.Contract(PollingStationAbi, addressConfig.PollingStation);
+	pollingStation = new web3.eth.Contract(PollingStationAbi, config.blockchain.pollingStationAddress);
 }
 
 /**
@@ -160,4 +159,13 @@ module.exports.getSignedOffEvent = function (callback) {
  */
 module.exports.getMunicipalityAddress = function (callback) {
 	pollingStation.methods.getMunicipalityAddress().call({ from: config.blockchain.owner.address }, callback);
+}
+
+/**
+ * Gets the address for the associated user activation contract
+ * @param {function(any,any)} callback 
+ * @returns {string address}
+ */
+module.exports.getUacAddress = function (callback) {
+	pollingStation.methods.getUacAddress().call({ from: config.blockchain.owner.address }, callback);
 }

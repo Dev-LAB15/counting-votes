@@ -10,13 +10,14 @@
     "secret": "app-secret",
     "port": 3000,
     "tokenExpiration": "14 days",
-    "pollingStationId": "ptest",
     "blockchain": {
+        "pollingStationId": "ptest",
+        "routerAddress": "0xa5d82075fbed8609731bf89feb12ca76837cc68b",
         "provider": "ws://104.40.190.151:8546",
         "httpProvider": "http://104.40.190.151:8545",
         "owner": {
-            "address": "0x70c0D1904aa32a40d146c9C45a7CB883ea7fE84C",
-            "privateKey": "8115bf21f49fd36bd384827a830e843c9b4951dd663d9f60196a3bbea2237619"
+            "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
+            "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"
         },
         "defaultValueInEther": "10"
     },
