@@ -24,12 +24,11 @@ function copyFile(source, target) {
 
 module.exports = function (deployer) {
     var addressConfigJson = {
+        "Router": "",
         "UserActivation": "",
         "Municipality": "",
         "PollingStation": ""
     }
-
-
 
     deployer.deploy(Migrations);
     deployer.deploy(Router);
@@ -44,12 +43,17 @@ module.exports = function (deployer) {
                                 addressConfigJson.UserActivation = UserActivation.address;
                                 addressConfigJson.Municipality = Municipality.address;
                                 addressConfigJson.PollingStation = PollingStation.address;
+                                
                                 fs.writeFile('../ps-backend/address.config.json', JSON.stringify(addressConfigJson), 'utf8', function () {
                                     console.log('address configuration file written');
                                     copyFile('./build/contracts/Router.json', '../ps-backend/app/contracts/abi/Router.json');
+                                    console.log('copied file Router.json');
                                     copyFile('./build/contracts/UserActivation.json', '../ps-backend/app/contracts/abi/UserActivation.json');
+                                    console.log('copied file UserActivation.json');
                                     copyFile('./build/contracts/Municipality.json', '../ps-backend/app/contracts/abi/Municipality.json');
+                                    console.log('copied file Municipality.json');
                                     copyFile('./build/contracts/PollingStation.json', '../ps-backend/app/contracts/abi/PollingStation.json');
+                                    console.log('copied file PollingStation.json');
                                 });
                             });
                         });

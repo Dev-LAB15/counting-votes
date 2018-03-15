@@ -40,7 +40,7 @@ contract PollingStation is Permissions {
     mapping (address => bool) private signedInTellers;
     mapping (address => uint256) private signedOffStaff;
     
-    Municipality private munContract;
+    Municipality public munContract;
     
     event VoterAlreadyRecorded(bytes32 qrCodeHash);
     event VoterCleared(bytes32 qrCodeHash);
@@ -315,7 +315,7 @@ contract PollingStation is Permissions {
         }
         
         if (!beganCounting) {
-            VerificationDone(verificationSuccessful, "Counting must begin first.", false, false, false, false, false);
+            VerificationDone(verificationSuccessful, "Counting must begin first.", true, false, false, false, false);
             return;
         }
         
@@ -329,7 +329,7 @@ contract PollingStation is Permissions {
             VerificationDone(verificationSuccessful, "", needsRecount, yesVerified, noVerified, blankVerified, invalidVerified);
         } else {
             needsRecount = true;
-            VerificationDone(verificationSuccessful, "needs recount", needsRecount, yesVerified, noVerified, blankVerified, invalidVerified);
+            VerificationDone(verificationSuccessful, "Needs Recount.", needsRecount, yesVerified, noVerified, blankVerified, invalidVerified);
         }
     }
     
