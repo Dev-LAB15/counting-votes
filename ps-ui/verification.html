@@ -25,7 +25,7 @@
 </head>
 
 <body>
-	<div id="app" class="main verification">
+	<div id="app" class="main verification" style="display: none">
 		<header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
 			<div class="col-md-3">
 				<a class="nav" href="dashboard.html">
@@ -56,7 +56,9 @@
 							<input type="text" class="form-control input-lg" v-model="model.pollingCards" placeholder="0" aria-label="0" id="polling-cards">
 							<span class="input-border"></span>
 						</div>
-						<label for="polling-cards">{{$t('message.totalAmount')}} <strong>{{$t('message.pollingCards')}}</strong></label>
+						<label for="polling-cards">{{$t('message.totalAmount')}}
+							<strong>{{$t('message.pollingCards')}}</strong>
+						</label>
 					</div>
 
 					<div class="col">
@@ -64,7 +66,9 @@
 							<input type="text" class="form-control input-lg" v-model="model.powerOfAttorneys" placeholder="0" aria-label="0" id="power-attorneys">
 							<span class="input-border"></span>
 						</div>
-						<label for="power-attorneys">{{$t('message.totalAmount')}} <strong>{{$t('message.powerOfAttorneys')}}</strong></label>
+						<label for="power-attorneys">{{$t('message.totalAmount')}}
+							<strong>{{$t('message.powerOfAttorneys')}}</strong>
+						</label>
 					</div>
 
 					<div class="col">
@@ -72,12 +76,15 @@
 							<input type="text" class="form-control input-lg" v-model="model.voterPasses" placeholder="0" aria-label="0" id="voter-passes">
 							<span class="input-border"></span>
 						</div>
-						<label for="voter-passes">{{$t('message.totalAmount')}} <strong>{{$t('message.voterPasses')}}</strong></label>
+						<label for="voter-passes">{{$t('message.totalAmount')}}
+							<strong>{{$t('message.voterPasses')}}</strong>
+						</label>
 					</div>
 				</div>
 			</div>
 
-			<span class="badge badge-primary toast"><i class="icon icon-check"></i> {{$t('message.dataInserted')}}</span>
+			<span class="badge badge-primary toast">
+				<i class="icon icon-check"></i> {{$t('message.dataInserted')}}</span>
 		</section>
 
 		<footer>

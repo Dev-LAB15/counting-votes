@@ -16,6 +16,7 @@ window.addEventListener('load', function () {
             }
         },
         mounted: function () {
+            $('#app').fadeIn();
             axios.get(apiEndpoint + '/verification/getdeviation', axiosHeaders)
                 .then(res => {
                     if (res.data.deviation > 0) {
@@ -28,8 +29,10 @@ window.addEventListener('load', function () {
         },
         methods: {
             authenticate() {
+                $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/signoff', vm.model)
                     .then(res => {
+                        $('#loading-modal').modal('hide');
                         vm.clearModel();
                         vm.$toasted.show('SignOff Ok', {
                             theme: "outline",
@@ -38,6 +41,7 @@ window.addEventListener('load', function () {
                         });
                     })
                     .catch(err => {
+                        $('#loading-modal').modal('hide');
                         var msg = vm.$t('message.unknownError');
                         if (err && err.response && err.response.data && err.response.data.message) {
                             msg = err.response.data.message;
@@ -87,7 +91,7 @@ window.addEventListener('load', function () {
     $(function () {
         $('.btn-authenticate').click(function () {
             if (!vm.model.email || !vm.model.password) {
-                vm.$toasted.show('Invalid Credentials', {
+                vm.$toasted.show(vm.$t('message.invalidCredentials'), {
                     theme: "bubble",
                     position: "bottom-center",
                     duration: 3000

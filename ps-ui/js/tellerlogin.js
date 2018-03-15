@@ -19,6 +19,9 @@ window.addEventListener('load', function () {
                 role: '4'
             }
         },
+        mounted: function () {
+            $('#app').fadeIn();
+        },
         methods: {
             requestVerificationCode: function (event) {
                 axios.post(apiEndpoint + '/authentication/verification', vm.model).then(resp => {
@@ -45,15 +48,23 @@ window.addEventListener('load', function () {
                 $('#sign-in-modal').modal();
             },
             requestCreatePassword: function (event) {
+                $('#create-password-modal').modal('hide');
+                $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/createpassword', vm.model).then(resp => {
+                    $('#loading-modal').modal('hide');
                     addTeller(resp.data.user);
                     vm._data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('section > .row').removeClass('justify-content-md-center');
-                    $('#create-password-modal').modal('hide');
+
                 }
                 ).catch(error => {
-                    this.$toasted.show(error.response.data.message, {
+                    $('#loading-modal').modal('hide');
+                    var msg = this.$t('message.unhandledError');
+                    if (error && error.response && error.response.data && error.response.data.message) {
+                        msg = error.response.data.message;
+                    }
+                    this.$toasted.show(msg, {
                         theme: "bubble",
                         position: "bottom-center",
                         duration: 3000
@@ -62,15 +73,21 @@ window.addEventListener('load', function () {
                 );
             },
             requestSignIn: function (event) {
+                $('#sign-in-modal').modal('hide');
+                $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/signin', vm.model).then(resp => {
+                    $('#loading-modal').modal('hide');
                     addTeller(resp.data.user);
                     vm._data.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('section > .row').removeClass('justify-content-md-center');
-                    $('#sign-in-modal').modal('hide');
-                }
-                ).catch(error => {
-                    this.$toasted.show(error.response.data.message, {
+                }).catch(error => {
+                    $('#loading-modal').modal('hide');
+                    var msg = this.$t('message.unhandledError');
+                    if (error && error.response && error.response.data && error.response.data.message) {
+                        msg = error.response.data.message;
+                    }
+                    this.$toasted.show(msg, {
                         theme: "bubble",
                         position: "bottom-center",
                         duration: 3000

@@ -84,7 +84,8 @@ const lang = {
                 registeredVotes: "registered votes",
                 hash: "hash",
                 dateTime: "date/time",
-                voteType: "vote type"
+                voteType: "vote type",
+                loading: "loading..."
 
 
             }

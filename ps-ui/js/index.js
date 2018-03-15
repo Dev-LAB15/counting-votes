@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
         this.window.location = 'tellerlogin.html';
         return;
     }
-    
+
 
     var vm = new Vue({
         i18n,
@@ -17,6 +17,9 @@ window.addEventListener('load', function () {
                 code: '',
                 role: '3'
             }
+        },
+        mounted: function () {
+            $('#app').fadeIn();
         },
         methods: {
             requestVerification: function (event) {
@@ -56,6 +59,8 @@ window.addEventListener('load', function () {
                 $('#sign-in-modal').modal();
             },
             requestCreatePassword: function (event) {
+                $('#create-password-modal').modal('hide');
+                $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/createpassword', vm.model)
                     .then(resp => {
                         window.localStorage.chairman = resp.data.user;
@@ -72,7 +77,8 @@ window.addEventListener('load', function () {
                     );
             },
             requestSignIn: function (event) {
-
+                $('#sign-in-modal').modal('hide');
+                $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/signin', vm.model)
                     .then(resp => {
                         window.localStorage.chairman = resp.data.user;

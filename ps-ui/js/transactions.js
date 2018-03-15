@@ -65,6 +65,7 @@ window.addEventListener('load', function () {
             }
         },
         mounted: function () {
+            $('#app').fadeIn();
             this.getScans();
             this.getVotes();
         }

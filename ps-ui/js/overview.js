@@ -27,6 +27,7 @@ window.addEventListener('load', function () {
             }
         },
         mounted: function () {
+            $('#app').fadeIn();
             axios.get(apiEndpoint + '/overview/report/', axiosHeaders)
                 .then(res => {
 

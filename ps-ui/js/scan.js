@@ -31,6 +31,7 @@ window.addEventListener('load', function () {
             }
         },
         mounted: function () {
+            $('#app').fadeIn();
             setInterval(fetchTransactions, 15000);
         },
         methods: {

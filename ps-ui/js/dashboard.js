@@ -20,6 +20,9 @@ window.addEventListener('load', function () {
             }
         },
         methods: {
+        },
+        mounted: function () {
+            $('#app').fadeIn();
         }
 
     });

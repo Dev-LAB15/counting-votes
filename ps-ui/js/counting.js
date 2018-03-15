@@ -10,6 +10,9 @@ window.addEventListener('load', function () {
             chairman: this.window.localStorage.chairman,
             tellers: getTellers()
         },
+        mounted: function () {
+            $('#app').fadeIn();
+        },
         methods: {
             registerVote: function (voteId) {
 

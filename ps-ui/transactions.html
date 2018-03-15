@@ -24,7 +24,7 @@
 </head>
 
 <body>
-	<div id="app" class="main transactions">
+	<div id="app" class="main transactions" style="display: none">
 		<header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
 			<div class="col-md-3">
 				<a class="nav" href="dashboard.html">
@@ -43,51 +43,51 @@
 			</div>
 		</header>
 
-        <section class="cv-fullwidth has-header scroll">
-            <article>
-                <div class="page-title page-title-sm">
-                    <h5>{{$t('message.scannedPollingCards')}}</h5>
-                </div>
+		<section class="cv-fullwidth has-header scroll">
+			<article>
+				<div class="page-title page-title-sm">
+					<h5>{{$t('message.scannedPollingCards')}}</h5>
+				</div>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">{{$t('message.hash')}}</th>
-                            <th scope="col" width="25%" class="text-right">{{$t('message.dateTime')}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in scans">
-                            <td>{{item.transactionHash}}</td>
-                            <td class="text-right">{{item.timestamp}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">{{$t('message.hash')}}</th>
+							<th scope="col" width="25%" class="text-right">{{$t('message.dateTime')}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="item in scans">
+							<td>{{item.transactionHash}}</td>
+							<td class="text-right">{{item.timestamp}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</article>
 
-            <article>
-                <div class="page-title page-title-sm">
-                    <h5>{{$t('message.registeredVotes')}}</h5>
-                </div>
+			<article>
+				<div class="page-title page-title-sm">
+					<h5>{{$t('message.registeredVotes')}}</h5>
+				</div>
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">{{$t('message.hash')}}</th>
-                            <th scope="col">{{$t('message.voteType')}}</th>
-                            <th scope="col" width="25%" class="text-right">{{$t('message.dateTime')}}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in votes">
-                            <td>{{item.transactionHash}}</td>
-                            <td>{{item.voteType}}</td>
-                            <td class="text-right">{{item.timestamp}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </article>
-        </section>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">{{$t('message.hash')}}</th>
+							<th scope="col">{{$t('message.voteType')}}</th>
+							<th scope="col" width="25%" class="text-right">{{$t('message.dateTime')}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="item in votes">
+							<td>{{item.transactionHash}}</td>
+							<td>{{item.voteType}}</td>
+							<td class="text-right">{{item.timestamp}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</article>
+		</section>
 	</div>
 	<!-- /main -->
 

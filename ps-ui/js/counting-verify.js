@@ -13,6 +13,7 @@ window.addEventListener('load', function () {
             }
         },
         mounted: function () {
+            $('#app').fadeIn();
             if (vm) {
                 vm.model.message = this.$t('message.verify');
             }

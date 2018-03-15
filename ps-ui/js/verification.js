@@ -3,7 +3,7 @@ window.addEventListener('load', function () {
         this.window.location = 'index.html';
         return;
     }
-    
+
     var vm = new Vue({
         i18n,
         el: '#app',
@@ -11,6 +11,9 @@ window.addEventListener('load', function () {
             chairman: this.window.localStorage.chairman,
             tellers: getTellers(),
             model: {}
+        },
+        mounted: function () {
+            $('#app').fadeIn();
         },
         methods: {
             inputControlNumbers: function () {

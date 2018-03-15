@@ -28,7 +28,7 @@
     <div id="scandit-barcode-picker" class="scanner"></div>
     <div id="scandit-barcode-result" class="result-text" style="display:block;!important"></div>
 
-    <div id="app" class="main scan">
+    <div id="app" class="main scan" style="display: none">
         <header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
             <div class="col-md-3">
                 <a class="nav" href="dashboard.html">
@@ -70,7 +70,8 @@
 
                     <div class="vote-options">
                         <div id="private-power-of-attorney-cancellation" class="private-wrapper">
-                            <p>Scan the <strong>{{$t('message.privateAuthorization')}}</strong> code.</p>
+                            <p>Scan the
+                                <strong>{{$t('message.privateAuthorization')}}</strong> code.</p>
                             <button v-on:click="cancelPrivatePowerOfAttorney" class="btn btn-info">{{$t('message.cancel')}}</button>
                         </div>
                         <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#voter-pass">{{$t('message.voterPass')}}</button>
@@ -255,7 +256,7 @@
     <script src="/js/config.js"></script>
     <script src="/js/scan.js"></script>
     <script>
-        
+
     </script>
 </body>
 
