@@ -66,7 +66,7 @@ module.exports = function (app) {
                         if (i >= result.length - 1)
                             res.json(result);
                         else {
-                            continue;
+                            return;
                         }
                     }
                 });
@@ -109,7 +109,7 @@ module.exports = function (app) {
                         if (i >= result.length - 1)
                             res.json(result);
                         else {
-                            continue;
+                            return;
                         }
                     }
                 });
