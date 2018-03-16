@@ -63,11 +63,7 @@ module.exports = function (app) {
                         if (i == result.length - 1)
                             res.json(result);
                     } else {
-                        if (i >= result.length - 1)
-                            res.json(result);
-                        else {
-                            return;
-                        }
+                        res.json(result);
                     }
                 });
             }
@@ -106,11 +102,7 @@ module.exports = function (app) {
                         if (i >= result.length - 1)
                             res.json(result);
                     } else {
-                        if (i >= result.length - 1)
-                            res.json(result);
-                        else {
-                            return;
-                        }
+                        res.json(result);
                     }
                 });
             }
