@@ -1,4 +1,3 @@
-var addressConfig = require('../../address.config.json');
 var config = require('../../config.json');
 let contract = require('../contracts/polling.station.contract');
 var blockchainService = require('./blockchain.service');
@@ -10,7 +9,7 @@ var blockchainService = require('./blockchain.service');
  */
 module.exports.recordVoter = function (wallet, qrCodeHash, voterType, callback) {
     var _params = [{ type: 'bytes32', value: qrCodeHash }, { type: 'uint8', value: voterType }];
-    blockchainService.executeFunction(wallet, addressConfig.PollingStation, 'recordVoter', _params, callback);
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, 'recordVoter', _params, callback);
 }
 
 /**
@@ -45,7 +44,7 @@ module.exports.recordVote = function (voteOption, wallet, callback) {
             methodName = "invalid";
             break;
     }
-    blockchainService.executeFunction(wallet, addressConfig.PollingStation, methodName, _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
 }
 /**
  * Signs in the current user assynchronously.
@@ -56,7 +55,7 @@ module.exports.signIn = function (wallet, callback) {
     let _params = [];
     let methodName = "signIn";
 
-    blockchainService.executeFunction(wallet, addressConfig.PollingStation, methodName, _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
 }
 
 /**
@@ -71,7 +70,7 @@ module.exports.inputControlNumbers = function (wallet, pollingCards, powerOfAtto
     let _params = [{ type: "uint256", value: pollingCards }, { type: "uint256", value: powerOfAttorneys }, { type: "uint256", value: voterPasses }];
     let methodName = "inputControlNumbers";
 
-    blockchainService.executeFunction(wallet, addressConfig.PollingStation, methodName, _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
 }
 
 /**
@@ -87,7 +86,7 @@ module.exports.verifyVotes = function (wallet, yesCount, noCount, blankCount, in
     let _params = [{ type: "uint256", value: yesCount }, { type: "uint256", value: noCount }, { type: "uint256", value: blankCount }, { type: "uint256", value: invalidCount }];
     let methodName = "verifyVotes";
 
-    blockchainService.executeFunction(wallet, addressConfig.PollingStation, methodName, _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
 }
 
 /**
@@ -99,7 +98,7 @@ module.exports.recount = function (wallet, callback) {
     let _params = [];
     let methodName = "recount";
 
-    blockchainService.executeFunction(wallet, addressConfig.PollingStation, methodName, _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
 }
 
 /**
@@ -110,7 +109,7 @@ module.exports.recount = function (wallet, callback) {
  */
 module.exports.signOff = function (wallet, explanation, callback) {
     let _params = [{ type: "string", value: explanation }];
-    blockchainService.executeFunction(wallet, addressConfig.PollingStation, "signOff", _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, "signOff", _params, callback, "0");
 }
 /**
  * Fires the beginVotingSession smart contract funcion in order to enable polling station transactions on
@@ -119,7 +118,7 @@ module.exports.signOff = function (wallet, explanation, callback) {
  */
 module.exports.beginVotingSession = function (callback) {
     let _params = [];
-    blockchainService.executeFunction(config.blockchain.owner, addressConfig.PollingStation, "beginVotingSession", _params, callback, "0");
+    blockchainService.executeFunction(config.blockchain.owner, config.blockchain.pollingStationAddress, "beginVotingSession", _params, callback, "0");
 }
 /**
  * Captures the VoteSessionBegun event

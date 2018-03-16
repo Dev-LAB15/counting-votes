@@ -76,5 +76,5 @@ exports.getWallet = function (email, password) {
  */
 exports.setUserRole = function (email, address, callback) {
     let _params = [{ type: "address", value: address }, { type: "string", value: email }];
-    blockchainService.executeFunction(config.blockchain.owner, addressConfig.PollingStation, "setUserRole", _params, callback, config.blockchain.defaultValueInEther);
+    blockchainService.executeFunction(config.blockchain.owner, config.blockchain.pollingStationAddress, "setUserRole", _params, callback, config.blockchain.defaultValueInEther);
 }

@@ -70,7 +70,7 @@ module.exports = function (app) {
 				vcodes.save(vcode);
 				if (app.config.useVerificationCode) {
 					mailService.sendVerificationCode(req.body.email, "", code);
-				}			
+				}
 				res.json({ message: 'Please check your email address to get the verification code', isActive: active });
 			});
 		});
@@ -167,21 +167,20 @@ module.exports = function (app) {
 											confirmed = true;
 										}
 									}
-									if (!confirmed) {
-										getUserAddedEvent(receipt);
+								}
+								if (!confirmed) {
+									getUserAddedEvent(receipt);
+								}
+								else {
+									if (req.body.role == '3') {
+										pollingStationService.beginVotingSession(function (beginVotingSessionReceipt) {
+											getVotingSessionBeganEvent(beginVotingSessionReceipt.message);
+										});
+									} else {
+										pollingStationService.signIn(wallet, function (signInReceipt) {
+											getSignedInEvent(signInReceipt.message);
+										});
 									}
-									else {
-										if (req.body.role == '3') {
-											pollingStationService.beginVotingSession(function (beginVotingSessionReceipt) {
-												getVotingSessionBeganEvent(beginVotingSessionReceipt.message);
-											});
-										} else {
-											pollingStationService.signIn(wallet, function (signInReceipt) {
-												getSignedInEvent(signInReceipt.message);
-											});
-										}
-									}
-
 								}
 							});
 						}

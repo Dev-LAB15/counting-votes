@@ -27,7 +27,7 @@ contract Permissions {
     
     mapping (address => uint8) internal roles;
     
-    event UserAdded(Role role);
+    event UserAdded(bool success, string message, string email, address userAddress, Role role);
     event UserCreationFailed(address uAddress, string email);
     event NotAllowed(string message);
    
@@ -42,12 +42,12 @@ contract Permissions {
    
     function setUserRole(address user, string email) public _isOwner() payable {
         Role userRole = Role(userActivationContract.getRoleId(email));
-        
-        if (userRole != Role.Unknown) {
+
+        if (userRole > Role.Unknown && userRole <= Role.Teller) {
             roles[user] = uint8(userRole);
-            UserAdded(Role(userRole));
+            UserAdded(true, "User Added", email, user, Role(userRole));
         } else {
-            UserCreationFailed(user, email);
+            UserAdded(false, "User Creation Failed", email, user, Role(userRole));
         }
     }
     
