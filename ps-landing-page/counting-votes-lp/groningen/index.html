@@ -9,11 +9,12 @@
 		<meta name="keywords" content="" />
 		<meta name="author" content="LAB15" />
 		
-		<base href="https://www.stemmen-telt.nl/groningen">
+		<!-- <base href="https://www.stemmen-telt.nl/groningen"> -->
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/>
 		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"/>
+		<link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
 		<link rel="stylesheet" type="text/css" href="css/main.min.css" />
 		<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,700" rel="stylesheet">
 
@@ -30,9 +31,9 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="#home">Home</a>
 					</li>
-					<!-- <li class="nav-item">
-						<a class="nav-link" href="#election-results">Verkiezingsuitslag</a>
-					</li> -->
+					<li class="nav-item">
+						<a class="nav-link" href="#results">Verkiezingsuitslag</a>
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#pilot">De Pilot</a>
 					</li>
@@ -69,9 +70,9 @@
 							</svg>
 						</a>
 					</li>
-					<!-- <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link" href="transactions.html">Transacties</a>
-					</li> -->
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/groningen/faq.html">FAQ</a>
 					</li>
@@ -90,32 +91,261 @@
 							<p>Een pilot van de gemeente om nog betrouwbaarder te stemmen</p>
 							<img src="img/svg/date.svg" class="date img-fluid">
 
-							<div id="countdown">
-								<div class="item">
-									<span class="days"></span>
-									<small>dagen</small>
-								</div>
+							<!-- before elections only -->
+								<div id="countdown">
+									<div class="item">
+										<span class="days"></span>
+										<small>dagen</small>
+									</div>
 
-								<div class="item">
-									<span class="hours"></span>
-									<small>uren</small>
-								</div>
+									<div class="item">
+										<span class="hours"></span>
+										<small>uren</small>
+									</div>
 
-								<div class="item">
-									<span class="minutes"></span>
-									<small>min</small>
-								</div>
+									<div class="item">
+										<span class="minutes"></span>
+										<small>min</small>
+									</div>
 
-								<div class="item">
-									<span class="seconds"></span>
-									<small>sec</small>
+									<div class="item">
+										<span class="seconds"></span>
+										<small>sec</small>
+									</div>
 								</div>
-							</div>
+							<!-- / --> 
+
+							<!-- during elections only -->
+								<!-- <p>Opkomstpercentage</p>
+								<div class="circle mb-4" id="avg-rate"></div> -->
+							<!-- / --> 
 
 							<a href="#pilot" class="btn btn-primary goto">Bekijk Meer</a>
 						</div>
 					</div><!-- /content -->
 				</section><!-- /home -->
+
+				<section id="results" class="section results">
+					<div class="container text-center top">
+						<div class="row justify-content-md-center">
+							<div class="col col-lg-8">
+								<h2>Verkiezingsuitslag</h2>
+								
+								<div class="ps-filter form-row justify-content-md-center">
+									<p class="col-12 text-center">Select a Polling Station if you would like to see local results:</p>
+									<div class="select col-12 col-md-6 mb-0">
+										<select class="form-control">
+											<option value="1">Groningen</option>
+											<option value="2">Polling Station #1</option>
+											<option value="3">Polling Station #2</option>
+											<option value="4">Polling Station #3</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="report">
+						<!-- real time -->
+						<div class="total">
+							<div class="container">
+								<div class="row justify-content-md-center yes">
+									<div class="col-3 col-lg-3">
+										<h3>yes</h3>
+									</div>
+									
+									<div class="col-5 col-lg-6">
+										<div class="progress">
+											<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-speed="800"></div>
+										</div>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="800">178</h2>
+									</div>
+								</div>
+			
+								<div class="row justify-content-md-center no">
+									<div class="col-3 col-lg-3">
+										<h3>no</h3>
+									</div>
+									
+									<div class="col-5 col-lg-6">
+										<div class="progress">
+											<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-speed="1000"></div>
+										</div>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="1000">110</h2>
+									</div>
+								</div>
+			
+								<div class="row justify-content-md-center blank">
+									<div class="col-3 col-lg-3">
+										<h3>blank</h3>
+									</div>
+									
+									<div class="col-5 col-lg-6">
+										<div class="progress">
+											<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-speed="3000"></div>
+										</div>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="3000">21</h2>
+									</div>
+								</div>
+			
+								<div class="row justify-content-md-center invalid">
+									<div class="col-3 col-lg-3">
+										<h3>invalid</h3>
+									</div>
+									
+									<div class="col-5 col-lg-6">
+										<div class="progress">
+											<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" data-speed="5200"></div>
+										</div>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="5200">3</h2>
+									</div>
+								</div>
+							</div>
+						
+							<div class="total-bar">
+								<div class="container">
+									<div class="row justify-content-md-center">
+										<div class="col-8 col-lg-8 offset-lg-1">
+											<h3>total registered votes</h3>
+										</div>
+			
+										<div class="col-4 col-lg-3">
+											<h2 class="counter" data-votes="0" data-speed="350">312</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- /total -->
+						
+						<div class="admitted">
+							<div class="container">
+								<div class="page-title">
+									<h5>Admitted voters</h5>
+								</div>
+								
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>collected voter passes</h4>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2>43</h2>
+									</div>
+								</div>
+			
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>collected power of attorneys</h4>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2>18</h2>
+									</div>
+								</div>
+								
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>collected polling cards</h4>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2>251</h2>
+									</div>
+								</div>
+							</div>
+			
+							<div class="total-bar">
+								<div class="container">
+									<div class="row justify-content-md-center">
+										<div class="col-8 col-lg-8 offset-lg-1">
+											<h3>total</h3>
+										</div>
+			
+										<div class="col-4 col-lg-3">
+											<h2>312</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- /admitted -->
+			
+						<!-- real time -->
+						<div class="registered">
+							<div class="container">
+								<div class="page-title">
+									<h5>Registered votes</h5>
+								</div>
+								
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>polling cards</h4>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="800">251</h2>
+									</div>
+								</div>
+			
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>power of attorneys</h4>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="3000">18</h2>
+									</div>
+								</div>
+								
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>objections to pilot</h4>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="5200">3</h2>
+									</div>
+								</div>
+			
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>voter passes</h4>
+									</div>
+			
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="1000">40</h2>
+									</div>
+								</div>
+							</div>
+			
+							<div class="total-bar">
+								<div class="container">
+									<div class="row justify-content-md-center">
+										<div class="col-8 col-lg-8 offset-lg-1">
+											<h3>total</h3>
+										</div>
+			
+										<div class="col-4 col-lg-3">
+											<h2 class="counter" data-votes="0" data-speed="350">312</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- /registered -->
+					</div><!-- /report -->
+				</section>
 
 				<section id="pilot" class="section pilot">
 					<div class="container-fluid">
@@ -138,25 +368,25 @@
 										<dd>
 											<h3>Proef met Blockchain</h3>
 
-											<p>Het doel van deze proef is om te onderzoeken of de nieuwe technologie van Blockchain de transparantie van het stemproces kan vergroten. Naast de potentiële betrouwbaarheid biedt het ook de mogelijkheid om het stemproces inzichtelijk te maken: de geregistreerde stemmen zijn direct digitaal te volgen, zonder gevolgen voor het stemgeheim. De terugkoppeling van de opkomst geeft stemmers daardoor digitaal in- en toezicht op het stemproces.</p>
+											<p>Het doel van deze proef is om te onderzoeken of blockchaintechnologie ervoor kan zorgen dat het tellen van stemmen tijdens verkiezingen nog betrouwbaarder en transparanter kan verlopen. De proef richt zich expliciet op het digitaal vastleggen en optellen van stemmen en niet op het stemmen zelf. Stemmen worden nog steeds met rood potlood op een papieren stembiljet uitgebracht en in een stembus gegooid. Daarmee is het stemgeheim gegarandeerd.</p>
 										</dd>
 
 										<dd>
-											<h3>Dashboard</h3>
+											<h3>VERKIEZINGSUITSLAGEN</h3>
 
-											<p>In het dashboard rechts wordt op 21 maart het verkiezingsproces op vijf stembureaus weergegeven. Gedurende de dag wordt de opkomst live bijgehouden. Na de sluiting van de stembureaus om 21 uur is ook het tellen van de stemmen hier live te volgen.</p>
+											<p>Gedurende de dag wordt op deze website het opkomstpercentage live bijgehouden. Dit is gebaseerd op het aantal kiesgerechtigden voor de vijf geselecteerde stembureaus en geldt dus niet voor de gemeente als geheel.<br> Waar het in deze proef echter echt om draait, is het transparant en inzichtelijk maken van het stem-tel-proces zelf (tellen, dus niet het stemmen zelf). Na de sluiting van de stembureaus om 21:00 uur is daarom het <strong>tellen</strong> van de stemmen per stembureau hier live te volgen, omdat vanaf dat moment het stemresultaat direct digitaal wordt vastgelegd. Op deze wijze wordt het mogelijk om digitaal toezicht te houden op de uitslag van de verkiezingen.</p>
 										</dd>
 
 										<dd>
 											<h3>Afwijkingen</h3>
 
-											<p>Het kan voorkomen dat het aantal stempassen niet overeenkomt met het aantal stemmen. Dit is mogelijk wanneer een kiezer bijvoorbeeld een ongeldige stempas toont of besluit om het stembiljet mee te nemen. In het proces-verbaal leggen de stembureauleden verantwoording af over het stemproces in hun stembureau. Voor deze proef hebben wij geen inzicht in deze afwijkingen en kunnen daarom mogelijke verschillen niet verklaren. De processen-verbaal zijn later wel terug te vinden op de website van de kiesraad: kiesraad.nl</p>
+											<p>Het kan voorkomen dat het aantal stempassen niet overeenkomt met het aantal stemmen. Dit is mogelijk wanneer een kiezer bijvoorbeeld een ongeldige stempas toont of besluit om het stembiljet mee te nemen. In het proces-verbaal leggen de stembureauleden verantwoording af over het stemproces in hun stembureau. Voor deze proef hebben wij geen inzicht in deze afwijkingen en kunnen daarom mogelijke verschillen niet verklaren. De processen-verbaal zijn later wel terug te vinden op de website van de kiesraad: <a href="https://www.kiesraad.nl/" target="_blank">kiesraad.nl</a></p>
 										</dd>
 
 										<dd>
 											<h3>Samenwerking</h3>
 
-											<p>Deze Blockchain proef is een samenwerking tussen de gemeente Groningen, Berenschot en technologiepartner LAB15.</p>
+											<p>Deze Blockchain proef is een samenwerking tussen de gemeente <a href="https://gemeente.groningen.nl/" target="_blank">Groningen</a>, <a href="https://www.berenschot.nl/" target="_blank">Berenschot</a> en technologiepartner <a href="http://lab15.io/" target="_blank">LAB15</a>.</p>
 										</dd>
 									</dl>
 								</div>
@@ -205,8 +435,9 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-		<script src="js/main.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/circles/0.0.6/circles.min.js"></script>
 		<script src="js/jquery.countdown.min.js"></script>
+		<script src="js/main.min.js"></script>
 		<script src="js/home.min.js"></script>
 		<!-- /base -->
 	</body>

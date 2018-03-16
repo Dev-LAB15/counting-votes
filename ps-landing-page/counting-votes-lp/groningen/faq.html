@@ -27,13 +27,13 @@
 			<header id="header" class="navbar navbar-expand flex-column flex-md-row">
 				<ul id="menu" class="nav justify-content-center">
 					<li class="nav-item">
-						<a class="nav-link" href="#home">Home</a>
+						<a class="nav-link" href="./#home">Home</a>
 					</li>
-					<!-- <li class="nav-item">
-						<a class="nav-link" href="#election-results">Verkiezingsuitslag</a>
-					</li> -->
 					<li class="nav-item">
-						<a class="nav-link" href="#pilot">De Pilot</a>
+						<a class="nav-link" href="./#election-results">Verkiezingsuitslag</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="./#pilot">De Pilot</a>
 					</li>
 					<li class="nav-item logo">
 						<a href="#home" class="navbar-brand goto" title="Stemmen Telt!">
@@ -68,14 +68,14 @@
 							</svg>
 						</a>
 					</li>
-					<!-- <li class="nav-item">
+					<li class="nav-item">
 						<a class="nav-link" href="transactions.html">Transacties</a>
-					</li> -->
+					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="faq.html">FAQ</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link goto" href="#contact">Contact</a>
+						<a class="nav-link goto" href="./#contact">Contact</a>
 					</li>
 				</ul>
 			</header>
@@ -148,7 +148,12 @@
 									    </div>
 									    <div id="block_04" class="collapse" data-parent="#accordion">
 									      <div class="card-body">
-									        De burger krijgt een stempas thuis gestuurd. Als hij/zij deze meeneemt naar het stembureau wordt deze één keer extra gescand VOORDAT het normale proces doorlopen wordt. De iPad scant de QR-code op de stembas en slaat deze (geen verdere informatie) versleuteld op in de blockchain. Gedurende de dag is de opkomst real-time te volgen waarna aan het eind van de dag gekeken wordt of het opgebouwde controlegetal overeenkomt met de telling van het totaal aantal uitgebrachte stemmen.
+									        Blockchain wordt op twee manieren ingezet om stemmen te tellen en controleerbaar te maken:<br>
+													<ol>
+														<li>Er wordt nog steeds een papieren stembiljet gebruikt waarop met rood potlood gestemd kan worden. Deze deponeert een stemgerechtigde in de stembus en brengt daarmee anoniem zijn stem uit. Wanneer de stembureaus op 21 maart na 21.00 sluiten, wordt de stembus met papieren stembiljetten geleegd en start het tellen. Parallel aan het normale telproces wordt als proef ook elke stem handmatig geregistreerd in een digitale blockchain-applicatie. Real-time is via deze website te volgen welke stemmen geteld worden na 21.00 en is dat voor iedereen transparant en controleerbaar omdat dit onwijzigbaar wordt vastgelegd.
+														</li>
+														<li>De hoeveelheid getelde stemmen moet overeenkomen met controlegetallen. Eén van die controlegetallen is het totaal aantal stempassen dat tijdens de verkiezingsdag is ingeleverd. Stemgerechtigden hebben een stempas thuis gestuurd gekregen. Als zij deze meenemen naar het stembureau, wordt deze bij de proef één keer extra gescand VOORDAT het normale proces doorlopen wordt. De tablet scant de QR-code op de stempas en slaat deze (zonder verdere informatie) versleuteld op in de blockchain. Gedurende de dag is de opkomst real-time via deze website te volgen, waarna aan het eind van de dag gekeken wordt of het opgebouwde controlegetal overeenkomt met de telling van het totaal aantal uitgebrachte stemmen.</li>
+													</ol>
 									      </div>
 									    </div>
 								    </div>
@@ -271,13 +276,13 @@
 									    <div class="card-header">
 									      <h5 class="mb-0">
 									        <button class="btn btn-info btn-block collapsed" data-toggle="collapse" data-target="#pilot_6" aria-expanded="false">
-									          Waarom doen jullie deze pilot?
+														Waarom doen jullie deze proef?
 									        </button>
 									      </h5>
 									    </div>
 									    <div id="pilot_6" class="collapse" data-parent="#accordion">
 									      <div class="card-body">
-									        Het doel dat de gemeente Groningen samen met Berenschot en LAB15 nastreeft is de versterking van onze democratie door fout- en fraudevrije referenda en verkiezingen mogelijk te maken. Om dit te bereiken voeren wij deze poef uit waarbij blockchain technologie wordt ingezet om het telproces van stemmen bij referenda en verkiezingen betrouwbaarder te maken.
+														Het doel dat de gemeente Groningen samen met Berenschot en LAB15 nastreeft is de versterking van (onze) democratie door fout- en fraudevrije referenda en verkiezingen mogelijk te maken. Om dit te bereiken voeren wij deze poef uit, waarbij blockchain technologie wordt ingezet om het telproces van stemmen bij referenda en verkiezingen transparanter en controleerbaarder te maken.
 									      </div>
 									    </div>
 								    </div>
@@ -401,7 +406,7 @@
 
 									    <div id="privacy_1" class="collapse" data-parent="#accordion">
 									      <div class="card-body">
-									        Nee. Uw stem blijft, evenals binnen het reguliere stemproces, volledig anoniem.
+														Nee. Uw stem blijft volledig anoniem. U brengt uw stem uit in het reguliere stemproces met een rood potlood op een papieren stembiljet en u gooit dat in de stembus. Daarmee is de anonimiteit van uw stem gegarandeerd.
 									      </div>
 									    </div>
 									</div>
@@ -417,7 +422,7 @@
 
 									    <div id="privacy_2" class="collapse" data-parent="#accordion">
 									      <div class="card-body">
-									        Nee. Het enige dat in de pilot wordt gebruikt, is uw QR code. Wij slaan een versleutelde (hash + salt) versie van deze code op. Deze versleuteling maakt het - zelfs als er een lek plaatsvindt - zeer onwaarschijnlijk dat uw QR code bekend wordt. Vervolgens moet iemand in bezit komen van de verkiezingsinformatie waarin QR code en namen aan elkaar verbonden worden.
+														Nee. Deze proef slaat als controlegetal de QR code van uw stempas op. De QR code bevat geen persoonsgegevens, de QR code bevat alleen de datum (21 maart 2018) en locatie van het stembureau.
 									      </div>
 									    </div>
 									</div>
@@ -433,7 +438,7 @@
 
 									    <div id="privacy_3" class="collapse" data-parent="#accordion">
 									      <div class="card-body">
-									        We slaan de QR-codes versleuteld op. Daarbij staan de iPads die wij gebruiken los van het Register Ongeldige Stempassen (ROS). Om een verband te vinden met persoonsgegevens dienen de QR-codes gekoppeld te worden aan het ROS.
+														De proef slaat geen persoonsgegevens op. De proef heeft geen koppeling met het Register Ongeldige Stempassen (ROS). De gescande QR codes bevatten alleen de datum en locatie van het stembureau en worden versleuteld opgeslagen.
 									      </div>
 									    </div>
 									</div>

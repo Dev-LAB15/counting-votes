@@ -303,30 +303,28 @@ header {
         color: #000; }
     header.navbar .navbar-brand img {
       max-width: 300px; }
-    header.navbar .signed-user {
-      color: #9B9B9B; }
-      header.navbar .signed-user strong {
-        color: #000; }
-      header.navbar .signed-user .users {
-        vertical-align: middle;
-        margin: 0 0 0 25px;
-        padding: 0;
-        display: inline-flex;
-        direction: rtl; }
-        header.navbar .signed-user .users li {
-          margin: 0 -15px 0 0; }
-          header.navbar .signed-user .users li:first-child {
-            margin-right: 0; }
-        header.navbar .signed-user .users .pic {
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-          border: 3px solid #fff;
-          overflow: hidden;
-          display: block;
-          margin: 0; }
-          header.navbar .signed-user .users .pic img {
-            width: 100%; }
+    header.navbar .signed-user strong {
+      color: #000; }
+    header.navbar .signed-user .users {
+      vertical-align: middle;
+      margin: 0 0 0 25px;
+      padding: 0;
+      display: inline-flex;
+      direction: rtl; }
+      header.navbar .signed-user .users li {
+        margin: 0 -15px 0 0; }
+        header.navbar .signed-user .users li:first-child {
+          margin-right: 0; }
+      header.navbar .signed-user .users .pic {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        overflow: hidden;
+        display: block;
+        margin: 0; }
+        header.navbar .signed-user .users .pic img {
+          width: 100%; }
 
 #main-menu {
   position: fixed;
@@ -632,31 +630,6 @@ footer {
     border: none; }
     .modal .modal-dialog .modal-footer .btn.btn-block {
       border-radius: 0px; }
-.modal.success {
-  background: transparent;
-  color: #fff;
-  -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
-  transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
-  .modal.success h1 {
-    font-weight: 400;
-    margin-bottom: 0px; }
-  .modal.success .icon {
-    font-size: 420px;
-    display: block;
-    margin-bottom: 60px;
-    opacity: 0;
-    visibility: hidden;
-    -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
-    transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
-    -webkit-transform: scale3d(1.5, 1.5, 1);
-    transform: scale3d(1.5, 1.5, 1); }
-  .modal.success.show {
-    background: #734FC1; }
-    .modal.success.show h1 .icon {
-      opacity: 1;
-      visibility: visible;
-      -webkit-transform: scale3d(1, 1, 1);
-      transform: scale3d(1, 1, 1); }
 .modal.fade .modal-dialog {
   -webkit-transform: translate(0, 25%);
   transform: translate(0, 25%); }
@@ -1113,23 +1086,32 @@ footer {
   margin: 0 120px 60px 120px; }
   .main.transactions article:last-child {
     margin-bottom: 120px; }
-.main.sign-out article {
-  margin: 120px; }
-.main.sign-out .table th,
-.main.sign-out .table td {
-  vertical-align: middle; }
-.main.sign-out .icon.icon-check {
-  width: 80px;
-  height: 80px;
-  line-height: 80px;
-  display: block;
-  vertical-align: middle;
-  font-size: 38px;
-  text-align: center;
-  background: #ADE673;
-  border-radius: 50%;
+
+#success {
+  background: transparent;
   color: #fff;
-  margin: 0 auto; }
+  -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
+  transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
+  #success h1 {
+    font-weight: 400;
+    margin-bottom: 0px; }
+  #success .icon {
+    font-size: 420px;
+    display: block;
+    margin-bottom: 60px;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
+    transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
+    -webkit-transform: scale3d(1.5, 1.5, 1);
+    transform: scale3d(1.5, 1.5, 1); }
+  #success.show {
+    background: #734FC1; }
+    #success.show h1 .icon {
+      opacity: 1;
+      visibility: visible;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1); }
 
 @keyframes menu_items {
   0% {

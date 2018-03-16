@@ -403,6 +403,8 @@ header
 				max-width: 300px
 
 		.signed-user
+			color: $darkgray
+
 			strong
 				color: $black
 
@@ -806,6 +808,37 @@ footer
 			.btn
 				&.btn-block
 					border-radius: 0px
+	
+	&.success
+		background: transparent
+		color: $white
+		-webkit-transition: all .3s $easing
+		transition: all .3s $easing
+
+		h1
+			font-weight: 400
+			margin-bottom: 0px
+
+		.icon
+			font-size: 420px
+			display: block
+			margin-bottom: 60px
+			opacity: 0
+			visibility: hidden
+			-webkit-transition: all .3s $easing .3s
+			transition: all .3s $easing .3s
+			-webkit-transform: scale3d(1.5,1.5,1)
+			transform: scale3d(1.5,1.5,1)
+			
+		&.show
+			background: $counting
+
+			h1
+				.icon
+					opacity: 1
+					visibility: visible
+					-webkit-transform: scale3d(1,1,1)
+					transform: scale3d(1,1,1)
 
 	&.fade
 		.modal-dialog
@@ -1441,36 +1474,28 @@ footer
 			&:last-child
 				margin-bottom: 120px
 
-#success
-	background: transparent
-	color: $white
-	-webkit-transition: all .3s $easing
-	transition: all .3s $easing
+	&.sign-out
+		article
+			margin: 120px
 
-	h1
-		font-weight: 400
-		margin-bottom: 0px
+		.table
+			th,
+			td
+				vertical-align: middle
 
-	.icon
-		font-size: 420px
-		display: block
-		margin-bottom: 60px
-		opacity: 0
-		visibility: hidden
-		-webkit-transition: all .3s $easing .3s
-		transition: all .3s $easing .3s
-		-webkit-transform: scale3d(1.5,1.5,1)
-		transform: scale3d(1.5,1.5,1)
-		
-	&.show
-		background: $counting
-
-		h1
-			.icon
-				opacity: 1
-				visibility: visible
-				-webkit-transform: scale3d(1,1,1)
-				transform: scale3d(1,1,1)
+		.icon
+			&.icon-check
+				width: 80px
+				height: 80px
+				line-height: 80px
+				display: block
+				vertical-align: middle
+				font-size: 38px
+				text-align: center
+				background: $valid
+				border-radius: 50%
+				color: $white
+				margin: 0 auto
 
 @keyframes menu_items
 	0%

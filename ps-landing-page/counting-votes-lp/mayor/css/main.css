@@ -116,17 +116,6 @@ p {
     padding-right: 15px;
     padding-left: 15px; }
 
-.circles-wrp .circles-text {
-  font-size: 40px !important;
-  font-weight: 300;
-  font-style: italic;
-  color: #F33232; }
-.circles-wrp svg path:first-child {
-  stroke: rgba(0, 0, 0, 0.03); }
-.circles-wrp svg path:last-child {
-  stroke-linecap: round;
-  stroke: #F33232; }
-
 .select {
   position: relative; }
   .select:before {
@@ -570,12 +559,6 @@ footer {
         -moz-border-radius-bottomleft: 5px;
         border-bottom-right-radius: 5px;
         border-bottom-left-radius: 5px; }
-        #fullpage .section.faq #accordion .collapse.show .card-body a {
-          color: #000;
-          -webkit-transition: color 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
-          transition: color 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
-          #fullpage .section.faq #accordion .collapse.show .card-body a:hover {
-            color: #F33232; }
   #fullpage .section.results {
     padding: 180px 0 100px; }
     #fullpage .section.results a:not(.btn) {
@@ -734,6 +717,32 @@ footer {
     border-bottom: 1px solid #EAEAEA;
     border-top: none; }
 
+#success-modal {
+  background: transparent;
+  color: #000;
+  -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
+  transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
+  #success-modal h1 {
+    font-weight: 300;
+    margin-bottom: 0px; }
+  #success-modal .icon {
+    font-size: 100px;
+    display: block;
+    margin-bottom: 50px;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
+    transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88) 0.3s;
+    -webkit-transform: scale3d(1.5, 1.5, 1);
+    transform: scale3d(1.5, 1.5, 1); }
+  #success-modal.show {
+    background: #fff; }
+    #success-modal.show h1 .icon {
+      opacity: 1;
+      visibility: visible;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1); }
+
 @media (max-width: 991px) {
   body {
     font-size: 15px;
@@ -774,77 +783,6 @@ footer {
       #header.navbar .nav li.logo {
         display: none; }
 
-  #fullpage .section.home {
-    background-size: 200px; }
-    #fullpage .section.home .subtitle {
-      margin-bottom: 15px;
-      width: 60%; }
-    #fullpage .section.home .logo {
-      width: 90%;
-      margin-bottom: 15px; }
-    #fullpage .section.home p {
-      font-size: 13px;
-      line-height: 18px;
-      margin-bottom: 15px; }
-    #fullpage .section.home .date {
-      margin-bottom: 20px;
-      width: 60%; }
-    #fullpage .section.home #countdown {
-      padding: 20px 0; }
-      #fullpage .section.home #countdown .item {
-        width: 55px;
-        display: inline-block; }
-        #fullpage .section.home #countdown .item span {
-          font-size: 30px;
-          line-height: 34px; }
-        #fullpage .section.home #countdown .item small {
-          font-size: 10px; }
-    #fullpage .section.home .btn {
-      margin-top: 0px; }
-  #fullpage .section.pilot {
-    padding: 120px 0 80px 0; }
-    #fullpage .section.pilot .cv-fullwidth {
-      height: auto;
-      display: block; }
-      #fullpage .section.pilot .cv-fullwidth .cv-vertical-align {
-        display: block;
-        height: auto; }
-    #fullpage .section.pilot .mockup-wrapper {
-      padding: 0 0 60px 0;
-      height: auto;
-      display: block; }
-      #fullpage .section.pilot .mockup-wrapper > h2 {
-        text-align: center; }
-      #fullpage .section.pilot .mockup-wrapper .mockup {
-        border-radius: 5px;
-        -webkit-box-shadow: 15px 15px 0px 0px rgba(0, 0, 0, 0.03);
-        -moz-box-shadow: 15px 15px 0px 0px rgba(0, 0, 0, 0.03);
-        box-shadow: 15px 15px 0px 0px rgba(0, 0, 0, 0.03); }
-    #fullpage .section.pilot .info {
-      padding: 0 10px; }
-  #fullpage .section.contact {
-    padding: 120px 0 80px 0; }
-    #fullpage .section.contact .form {
-      margin-top: 40px; }
-      #fullpage .section.contact .form .form-group {
-        margin-bottom: 15px; }
-  #fullpage .section.faq {
-    padding: 120px 10px 60px; }
-    #fullpage .section.faq h2 {
-      padding: 8px 0;
-      min-height: 40px; }
-      #fullpage .section.faq h2 span {
-        font-size: 40px;
-        line-height: 40px; }
-    #fullpage .section.faq #accordion .card .card-header .btn {
-      font-size: 16px;
-      padding: 30px 20px;
-      white-space: normal; }
-      #fullpage .section.faq #accordion .card .card-header .btn.collapsed {
-        padding: 20px; }
-    #fullpage .section.faq #accordion .card-body {
-      padding: 20px;
-      font-size: 14px; }
   #fullpage .section.results {
     padding: 120px 0px 60px; }
     #fullpage .section.results > .container {
@@ -864,17 +802,6 @@ footer {
           margin-left: 0px;
           margin-right: 0px; }
       #fullpage .section.results .report .total-bar {
-        margin-top: 60px; }
-  #fullpage .section.transactions {
-    padding: 120px 0px 60px; }
-    #fullpage .section.transactions > .container {
-      padding-left: 30px;
-      padding-right: 30px; }
-    #fullpage .section.transactions .page-title {
-      margin-top: 60px;
-      margin-bottom: 30px; }
-      #fullpage .section.transactions .page-title h5 {
-        font-size: 16px;
-        line-height: 22px; } }
+        margin-top: 60px; } }
 
 /*# sourceMappingURL=main.css.map */

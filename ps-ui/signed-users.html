@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Counting Votes</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="author" content="LAB15" />
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="sass/main.min.css" />
+	<link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+	<div id="app" class="main sign-out">
+		<header class="navbar navbar-expand flex-column flex-md-row bd-navbar">
+			<div class="col-md-3">
+				<a class="nav" href="dashboard.html">
+					<i class="icon icon-chevron-left"></i>
+				</a>
+			</div>
+
+			<div class="col-md-6 text-center">
+				<h1 class="title">{{$t('message.signedInUsers')}}</h1>
+			</div>
+
+			<div class="col-md-3">
+				<a href="dashboard.html" class="navbar-toggler">
+					<i class="icon icon-menu"></i>
+				</a>
+			</div>
+		</header>
+
+        <section class="cv-fullwidth has-header scroll">
+            <article>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">name</th>
+                            <th scope="col">role</th>
+                            <th scope="col">signed in</th>
+                            <th scope="col" class="text-center" width="20%">sign out</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John F. Doe</td>
+                            <td>Chairman</td>
+                            <td>10/03/2018 - 10:14:19</td>
+                            <td class="text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sign-out-modal">sign out</button></td>
+                        </tr>
+
+                        <tr>
+                            <td>Albert H. Schumann</td>
+                            <td>Teller</td>
+                            <td>10/03/2018 - 10:14:19</td>
+                            <td class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#sign-out-modal">sign out</button></td>
+                        </tr>
+
+                        <tr>
+                            <td>Robert J. Johnson</td>
+                            <td>Teller</td>
+                            <td>10/03/2018 - 10:14:19</td>
+                            <td class="text-center"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#sign-out-modal">sign out</button></td>
+                        </tr>
+
+                        <tr>
+                            <td>Michael S. Scaletti</td>
+                            <td>Teller</td>
+                            <td>10/03/2018 - 10:14:19</td>
+                            <td class="text-center"><i class="icon icon-check"></i></td>
+                        </tr>
+
+                        <tr>
+                            <td>Abraham L. Courtington</td>
+                            <td>Teller</td>
+                            <td>10/03/2018 - 10:14:19</td>
+                            <td class="text-center"><i class="icon icon-check"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+	</div>
+    <!-- /main -->
+    
+    <div class="modal fade success" id="sign-out-modal" tabindex="-1" role="dialog" aria-labelledby="success" aria-hidden="true" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog cv-fullwidth" role="document">
+            <div class="cv-vertical-align text-center">
+                <h1><i class="icon icon-verification"></i>you are successfully<br> signed out!</h1>
+            </div>
+        </div>
+    </div>
+
+	<!-- base -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/7.4.2/vue-i18n.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-toasted/1.1.24/vue-toasted.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<!-- /base -->
+
+	<script src="/lang/en.js"></script>
+	<script src="/js/config.js"></script>
+	<script src="/js/signed-in-users.js"></script>
+</body>
+
+</html>
