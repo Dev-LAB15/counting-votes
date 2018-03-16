@@ -57,10 +57,18 @@ module.exports = function (app) {
 
             for (let i = 0; i < result.length; i++) {
                 web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
-                    result[i].timestamp = blockResult.timestamp;
-                    console.log(i);
-                    if (i == result.length - 1)
-                        res.json(result);
+                    if (result[i]) {
+                        result[i].timestamp = blockResult.timestamp;
+                        console.log(i);
+                        if (i == result.length - 1)
+                            res.json(result);
+                    } else {
+                        if (i >= result.length - 1)
+                            res.json(result);
+                        else {
+                            continue;
+                        }
+                    }
                 });
             }
         });
@@ -92,10 +100,18 @@ module.exports = function (app) {
 
             for (let i = 0; i < result.length; i++) {
                 web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
-                    result[i].timestamp = blockResult.timestamp;
-                    console.log(i);
-                    if (i == result.length - 1)
-                        res.json(result);
+                    if (result[i]) {
+                        result[i].timestamp = blockResult.timestamp;
+                        console.log(i);
+                        if (i >= result.length - 1)
+                            res.json(result);
+                    } else {
+                        if (i >= result.length - 1)
+                            res.json(result);
+                        else {
+                            continue;
+                        }
+                    }
                 });
             }
         });
@@ -124,6 +140,10 @@ module.exports = function (app) {
             var voterEvents = [];
             for (let i = 0; i < events.length; i++) {
                 let event = events[i];
+                if (!event) {
+                    continue;
+                }
+
                 event.blockNumber;
                 switch (event.event) {
                     case "VoterCleared":

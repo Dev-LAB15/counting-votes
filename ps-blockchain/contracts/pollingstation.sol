@@ -300,6 +300,7 @@ contract PollingStation is Permissions {
         collectedPollingCardCount = pollingCards;
         collectedPowerOfAttorneyCount = powerOfAttorneys;
         collectedVoterPassCount = voterPasses;
+        munContract.inputControlNumbers(pollingCards, powerOfAttorneys, voterPasses);
         ControlNumbersAdded(pollingCards, powerOfAttorneys, voterPasses);
     }
     

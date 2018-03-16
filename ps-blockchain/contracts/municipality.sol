@@ -95,6 +95,12 @@ contract Municipality is Permissions {
         return blank;
     }
     
+    function inputControlNumbers(uint pollingCards, uint powerOfAttorneys, uint voterPasses) public _verifyRole(Role.Chairman) {
+        collectedPollingCardCount = pollingCards;
+        collectedPowerOfAttorneyCount = powerOfAttorneys;
+        collectedVoterPassCount = voterPasses;
+    }
+    
     function recount() public _verifyRole(Role.Chairman) _canVote() {
         uint128 yesTemp = pollingStationYesVotes[msg.sender];
         uint128 noTemp = pollingStationNoVotes[msg.sender];

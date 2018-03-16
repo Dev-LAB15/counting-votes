@@ -28,7 +28,7 @@ module.exports = function (app) {
                         if (evt[i].transactionHash == transaction) {
                             txConfirmed = true;
                             event = evt[i];
-                            countingData.update(transaction);
+                            countingData.update(transaction, 'confirmed', transaction);
                             break;
                         }
                     }
