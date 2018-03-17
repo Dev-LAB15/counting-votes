@@ -13,6 +13,7 @@
     "@sendgrid/mail": "^6.2.1",
     "abi-decoder": "^1.0.9",
     "axios": "^0.17.1",
+    "better-queue": "^3.8.6",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "ethereumjs-util": "^5.1.5",

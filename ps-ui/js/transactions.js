@@ -17,6 +17,7 @@ window.addEventListener('load', function () {
             getScans: function () {
                 axios.get(apiEndpoint + '/transaction/scans', axiosHeaders)
                     .then(res => {
+                        $('#loading-scans').hide();
                         this.scans = [];
                         if (res && res.data && res.data instanceof Array) {
                             for (var i = 0; i < res.data.length; i++) {
@@ -32,6 +33,7 @@ window.addEventListener('load', function () {
             getVotes: function () {
                 axios.get(apiEndpoint + '/transaction/votes', axiosHeaders)
                     .then(res => {
+                        $('#loading-votes').hide();
                         this.votes = [];
                         if (res && res.data && res.data instanceof Array) {
                             for (var i = 0; i < res.data.length; i++) {

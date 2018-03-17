@@ -1,6 +1,40 @@
 var utils = require('../common/utils');
 var countingData = require('../data/counting.data');
 var pollingStationService = require('../services/pollingstation.service');
+var Queue = require('better-queue');
+
+var counter = new Queue(function (task, cb) {
+
+    var option = task.option;
+    var wallet = task.wallet;
+    var response = task.response;
+
+    function trySendResponse(response, status, message) {
+        cb();
+        try {
+            response.status(status).json({ message: message });
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
+    pollingStationService.recordVote(option, (new Date()).getTime().toString(), wallet, function (data) {
+        if (data.status) {
+            pollingStationService.getVoteCounted(function (error, event) {
+                if (event && event.returnValues && event.returnValues.message) {
+                    trySendResponse(response, 200, `vote ${option} recorded`);
+                }
+            });
+            setTimeout(() => {
+                trySendResponse(response, 422, `failed to record vote option ${option} please try again. Error: timeout`);
+            }, 30 * 1000);
+        }
+        else {
+            trySendResponse(response, 422, `failed to record vote option ${option} please try again. Error: ${data.message}`);
+        }
+    });
+});
 
 module.exports = function (app) {
     /**
@@ -9,74 +43,18 @@ module.exports = function (app) {
      * At this moment the transaction is kept waiting, otherwise the
      * webservice will throw a 422 exception.
      */
-    app.post('/counting/vote', function (req, res) {
-        var wallet = req.user.wallet;
-        var option = req.body.option;
-        //converted into a callback in case of retrial
-        //the timeout enables a single retrial recursively
-        //if the transaction is confirmed the setTimeout is ignored.     
-
-        //don't allow the finish counting while a transaction is still in place.
-
-        var voteRecorded_Event = function (transaction) {
-            pollingStationService.getVoteCountedEvent(function (err, evt) {
-                var txConfirmed = false;
-                var event;
-                if (evt && evt instanceof Array && evt.length > 0) {
-                    for (var i = 0; i < evt.length; i++) {
-                        console.log(evt);
-                        if (evt[i].transactionHash == transaction) {
-                            txConfirmed = true;
-                            event = evt[i];
-                            countingData.update(transaction, 'confirmed', transaction);
-                            break;
-                        }
-                    }
-                    if (!txConfirmed)
-                        voteRecorded_Event(transaction);
-                    else {
-                        if (event.returnValues.success)
-                            res.status(200).json({ message: 'ok' });
-                        else
-                            res.status(422).json({ message: event.returnValues.message });
-                    }
-                }
-            });
-        }
-
-        var recordVote = function (_option, _wallet, _callback) {
-            var transaction;
-            pollingStationService.recordVote(option, wallet, function (data) {
-                transaction = data.message;
-                var transactionObject = {
-                    timestamp: utils.timestamp(),
-                    transaction: data.message,
-                    option: option,
-                    status: 'waiting'
-                }
-                countingData.insert(transactionObject);
-
-                //straight call to the event firing procedure
-                voteRecorded_Event(transaction);
-            });
-
-        }
-
-        //call the recordVote again in case the transaction takes too long
-        //or is dropped by the node
-        //this will fire another recursive attempt
-        recordVote(option, wallet, recordVote);
-
+    app.post('/counting/vote', async function (req, res) {
+        counter.push({ wallet: req.user.wallet, option: req.body.option, response: res });
     });
 
     app.get('/counting/canfinish', function (req, res) {
-        var pending = countingData.hasAnyPending();
-        if (pending) {
-            res.status(422).json({ message: 'There are still pending transactions, please wait' });
-        } else {
-            res.send({ message: 'ok' });
+        var ct = counter;
+        if (counter.length == 0) {
+            res.json({ message: 'ok' });
         }
+        else {
+            res.status(422).json({ message: 'please wait the the counting process finish before continuing ' });
+        }
+
     });
-
-
 }

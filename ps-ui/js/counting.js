@@ -8,7 +8,8 @@ window.addEventListener('load', function () {
         el: '#app',
         data: {
             chairman: this.window.localStorage.chairman,
-            tellers: getTellers()
+            tellers: getTellers(),
+            log: []
         },
         mounted: function () {
             $('#app').fadeIn();
@@ -20,15 +21,17 @@ window.addEventListener('load', function () {
                 axios.post(apiEndpoint + '/counting/vote', vote, axiosHeaders)
                     .then(resp => {
                         var msg = vm.$t('message.voteRecorded');
+                        if (resp.data.message)
+                            msg = resp.data.message;
                         this.$toasted.show(msg, {
                             theme: "outline",
                             position: "bottom-center",
                             duration: 3000
                         });
                     }).catch(error => {
-                        var msg = vm.$t('message.');
+                        var msg = error.message;
                         if (error && error.response && error.response.data && error.response.data.message) {
-                            msg = error.response.data.message;
+                            msg += error.response.data.message;
                         }
                         this.$toasted.show(msg, {
                             theme: "bubble",

@@ -238,32 +238,32 @@ contract PollingStation is Permissions {
         return (scannedPollingCardCount, registeredVoterPassCount, scannedPowerOfAttorneyCount, registeredPowerOfAttorneyCount, registeredObjectionCount, collectedPollingCardCount, collectedVoterPassCount, collectedPowerOfAttorneyCount, yesLocal, noLocal, blankLocal, invalidLocal);
     }
     
-    function yes() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
+    function yes(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         yesLocal++;
         munContract.voteYes();
-        VoteCounted(1, true, "");
+        VoteCounted(1, true, timestamp);
     }
     
-    function no() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
+    function no(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         noLocal++;
         munContract.voteNo();
-        VoteCounted(2, true, "");
+        VoteCounted(2, true, timestamp);
     }
     
-    function blank() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
+    function blank(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         blankLocal++;
         munContract.voteBlank();
-        VoteCounted(3, true, "");
+        VoteCounted(3, true, timestamp);
     }
     
-    function invalid() public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
+    function invalid(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         invalidLocal++;
         munContract.voteInvalid();
-        VoteCounted(4, true, "");
+        VoteCounted(4, true, timestamp);
     }
     
     function getVerification() public view returns (bool) {

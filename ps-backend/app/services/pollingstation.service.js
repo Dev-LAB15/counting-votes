@@ -25,10 +25,11 @@ module.exports.setUserRole = function (address, email, callback) {
 /**
  * Records a Vote for a Chairman Polling Station.
  * @param {string} voteOption 
+ * @param {string} timeStamp
  * @param {any} wallet 
  */
-module.exports.recordVote = function (voteOption, wallet, callback) {
-    var _params = [];
+module.exports.recordVote = function (voteOption, timeStamp, wallet, callback) {
+    var _params = [{ type: "string", value: timeStamp }];
     var methodName;
     switch (voteOption) {
         case "vote-yes":
@@ -44,6 +45,7 @@ module.exports.recordVote = function (voteOption, wallet, callback) {
             methodName = "invalid";
             break;
     }
+
     blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
 }
 /**
@@ -97,7 +99,6 @@ module.exports.verifyVotes = function (wallet, yesCount, noCount, blankCount, in
 module.exports.recount = function (wallet, callback) {
     let _params = [];
     let methodName = "recount";
-
     blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
 }
 
@@ -148,7 +149,9 @@ module.exports.getControlNumbersAddedEvent = function (callback) {
 module.exports.getVoteCountedEvent = function (callback) {
     contract.getVoteCountedEvent(callback);
 }
-
+module.exports.getVoteCounted = function (callback) {
+    contract.getVoteCounted(callback);
+}
 module.exports.getUserAddedEvent = function (callback) {
     contract.getUserAddedEvent(callback);
 }

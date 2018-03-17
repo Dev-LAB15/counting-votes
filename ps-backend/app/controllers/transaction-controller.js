@@ -36,7 +36,6 @@ module.exports = function (app) {
         var maxLength = 10;
         var result = [];
         psContract.getVoterClearedEvent(function (err, voterClearedEvents) {
-            var result = [];
             if (voterClearedEvents && voterClearedEvents instanceof Array && voterClearedEvents.length > 0) {
                 voterClearedEvents.reverse();
                 if (voterClearedEvents.length <= 10)
@@ -56,25 +55,24 @@ module.exports = function (app) {
             }
 
             for (let i = 0; i < result.length; i++) {
+                if (!result[i])
+                    continue;
                 web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
                     if (result[i]) {
                         result[i].timestamp = blockResult.timestamp;
-                        console.log(i);
-                        if (i == result.length - 1)
-                            res.json(result);
-                    } else {
-                        res.json(result);
                     }
                 });
             }
         });
+        setTimeout(() => {
+            res.json(result);
+        }, 10 * 1000);
     });
 
     app.get('/transaction/votes', function (req, res) {
         var maxLength = 10;
         var result = [];
         psContract.getVoteCountedEvent(function (err, voteCountedEvents) {
-            var result = [];
             if (voteCountedEvents && voteCountedEvents instanceof Array && voteCountedEvents.length > 0) {
                 voteCountedEvents.reverse();
                 if (voteCountedEvents.length <= 10)
@@ -95,22 +93,21 @@ module.exports = function (app) {
             }
 
             for (let i = 0; i < result.length; i++) {
+                if (!result[i])
+                    continue;
                 web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
                     if (result[i]) {
                         result[i].timestamp = blockResult.timestamp;
-                        console.log(i);
-                        if (i >= result.length - 1)
-                            res.json(result);
-                    } else {
-                        res.json(result);
                     }
                 });
             }
         });
+        setTimeout(() => {
+            res.json(result);
+        }, 10 * 1000);
     });
 
     app.get('/transaction/log', function (req, res) {
-
         var block = web3.eth.getBlock('latest', function (err, res) {
             console.log(res);
             for (var i = 0; i < res.transactions.length; i++) {
@@ -121,11 +118,6 @@ module.exports = function (app) {
                 });
             }
         });
-
-
-
-
-
         mnContract.getPastEvents(function (err, events) {
             var sendBack = true;
             //the voter events can't exceed a maximum value of 10

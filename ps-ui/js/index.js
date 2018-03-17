@@ -63,11 +63,13 @@ window.addEventListener('load', function () {
                 $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/createpassword', vm.model)
                     .then(resp => {
+                        $('#loading-modal').modal('hide');
                         window.localStorage.chairman = resp.data.user;
                         window.localStorage.token = resp.data.token;
                         window.location = 'tellerlogin.html';
                     }
                     ).catch(error => {
+                        $('#loading-modal').modal('hide');
                         this.$toasted.show(error.response.data.message, {
                             theme: "bubble",
                             position: "bottom-center",
@@ -81,11 +83,13 @@ window.addEventListener('load', function () {
                 $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/signin', vm.model)
                     .then(resp => {
+                        $('#loading-modal').modal('hide');
                         window.localStorage.chairman = resp.data.user;
                         window.localStorage.token = resp.data.token;
                         window.location = 'tellerlogin.html';
                     })
                     .catch(error => {
+                        $('#loading-modal').modal('hide');
                         this.$toasted.show(error.response.data.message, {
                             theme: "bubble",
                             position: "bottom-center",

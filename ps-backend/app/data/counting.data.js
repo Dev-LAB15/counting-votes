@@ -30,7 +30,7 @@ module.exports.update = function (transaction, status, signature) {
  */
 module.exports.remove = function (transaction) {
     var results = data.find(({ 'transaction': transaction }));
-    if (results.length == 0) {
+    if (results.length > 0) {
         data.remove(result[0]);
     }
 }

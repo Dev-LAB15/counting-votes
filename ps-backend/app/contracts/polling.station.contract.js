@@ -87,6 +87,10 @@ module.exports.getPastEvents = function (callback) {
 	pollingStation.getPastEvents('allEvents', { fromBlock: 0 }, callback);
 }
 
+module.exports.getVoteCounted = function (callback) {
+	pollingStation.once('VoteCounted', { fromBlock: 0 }, callback);
+}
+
 /**
  * Set a trigger to fire uppon an event
  * @param {string} eventName 
