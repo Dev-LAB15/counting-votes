@@ -78,3 +78,12 @@ exports.setUserRole = function (email, address, callback) {
     let _params = [{ type: "address", value: address }, { type: "string", value: email }];
     blockchainService.executeFunction(config.blockchain.owner, config.blockchain.pollingStationAddress, "setUserRole", _params, callback, config.blockchain.defaultValueInEther);
 }
+/**
+ * Executes the sign out procedure.
+ * @param {wallet} wallet 
+ * @param {funcion(any)} callback 
+ */
+exports.signOut = function (wallet, callback) {
+    let _params = [];
+    blockchainService.executeFunction(config.blockchain.owner, config.blockchain.pollingStationAddress, "signOut", _params, callback, "0");
+}

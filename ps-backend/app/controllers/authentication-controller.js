@@ -403,9 +403,40 @@ module.exports = function (app) {
 	/**
 	 * Executes the signout process
 	 */
-	app.get('/authentication/signout', function (req, res) {
+	app.post('/authentication/signout', function (req, res) {
+		var timeoutStart = utils.timestamp();
+		var wallet = userService.getWallet(req.body.email, req.body.password);
 
-		res.send({ ok: "ok" });
+		var getUserSignedOutEvent = function (transactionHash) {
+			pollingStationService.getUserSignedOutEvent(function (err, userSignedOutEvents) {
+				var timeout = utils.timestamp() - timeoutStart;
+				if (timeout > 30 * 1000) {
+					res.json({ message: 'Request timeout ' });
+					return;
+				}
+
+				var signOutSuccess = false;
+				if (userSignedOutEvents && userSignedOutEvents instanceof Array && userSignedOutEvents.length > 0) {
+					for (var i = 0; i < userSignedOutEvents.length; i++) {
+						if (userSignedOutEvents[i].transactionHash == transactionHash)
+							signOutSuccess = true;
+					}
+				}
+
+				if (signOutSuccess) {
+					res.json({ message: 'Sign out ok' });
+				} else {
+					getUserSignedOutEvent(transactionHash);
+				}
+			});
+		}
+
+		userService.signOut(wallet, function (signOutResult) {
+			if (signOutResult.status)
+				getUserSignedOutEvent(signOutResult.message);
+			else
+				res.status(422).json({ message: 'Failed to sign out' });
+		});
 	});
 
 

@@ -47,6 +47,9 @@ if (ganache) {
 
 promise.then(() => {
 
+
+
+
   /**
    * This request pipe will restablish connections to the contracts in case the connection
    * is lost by a node sleeping or timeout  request.
@@ -69,7 +72,8 @@ promise.then(() => {
       "/authentication/createpassword",
       "/authentication/signin",
       "/authentication/signofftest",
-      "/authentication/signoff"
+      "/authentication/signoff",
+      "/authentication/signout"
     ]
 
     if (anonymousServices.indexOf(req.path) >= 0) {

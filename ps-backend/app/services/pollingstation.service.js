@@ -167,6 +167,9 @@ module.exports.getVerificationDoneEvent = function (callback) {
 module.exports.getSignedOffEvent = function (callback) {
     contract.getSignedOffEvent(callback);
 }
+module.exports.getUserSignedOutEvent = function(callback){
+    contract.getUserSignedOutEvent(callback);
+}
 
 module.exports.canSubmit = function (callback) {
     contract.canSubmit(callback);

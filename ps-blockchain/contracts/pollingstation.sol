@@ -45,7 +45,7 @@ contract PollingStation is Permissions {
     event VoterAlreadyRecorded(bytes32 qrCodeHash);
     event VoterCleared(bytes32 qrCodeHash);
     event UserSignedIn(address userAddress, Role role);
-    event UserSignedOut(address userAddress, Role role);
+    event UserSignedOut(bool success, string message, address userAddress, Role role);
     event VotingFinished(address pollingStation);
     event StaffSignedOff(address staff);
     event SignedOff(address staff, bool success, string message);
@@ -93,17 +93,6 @@ contract PollingStation is Permissions {
         }
         
         if ((currRole == Role.Chairman && signedInChairmenCount == 0) || (currRole == Role.Teller && signedInChairmenCount >= 0)) {
-            _;
-        } else {
-            NotAllowed("Unallowed role or rule violation.");
-        }
-    }
-    
-    modifier _canSignOut() {
-        Role currRole = Role(roles[msg.sender]);
-        
-        if ((currRole == Role.Chairman && signedInChairmenCount > 0 && signedInTellerCount <= 0 && votingSessionClosed) || 
-            (currRole == Role.Teller && (signedInTellerCount > 1 || votingSessionClosed))) {
             _;
         } else {
             NotAllowed("Unallowed role or rule violation.");
@@ -178,10 +167,14 @@ contract PollingStation is Permissions {
         Role role = Role(roles[msg.sender]);
         
         if (role == Role.Chairman) {
-            signedInChairmenCount++;
+            if (!signedInChairmen[msg.sender]) {
+                signedInChairmenCount++;
+            }
             signedInChairmen[msg.sender] = true;
         } else if (role == Role.Teller) {
-            signedInTellerCount++;
+            if (!signedInTellers[msg.sender]) {
+                signedInTellerCount++;
+            }
             signedInTellers[msg.sender] = true;
         } else {
             NotAllowed("Unallowed role or rule violation.");
@@ -195,22 +188,17 @@ contract PollingStation is Permissions {
         return signedInTellerCount;
     }
     
-    function signOut() public _canSignOut { 
-        
+    function signOut() public { 
         Role role = Role(roles[msg.sender]);
-        
         if (role == Role.Chairman) {
-            signedInChairmenCount--;
-            signedInChairmen[msg.sender] = false;
+            UserSignedOut(false, "The chairman can't sign out", msg.sender, role);
         } else if (role == Role.Teller) {
             signedInTellerCount--;
             signedInTellers[msg.sender] = false;
+            UserSignedOut(true, "User signed out", msg.sender, role);
         } else {
-            NotAllowed("Unallowed role or rule violation.");
-            return;
-        }
-        
-        UserSignedOut(msg.sender, role);
+            UserSignedOut(false, "User not signed in", msg.sender, Role.Unknown);
+        }        
     }
     
     function beginVotingSession() public _isOwner _canSessionStart() {

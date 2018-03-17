@@ -177,3 +177,7 @@ module.exports.getVoterClearedEvent = function (callback) {
 module.exports.getVoterAlreadyRecordedEvent = function (callback) {
 	pollingStation.getPastEvents('VoterAlreadyRecorded', { fromBlock: 0 }, callback);
 }
+
+module.exports.getUserSignedOutEvent = function (callback) {
+	pollingStation.getPastEvents('UserSignedOut', { fromBlock: 0 }, callback);
+}

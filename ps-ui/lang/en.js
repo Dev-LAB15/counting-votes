@@ -85,9 +85,12 @@ const lang = {
                 hash: "hash",
                 dateTime: "date/time",
                 voteType: "vote type",
-                loading: "loading..."
-
-
+                loading: "loading...",
+                teller: "teller",
+                user: "user",
+                role: "role",
+                signOut: "sign out",
+                signOutConfirmation: " sign out confirmation"
             }
         }
     }

@@ -51,14 +51,17 @@ window.addEventListener('load', function () {
                 $('#create-password-modal').modal('hide');
                 $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/createpassword', vm.model).then(resp => {
+                    this.clearModel();
                     $('#loading-modal').modal('hide');
                     addTeller(resp.data.user);
-                    vm._data.tellers.push(resp.data.user);
+                    if(this.tellers.indexOf(resp.data.user) == -1)
+                        this.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('section > .row').removeClass('justify-content-md-center');
 
                 }
                 ).catch(error => {
+                    this.clearModel();
                     $('#loading-modal').modal('hide');
                     var msg = this.$t('message.unhandledError');
                     if (error && error.response && error.response.data && error.response.data.message) {
@@ -69,19 +72,21 @@ window.addEventListener('load', function () {
                         position: "bottom-center",
                         duration: 3000
                     });
-                }
-                );
+                });
             },
             requestSignIn: function (event) {
                 $('#sign-in-modal').modal('hide');
                 $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/signin', vm.model).then(resp => {
+                    this.clearModel();
                     $('#loading-modal').modal('hide');
                     addTeller(resp.data.user);
-                    vm._data.tellers.push(resp.data.user);
+                    if(this.tellers.indexOf(resp.data.user) == -1)
+                        this.tellers.push(resp.data.user);
                     $('.sidebar-wrapper, .content-wrapper').addClass('show');
                     $('section > .row').removeClass('justify-content-md-center');
                 }).catch(error => {
+                    this.clearModel();
                     $('#loading-modal').modal('hide');
                     var msg = this.$t('message.unhandledError');
                     if (error && error.response && error.response.data && error.response.data.message) {
@@ -97,6 +102,12 @@ window.addEventListener('load', function () {
             },
             goToDashboard: function (event) {
                 window.location = 'dashboard.html';
+            },
+            clearModel: function () {
+                this.model.email = '';
+                this.model.password = '';
+                this.model.passwordConfirmation = '';
+                this.model.code = ''
             }
         }
 

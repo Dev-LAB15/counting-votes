@@ -23,13 +23,12 @@ function addTeller(teller) {
 
     }
 
-
     if (!tellersString) {
         tellers = new Array();
     } else {
         var tellers = JSON.parse(tellersString)
     }
-    if (tellers.indexOf(teller) < 0) {
+    if (tellers.indexOf(teller) <= -1) {
         tellers.push(teller);
         window.localStorage.setItem('tellers', JSON.stringify(tellers));
     }
@@ -43,10 +42,25 @@ function getTellers() {
     }
 }
 
+function removeTeller(email) {
+    var tellers = getTellers();
+    if (tellers) {
+        var index = tellers.indexOf(email);
+        if (index > -1) {
+            tellers.splice(index, 1);
+        }
+        if (tellers.length == 0) {
+            window.localStorage.removeItem('tellers');
+        } else {
+            window.localStorage.setItem('tellers', JSON.stringify(tellers));
+        }
+    }
+}
+
 function toDateString(utx) {
     var date = new Date(utx * 1000);
-    var day = "0"+date.getDay();
-    var month = "0"+ date.getMonth();
+    var day = "0" + date.getDay();
+    var month = "0" + date.getMonth();
     var year = date.getFullYear();
     var hours = date.getHours();
     var minutes = "0" + date.getMinutes();
