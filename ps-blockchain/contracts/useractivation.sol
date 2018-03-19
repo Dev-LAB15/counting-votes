@@ -21,6 +21,7 @@ contract UserActivation {
     }
 
     function addEmail(string email, uint8 assignedUserRole) public _isOwner() {
+        
         emailAddresses.push(email);
         roles[email] = assignedUserRole;
         usedAddresses[email] = false;

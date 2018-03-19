@@ -206,6 +206,7 @@ contract PollingStation is Permissions {
         needsRecount = false;
         votingRound++;
         VotingSessionBegan(this);
+        munContract.beginVotingSession();
     }
     
     function recordVoter(bytes32 qrCodeHash, VoterType voterType) public _verifyRole(Role.Chairman) _noRevote(qrCodeHash) returns(bool) {
@@ -241,28 +242,28 @@ contract PollingStation is Permissions {
     function yes(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         yesLocal++;
-        munContract.voteYes();
+        munContract.countVote(1, timestamp);
         VoteCounted(1, true, timestamp);
     }
     
     function no(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         noLocal++;
-        munContract.voteNo();
+        munContract.countVote(2, timestamp);
         VoteCounted(2, true, timestamp);
     }
     
     function blank(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         blankLocal++;
-        munContract.voteBlank();
+        munContract.countVote(3, timestamp);
         VoteCounted(3, true, timestamp);
     }
     
     function invalid(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
         invalidLocal++;
-        munContract.voteInvalid();
+        munContract.countVote(4, timestamp);
         VoteCounted(4, true, timestamp);
     }
     
@@ -359,6 +360,7 @@ contract PollingStation is Permissions {
             if (signedOffChairmenCount >= signedInChairmenCount) {
                 votingSessionClosed = true;
                 signedOffStaff[msg.sender] = 1;
+                munContract.finishVotingSession();
                 SignedOff(msg.sender, true, "");
                 VotingFinished(this);
                 return true;

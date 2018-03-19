@@ -92,5 +92,4 @@ window.addEventListener('load', function () {
         }
 
     });
-
 });

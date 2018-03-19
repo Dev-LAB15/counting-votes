@@ -1,10 +1,10 @@
 pragma solidity ^0.4.19;
 
-import './useractivation.sol';
-import './permissions.sol';
+import "./useractivation.sol";
+import "./permissions.sol";
 
 contract Municipality is Permissions {
-    
+   
     uint128 private yes = 0;
     uint128 private no = 0;
     uint128 private invalid = 0;
@@ -23,6 +23,8 @@ contract Municipality is Permissions {
     uint private collectedPollingCardCount = 0;
     uint private collectedPowerOfAttorneyCount = 0;
     uint private collectedVoterPassCount = 0;
+
+    uint private workingPollingStationsCount = 0;
     
     mapping (bytes32 => uint128) private whosError;
     mapping (bytes32 => address) private cardsClaimed;
@@ -31,9 +33,12 @@ contract Municipality is Permissions {
     mapping (address => uint128) private pollingStationBlankVotes;
     mapping (address => uint128) private pollingStationInvalidVotes;
     mapping (address => bool) private enrolledPollStations;
+    mapping (address => bool) private pollingStationJobComplete; 
 
+    event MayorSignedIn(bool success, string message);
     event VoterAlreadyRecorded(bytes32 qrCodeHash, uint howMany);
     event VoterCleared(bytes32 qrCodeHash, VoterType voterType);
+    event VoteCounted(uint voteCode, string timestamp);
     
     event YesVoted();
     event NoVoted();
@@ -55,30 +60,33 @@ contract Municipality is Permissions {
         enrolledPollStations[msg.sender] = true;
     }
 
-    function voteYes() public _verifyRole(Role.Chairman) _canVote() {
-        yes++;
-        pollingStationYesVotes[msg.sender]++;
-        YesVoted();
+    function beginVotingSession() public _isOwner() {
+        workingPollingStationsCount++;
     }
-    
-    function voteNo() public _verifyRole(Role.Chairman) _canVote() {
-        no++;
-        pollingStationNoVotes[msg.sender]++;
-        NoVoted();
+
+    function finishVotingSession() public _isOwner() {
+        workingPollingStationsCount--;
     }
-    
-    function voteBlank() public _verifyRole(Role.Chairman) _canVote() {
-        blank++;
-        pollingStationBlankVotes[msg.sender]++;
-        BlankVoted();
+
+    function countVote(uint voteId, string timestamp) public _verifyRole(Role.Chairman) _canVote() {
+
+        if(voteId == 1) {
+            yes++;
+            pollingStationYesVotes[msg.sender]++;
+        }else if(voteId == 2) {
+            no++;
+            pollingStationNoVotes[msg.sender]++;
+        }else if(voteId == 3) {
+            blank++;
+            pollingStationBlankVotes[msg.sender]++;
+        }else {
+            invalid++;
+            pollingStationInvalidVotes[msg.sender]++;          
+        }
+
+        VoteCounted(voteId, timestamp);
     }
-    
-    function voteInvalid() public _verifyRole(Role.Chairman) _canVote() {
-        invalid++;
-        pollingStationInvalidVotes[msg.sender]++;
-        InvalidVoted();
-    }
-    
+   
     function getYes() public view returns (uint128) {
         return yes;
     }
@@ -156,10 +164,39 @@ contract Municipality is Permissions {
     }
     
     function isValid() public view returns (bool) {
-       return ((blank + no + yes + invalid) == (collectedVoterPassCount + collectedPowerOfAttorneyCount + collectedPollingCardCount));
+        return ((blank + no + yes + invalid) == (collectedVoterPassCount + collectedPowerOfAttorneyCount + collectedPollingCardCount));
     }
     
     function userVoted(bytes32 qrCodeHash) public view returns (bool) {
         return cardsClaimed[qrCodeHash] != 0;
+    }
+
+    //Adds the Mayor Role when the mayor first signs in
+    function setMayorRole(address user, string email) public _isOwner() payable {
+        require(msg.value > 0);
+        super.setUserRole(user, email);
+        super.setUsedEmail(email);
+        if (user.balance <= 1) {
+            user.send(msg.value);
+        }
+    }
+
+    function mayorSignIn() public {
+        Role role = Role(roles[msg.sender]);
+
+        if (role == Role.Mayor) {
+            MayorSignedIn(true, "Mayor Signed In");
+        }
+        else{
+            MayorSignedIn(false, "Mayor Signed In");
+        }
+    }
+
+    function getSummary() public view returns (uint scannedPollingCards, uint registeredVoterPasses, uint scannedPowerOfAttorneys, uint registeredPowerOfAttorneys, uint registeredObjections, uint collectedPollingCards, uint collectedVoterPasses, uint collectedPowerOfAttorneys, uint yesGlobal, uint noGlobal, uint blankGlobal, uint invalidGlobal) {
+        return (scannedPollingCardCount, registeredVoterPassCount, scannedPowerOfAttorneyCount, registeredPowerOfAttorneyCount, registeredObjectionCount, collectedPollingCardCount, collectedVoterPassCount, collectedPowerOfAttorneyCount, yes, no, blank, invalid);
+    }
+
+    function canSignOff() public view returns (bool isMissingPollingStation) {
+        return (workingPollingStationsCount == 0);
     }
 }

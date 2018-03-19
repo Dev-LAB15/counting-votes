@@ -1,0 +1,39 @@
+{
+    "enableSecurityToken": true,
+    "useVerificationCode": false,
+    "sendGridEmailFrom": "no-reply@lab15.io",
+    "sendGridEmailFromName": "LAB15 - Counting Votes Verification Services",
+    "sendGridApiKey": "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",
+    "verification_code_characters": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+    "verification_code_length": 4,
+    "maxLedgerShareTimeInSeconds": 8,
+    "secret": "app-secret",
+    "port": 3000,
+    "tokenExpiration": "14 days",
+    "blockchain": {
+        "pollingStationId": "ptest",
+        "routerAddress": "0x51c2a597710be17d86fdcf44c908ecb1b3488d7c",
+        "provider": "ws://104.40.190.151:8546",
+        "httpProvider": "http://104.40.190.151:8545",
+        "owner": {
+            "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
+            "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"
+        },
+        "defaultValueInEther": "10"
+    },
+    "roles": {
+        "Unknown": 0,
+        "Owner": 1,
+        "Mayor": 2,
+        "Chairman": 3,
+        "Teller": 4
+    },
+    "voterTypes": {
+        "Unspecified": 0,
+        "PollingCard": 1,
+        "PowerOfAttorneyPollingCard": 2,
+        "PowerOfAttorney": 3,
+        "VoterPass": 4,
+        "Objection": 5
+    }
+}

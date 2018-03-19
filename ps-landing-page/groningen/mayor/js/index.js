@@ -1,10 +1,9 @@
 window.addEventListener('load', function () {
 
     if (this.window.localStorage.token) {
-        this.window.location = 'tellerlogin.html';
+        this.window.location = '/groningen/mayor/election-results.html';
         return;
     }
-
 
     var vm = new Vue({
         i18n,
@@ -15,7 +14,7 @@ window.addEventListener('load', function () {
                 password: '',
                 passwordConfirmation: '',
                 code: '',
-                role: '3'
+                role: '2'
             }
         },
         mounted: function () {
@@ -32,7 +31,6 @@ window.addEventListener('load', function () {
                     return;
                 }
                 axios.post(apiEndpoint + '/twofactor/verification', vm.model).then(resp => {
-                    $('#two-factor-modal').modal();
                     if (resp.data.isActive) {
                         this.showModalSignIn(event);
                     } else {
@@ -61,12 +59,12 @@ window.addEventListener('load', function () {
             requestCreatePassword: function (event) {
                 $('#create-password-modal').modal('hide');
                 $('#loading-modal').modal();
-                axios.post(apiEndpoint + '/authentication/createpassword', vm.model)
+                axios.post(apiEndpoint + '/mayor/createpassword', vm.model)
                     .then(resp => {
                         $('#loading-modal').modal('hide');
-                        window.localStorage.chairman = resp.data.user;
+                        window.localStorage.mayor = resp.data.user;
                         window.localStorage.token = resp.data.token;
-                        window.location = 'tellerlogin.html';
+                        window.location = '/groningen/mayor/election-results.html';
                     }
                     ).catch(error => {
                         $('#loading-modal').modal('hide');
@@ -81,12 +79,12 @@ window.addEventListener('load', function () {
             requestSignIn: function (event) {
                 $('#sign-in-modal').modal('hide');
                 $('#loading-modal').modal();
-                axios.post(apiEndpoint + '/authentication/signin', vm.model)
+                axios.post(apiEndpoint + '/mayor/signin', vm.model)
                     .then(resp => {
                         $('#loading-modal').modal('hide');
-                        window.localStorage.chairman = resp.data.user;
+                        window.localStorage.mayor = resp.data.user;
                         window.localStorage.token = resp.data.token;
-                        window.location = 'tellerlogin.html';
+                        window.location = '/groningen/mayor/election-results.html';
                     })
                     .catch(error => {
                         $('#loading-modal').modal('hide');

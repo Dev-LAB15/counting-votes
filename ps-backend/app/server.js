@@ -68,12 +68,24 @@ promise.then(() => {
    */
   app.use(function (req, res, next) {
     var anonymousServices = [
-      "/authentication/verification",
       "/authentication/createpassword",
+      "/authentication/createpassword/",
+      "/mayor/createpassword",
+      "/mayor/createpassword/",
+      "/mayor/signin",
+      "/mayor/signin/",
       "/authentication/signin",
-      "/authentication/signofftest",
+      "/authentication/signin/",
       "/authentication/signoff",
-      "/authentication/signout"
+      "/authentication/signoff/",
+      "/authentication/signout",
+      "/authentication/signout/",
+      "/twofactor/verification",
+      "/twofactor/verification/",
+      "/transaction/votes/all",
+      "/transaction/votes/all/",
+      "/transaction/scans/all",
+      "/transaction/scans/all/"
     ]
 
     if (anonymousServices.indexOf(req.path) >= 0) {
@@ -102,16 +114,18 @@ promise.then(() => {
   //Require All Controllers for Environment Setup.
   require('../app/controllers/home-cotroller')(app);
   require('../app/controllers/authentication-controller')(app);
+  require('../app/controllers/two-factor-controller')(app);
+  require('../app/controllers/mayor-controller')(app);
   require('../app/controllers/scan-controller')(app);
   require('../app/controllers/counting-controller')(app);
   require('../app/controllers/verification-controller')(app);
   require('../app/controllers/transaction-controller')(app);
   require('../app/controllers/overview-controller')(app);
-
+  /*
   require('../app/triggers/municipality.triggers')();
   require('../app/triggers/polling.station.triggers')();
   require('../app/triggers/user.actionvation.triggers')();
-
+  */
   //mark the app to use the router 
   app.use('', app.appRouter);
   //start app on the configured port

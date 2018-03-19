@@ -30,7 +30,7 @@ module.exports = function (app) {
         });
     });
 
-
+    
 
     app.get('/transaction/scans', function (req, res) {
         var maxLength = 10;
@@ -68,7 +68,6 @@ module.exports = function (app) {
             res.json(result);
         }, 10 * 1000);
     });
-
     app.get('/transaction/votes', function (req, res) {
         var maxLength = 10;
         var result = [];
@@ -142,5 +141,81 @@ module.exports = function (app) {
             }
             res.json(voterEvents);
         });
+    });
+
+    
+    app.get('/transaction/scans/all', function (req, res) {
+        var maxLength = 10;
+        var result = [];
+        mnContract.getVoterClearedEvents(function (err, voterClearedEvents) {
+            if (voterClearedEvents && voterClearedEvents instanceof Array && voterClearedEvents.length > 0) {
+                voterClearedEvents.reverse();
+                if (voterClearedEvents.length <= 10)
+                    maxLength = voterClearedEvents.length;
+                for (let i = maxLength - 1; i >= 0; i--) {
+                    let evt = voterClearedEvents[i];
+                    let blockHash = evt.blockHash;
+                    let transactionHash = evt.transactionHash;
+                    let timestamp = null;
+                    var scan = {
+                        blockHash: blockHash,
+                        transactionHash: transactionHash,
+                        timestamp: timestamp
+                    }
+                    result.push(scan);
+                }
+            }
+
+            for (let i = 0; i < result.length; i++) {
+                if (!result[i])
+                    continue;
+                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                    if (result[i]) {
+                        result[i].timestamp = blockResult.timestamp;
+                    }
+                });
+            }
+        });
+        setTimeout(() => {
+            res.json(result);
+        }, 10 * 1000);
+    });
+
+    app.get('/transaction/votes/all', function (req, res) {
+        var maxLength = 10;
+        var result = [];
+        mnContract.getVoteCountedEvents(function (err, voteCountedEvents) {
+            if (voteCountedEvents && voteCountedEvents instanceof Array && voteCountedEvents.length > 0) {
+                voteCountedEvents.reverse();
+                if (voteCountedEvents.length <= 10)
+                    maxLength = voteCountedEvents.length;
+                for (let i = maxLength - 1; i >= 0; i--) {
+                    let evt = voteCountedEvents[i];
+                    let blockHash = evt.blockHash;
+                    let transactionHash = evt.transactionHash;
+                    let timestamp = null;
+                    var scan = {
+                        blockHash: blockHash,
+                        transactionHash: transactionHash,
+                        voteCode: evt.returnValues.voteCode,
+                        timestamp: timestamp
+                    }
+                    result.push(scan);
+                }
+            }
+
+            for (let i = 0; i < result.length; i++) {
+                if (!result[i])
+                    continue;
+                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                    if (result[i]) {
+                        result[i].timestamp = blockResult.timestamp;
+                    }
+                });
+            }
+        });
+        setTimeout(() => {
+            res.json(result);
+        }, 10 * 1000);
     });
 }

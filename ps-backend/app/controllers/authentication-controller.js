@@ -1,80 +1,9 @@
-var ethwallet = require('ethereumjs-wallet');
 var config = require('../../config.json');
-var mailService = require('../common/mail.service');
-var sha1 = require('sha1');
 var utils = require('../common/utils');
-var users = require('../data/user.data');
 var userService = require('../services/user.service');
 var pollingStationService = require('../services/pollingstation.service');
-var pollingStationContract = require('../contracts/polling.station.contract');
-var vcodes = require('../data/verification.code.data');
 
 module.exports = function (app) {
-
-	/**
-	 * Requests a Verification Code for the user.
-	 * @param {string} email 
-	 * @param {string} code 
-	 */
-	function validateVerificationCode(email, code) {
-		if (app.config.useVerificationCode) {
-			try {
-				var vcode = vcodes.find(email);
-				var isValidCode = vcode && vcode.code == code;
-				if (isValidCode) {
-					vcodes.markUsed(vcode);
-				}
-				return isValidCode;
-			} catch (err) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
-	 * Generates a verification code for signin process.
-	 * TODO: request ledger registry to confirm user password creation.
-	 * TODO: remove LokiJS and add blockchain signin.
-	 */
-	app.post('/authentication/verification', function (req, res) {
-		if (!req.body.email || req.body.email == '') {
-			res.status(422).json({ message: "Email can't be empty" });
-			return;
-		}
-		userService.getUsedEmail(req.body.email, function (err, active) {
-			if (err) {
-				res.status(500).json({ message: err.message });
-				return;
-			}
-			userService.getRoleId(req.body.email, function (err, roleId) {
-				if (err) {
-					res.status(500).json({ message: err.message });
-					return;
-				}
-				if (!roleId || roleId == "0") {
-					res.status(403).json({ message: 'Unauthorized access' });
-					return;
-				}
-
-				if (roleId != req.body.role) {
-					res.status(403).json({ message: 'Invalid role or assignment' });
-					return;
-				}
-				var code = utils.generateCode();
-				var vcode = {
-					code: code,
-					timestamp: utils.timestamp(),
-					email: req.body.email
-				}
-				vcodes.save(vcode);
-				if (app.config.useVerificationCode) {
-					mailService.sendVerificationCode(req.body.email, "", code);
-				}
-				res.json({ message: 'Please check your email address to get the verification code', isActive: active });
-			});
-		});
-	});
 
 	/**
 	 * Generates user password.
@@ -93,7 +22,7 @@ module.exports = function (app) {
 						});
 					}
 					else {
-						if (!validateVerificationCode(req.body.email, req.body.code)) {
+						if (!userService.validateVerificationCode(req.body.email, req.body.code)) {
 							res.status(422).json({
 								message: "Invalid Verification Code"
 							});
@@ -134,7 +63,7 @@ module.exports = function (app) {
 											privateKey: wallet.privateKey
 										}
 									}
-									var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
+									var token = app.jwt.sign(user, config.secret, { expiresIn: "14 days" });
 									res.json({
 										success: true,
 										user: user.email,
@@ -213,7 +142,7 @@ module.exports = function (app) {
 			})
 		}
 
-		if (!validateVerificationCode(req.body.email, req.body.code)) {
+		if (!userService.validateVerificationCode(req.body.email, req.body.code)) {
 			res.status(422).json({
 				message: "Invalid Verification Code"
 			});
@@ -256,7 +185,7 @@ module.exports = function (app) {
 								privateKey: wallet.privateKey
 							}
 						}
-						var token = app.jwt.sign(user, app.config.secret, { expiresIn: "14 days" });
+						var token = app.jwt.sign(user, config.secret, { expiresIn: "14 days" });
 						res.json({
 							success: true,
 							user: user.email,
@@ -362,45 +291,6 @@ module.exports = function (app) {
 	});
 
 	/**
-	 * Submit to finish the voting session.
-	 */
-	app.get('/authentication/submit', function (req, res) {
-		pollingStationService.canSubmit(function (err, result) {
-			if (result) {
-				res.send('ok');
-			} else {
-				res.status(422).json({ message: 'All members must sign off in order to finish the voting session.' });
-			}
-		});
-	});
-
-	/**
-	 * Performs a signoff check 
-	 */
-	app.get('/authentication/signoffcheck', function (req, res) {
-		pollingStationContract.getPastEvents(function (err, events) {
-			//the voter events can't exceed a maximum value of 10
-			var signEvents = [];
-			for (let i = 0; i < events.length; i++) {
-				let event = events[i];
-				switch (event.event) {
-					case "StaffSignedOff":
-						signEvents.push({ transactionHash: event.transactionHash, error: false });
-						break;
-					case "VotingFinished":
-						signEvents.push({ transactionHash: event.transactionHash, error: false });
-						break;
-					default:
-						break;
-				}
-			}
-			//reverses the array
-			signEvents.reverse();
-			res.json(signEvents);
-		});
-	});
-
-	/**
 	 * Executes the signout process
 	 */
 	app.post('/authentication/signout', function (req, res) {
@@ -439,5 +329,17 @@ module.exports = function (app) {
 		});
 	});
 
+	/**
+	 * Submit to finish the voting session.
+	 */
+	app.get('/authentication/submit', function (req, res) {
+		pollingStationService.canSubmit(function (err, result) {
+			if (result) {
+				res.send('ok');
+			} else {
+				res.status(422).json({ message: 'All members must sign off in order to finish the voting session.' });
+			}
+		});
+	});
 
 }

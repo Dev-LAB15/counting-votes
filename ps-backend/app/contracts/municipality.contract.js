@@ -95,3 +95,38 @@ module.exports.getVoterClearedEvents = function (callback) {
 module.exports.setTrigger = function (eventName, callback) {
     var event = municipality.events[eventName](null, { fromBlock: 0, }, callback);
 }
+/**
+ * Gets the mayor Sign In Events in a row
+ * @param {function(any,any)} callback 
+ */
+module.exports.getMayorSignedInEvent = function (callback) {
+    municipality.getPastEvents('MayorSignedIn', { fromBlock: 0 }, callback);
+}
+/**
+ * Gets an array of UserAdded events
+ * @param {function(any,any)} callback 
+ */
+module.exports.getUserAddedEvent = function (callback) {
+    municipality.getPastEvents('UserAdded', { fromBlock: 0 }, callback);
+}
+
+module.exports.getRole = function (callerAddress, callback) {
+    municipality.methods.getRole().call({ from: callerAddress }, callback);
+}
+
+/**
+ * 
+ * @param {function(any,any)} callback 
+ * @returns {int scannedPollingCards, int registeredVoterPasses, int scannedPowerOfAttorneys, int registeredPowerOfAttorneys, int registeredObjections, int collectedPollingCards, int collectedVoterPasses, int collectedPowerOfAttorneys}
+ */
+module.exports.getSummary = function (callback) {
+    municipality.methods.getSummary().call({ from: config.blockchain.owner.address }, callback);
+}
+
+module.exports.getVoteCountedEvents = function (callback) {
+    municipality.getPastEvents('VoteCounted', { fromBlock: 0 }, callback);
+}
+
+module.exports.getVoterClearedEvent = function (callback) {
+    municipality.once('VoterCleared', { fromBlock: 0 }, callback);
+}

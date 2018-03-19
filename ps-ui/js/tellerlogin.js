@@ -24,7 +24,7 @@ window.addEventListener('load', function () {
         },
         methods: {
             requestVerificationCode: function (event) {
-                axios.post(apiEndpoint + '/authentication/verification', vm.model).then(resp => {
+                axios.post(apiEndpoint + '/twofactor/verification', vm.model).then(resp => {
                     if (resp.data.isActive) {
                         this.showModalSignIn(event);
                     } else {

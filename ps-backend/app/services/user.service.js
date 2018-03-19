@@ -5,6 +5,28 @@ var contract = require('../contracts/user.activation.contract');
 var pollingStationContract = require('../contracts/polling.station.contract');
 var crypto = require('crypto');
 var ethwallet = require('ethereumjs-wallet');
+var vcodes = require('../data/verification.code.data');
+
+/**
+ * Requests a Verification Code for the user.
+ * @param {string} email 
+ * @param {string} code 
+ */
+exports.validateVerificationCode = function (email, code) {
+    if (config.useVerificationCode) {
+        try {
+            var vcode = vcodes.find(email);
+            var isValidCode = vcode && vcode.code == code;
+            if (isValidCode) {
+                vcodes.markUsed(vcode);
+            }
+            return isValidCode;
+        } catch (err) {
+            return false;
+        }
+    }
+    return true;
+}
 
 /**
  * Requests the contract if the email is registered.
