@@ -5,7 +5,7 @@ var axiosHeaders;
 window.addEventListener('load', function () {
     Vue.use(VueI18n);
     Vue.use(Toasted);
-    i18n = new VueI18n(lang);
+    i18n = new VueI18n(lang.nl);
     axiosHeaders = {
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
