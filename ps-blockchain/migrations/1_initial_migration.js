@@ -24,7 +24,7 @@ function copyFile(source, target) {
 
 module.exports = function (deployer) {
     deployer.deploy(Migrations);
-    deployer.deploy(Router);
+    //deployer.deploy(Router);
     deployer.deploy(UserActivation)
         .then(function () {
             deployer.deploy(Municipality, UserActivation.address)
@@ -32,10 +32,9 @@ module.exports = function (deployer) {
                     deployer.deploy(PollingStation, Municipality.address, UserActivation.address).then(function () {
                         console.log('All Contracts Deployed!');
                         console.log('');
-
-                        console.log(`Router Address: ${Router.address}`);
+                        console.log(`Router Address: 0x51c2a597710be17d86fdcf44c908ecb1b3488d7c`);
+                        console.log(`Municipality Address:   ${Municipality.address}`);
                         console.log(`UserActivation Address: ${UserActivation.address}`);
-                        console.log(`Municipality Address: ${Municipality.address}`);
                         console.log(`PollingStation Address: ${PollingStation.address}`);
                     });
                 });

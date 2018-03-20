@@ -20,11 +20,15 @@ contract Municipality is Permissions {
     uint private registeredObjectionCount = 0;
     
     //Control Numbers
+    mapping (address => uint) collectedPollingCardCountByPollingStation;
+    mapping (address => uint) collectedPowerOfAttorneyCountByPollingStation;
+    mapping (address => uint) collectedVoterPassCountByPollingStation;
     uint private collectedPollingCardCount = 0;
     uint private collectedPowerOfAttorneyCount = 0;
     uint private collectedVoterPassCount = 0;
 
     uint private workingPollingStationsCount = 0;
+    bool private mayorSignedOff = false;
     
     mapping (bytes32 => uint128) private whosError;
     mapping (bytes32 => address) private cardsClaimed;
@@ -35,6 +39,7 @@ contract Municipality is Permissions {
     mapping (address => bool) private enrolledPollStations;
     mapping (address => bool) private pollingStationJobComplete; 
 
+    event MayorSignedOff(bool success, string message);
     event MayorSignedIn(bool success, string message);
     event VoterAlreadyRecorded(bytes32 qrCodeHash, uint howMany);
     event VoterCleared(bytes32 qrCodeHash, VoterType voterType);
@@ -54,6 +59,25 @@ contract Municipality is Permissions {
             NotAllowed("Only enrolled poll stations can cast votes.");
             revert();
         }
+    }
+
+    modifier _canSignOff() {
+        if(Role(roles[tx.origin]) == Role.Mayor) {
+            MayorSignedOff(false, "Access denied!");
+            return;
+        }
+
+        if(mayorSignedOff) {
+            MayorSignedOff(false, "Already Signed Off");
+            return;
+        }
+
+        if(workingPollingStationsCount != 0) {
+            MayorSignedOff(false, "All Polling Stations must Sign Off first");
+            return;
+        }
+
+        _;
     }
     
     function enrollPollStation() public _isOwner() {
@@ -103,10 +127,22 @@ contract Municipality is Permissions {
         return blank;
     }
     
-    function inputControlNumbers(uint pollingCards, uint powerOfAttorneys, uint voterPasses) public _verifyRole(Role.Chairman) {
-        collectedPollingCardCount = pollingCards;
-        collectedPowerOfAttorneyCount = powerOfAttorneys;
-        collectedVoterPassCount = voterPasses;
+    function inputControlNumbers(uint pollingCards, uint powerOfAttorneys, uint voterPasses) public _verifyRole(Role.Chairman) _canVote() {
+        uint tempPollingCardCount = collectedPollingCardCountByPollingStation[msg.sender];
+        uint tempPowerOfAttorneyCount = collectedPowerOfAttorneyCountByPollingStation[msg.sender];
+        uint tempVoterPassCount = collectedVoterPassCountByPollingStation[msg.sender];
+
+        collectedPollingCardCount -= tempPollingCardCount;
+        collectedPowerOfAttorneyCount -= tempPowerOfAttorneyCount;
+        collectedVoterPassCount -= tempVoterPassCount;
+
+        collectedPollingCardCount += pollingCards;
+        collectedPowerOfAttorneyCount += powerOfAttorneys;
+        collectedVoterPassCount += voterPasses;
+
+        collectedPollingCardCountByPollingStation[msg.sender] = pollingCards;
+        collectedPowerOfAttorneyCountByPollingStation[msg.sender] = powerOfAttorneys;
+        collectedVoterPassCountByPollingStation[msg.sender] = voterPasses;
     }
     
     function recount() public _verifyRole(Role.Chairman) _canVote() {
@@ -198,5 +234,10 @@ contract Municipality is Permissions {
 
     function canSignOff() public view returns (bool isMissingPollingStation) {
         return (workingPollingStationsCount == 0);
+    }
+
+    function signOff() public _canSignOff() {
+        mayorSignedOff = true;
+        MayorSignedOff(true, "Sign off successful!");
     }
 }

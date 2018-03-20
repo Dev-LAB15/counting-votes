@@ -94,14 +94,14 @@
     "absolutePath": "/D/LAB15/git/CountingVotes/ps-blockchain/contracts/useractivation.sol",
     "exportedSymbols": {
       "UserActivation": [
-        2525
+        2642
       ]
     },
-    "id": 2526,
+    "id": 2643,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2420,
+        "id": 2537,
         "literals": [
           "solidity",
           "^",
@@ -117,19 +117,19 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 2525,
+        "id": 2642,
         "linearizedBaseContracts": [
-          2525
+          2642
         ],
         "name": "UserActivation",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 2422,
+            "id": 2539,
             "name": "owner",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "61:21:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -138,7 +138,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 2421,
+              "id": 2538,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "61:7:5",
@@ -152,10 +152,10 @@
           },
           {
             "constant": false,
-            "id": 2425,
+            "id": 2542,
             "name": "emailAddresses",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "89:31:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -165,7 +165,7 @@
             },
             "typeName": {
               "baseType": {
-                "id": 2423,
+                "id": 2540,
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "89:6:5",
@@ -174,7 +174,7 @@
                   "typeString": "string storage pointer"
                 }
               },
-              "id": 2424,
+              "id": 2541,
               "length": null,
               "nodeType": "ArrayTypeName",
               "src": "89:8:5",
@@ -188,10 +188,10 @@
           },
           {
             "constant": false,
-            "id": 2429,
+            "id": 2546,
             "name": "usedAddresses",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "127:46:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -200,9 +200,9 @@
               "typeString": "mapping(string memory => bool)"
             },
             "typeName": {
-              "id": 2428,
+              "id": 2545,
               "keyType": {
-                "id": 2426,
+                "id": 2543,
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "136:6:5",
@@ -218,7 +218,7 @@
                 "typeString": "mapping(string memory => bool)"
               },
               "valueType": {
-                "id": 2427,
+                "id": 2544,
                 "name": "bool",
                 "nodeType": "ElementaryTypeName",
                 "src": "146:4:5",
@@ -233,10 +233,10 @@
           },
           {
             "constant": false,
-            "id": 2433,
+            "id": 2550,
             "name": "roles",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "180:39:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -245,9 +245,9 @@
               "typeString": "mapping(string memory => uint8)"
             },
             "typeName": {
-              "id": 2432,
+              "id": 2549,
               "keyType": {
-                "id": 2430,
+                "id": 2547,
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "189:6:5",
@@ -263,7 +263,7 @@
                 "typeString": "mapping(string memory => uint8)"
               },
               "valueType": {
-                "id": 2431,
+                "id": 2548,
                 "name": "uint8",
                 "nodeType": "ElementaryTypeName",
                 "src": "199:5:5",
@@ -278,11 +278,11 @@
           },
           {
             "anonymous": false,
-            "id": 2435,
+            "id": 2552,
             "name": "NotAllowed",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2434,
+              "id": 2551,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "248:2:5"
@@ -291,25 +291,25 @@
           },
           {
             "body": {
-              "id": 2443,
+              "id": 2560,
               "nodeType": "Block",
               "src": "296:37:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2441,
+                    "id": 2558,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 2438,
+                      "id": 2555,
                       "name": "owner",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2422,
+                      "referencedDeclaration": 2539,
                       "src": "307:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -322,18 +322,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 2439,
+                        "id": 2556,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2537,
+                        "referencedDeclaration": 2654,
                         "src": "315:3:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 2440,
+                      "id": 2557,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -353,13 +353,13 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 2442,
+                  "id": 2559,
                   "nodeType": "ExpressionStatement",
                   "src": "307:18:5"
                 }
               ]
             },
-            "id": 2444,
+            "id": 2561,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -367,19 +367,19 @@
             "name": "UserActivation",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2436,
+              "id": 2553,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "286:2:5"
             },
             "payable": false,
             "returnParameters": {
-              "id": 2437,
+              "id": 2554,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "296:0:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "263:70:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -387,7 +387,7 @@
           },
           {
             "body": {
-              "id": 2453,
+              "id": 2570,
               "nodeType": "Block",
               "src": "402:70:5",
               "statements": [
@@ -398,7 +398,7 @@
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     },
-                    "id": 2449,
+                    "id": 2566,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -407,18 +407,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 2446,
+                        "id": 2563,
                         "name": "tx",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2547,
+                        "referencedDeclaration": 2664,
                         "src": "417:2:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_transaction",
                           "typeString": "tx"
                         }
                       },
-                      "id": 2447,
+                      "id": 2564,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -436,11 +436,11 @@
                     "operator": "==",
                     "rightExpression": {
                       "argumentTypes": null,
-                      "id": 2448,
+                      "id": 2565,
                       "name": "owner",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2422,
+                      "referencedDeclaration": 2539,
                       "src": "430:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -454,16 +454,16 @@
                     }
                   },
                   "falseBody": null,
-                  "id": 2452,
+                  "id": 2569,
                   "nodeType": "IfStatement",
                   "src": "413:52:5",
                   "trueBody": {
-                    "id": 2451,
+                    "id": 2568,
                     "nodeType": "Block",
                     "src": "437:28:5",
                     "statements": [
                       {
-                        "id": 2450,
+                        "id": 2567,
                         "nodeType": "PlaceholderStatement",
                         "src": "452:1:5"
                       }
@@ -472,11 +472,11 @@
                 }
               ]
             },
-            "id": 2454,
+            "id": 2571,
             "name": "_isOwner",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 2445,
+              "id": 2562,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "399:2:5"
@@ -486,7 +486,7 @@
           },
           {
             "body": {
-              "id": 2481,
+              "id": 2598,
               "nodeType": "Block",
               "src": "554:136:5",
               "statements": [
@@ -496,11 +496,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 2466,
+                        "id": 2583,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2456,
+                        "referencedDeclaration": 2573,
                         "src": "595:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -517,18 +517,18 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 2463,
+                        "id": 2580,
                         "name": "emailAddresses",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2425,
+                        "referencedDeclaration": 2542,
                         "src": "575:14:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_string_storage_$dyn_storage",
                           "typeString": "string storage ref[] storage ref"
                         }
                       },
-                      "id": 2465,
+                      "id": 2582,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -542,7 +542,7 @@
                         "typeString": "function (string storage ref) returns (uint256)"
                       }
                     },
-                    "id": 2467,
+                    "id": 2584,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -556,14 +556,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 2468,
+                  "id": 2585,
                   "nodeType": "ExpressionStatement",
                   "src": "575:26:5"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2473,
+                    "id": 2590,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -572,25 +572,25 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 2469,
+                        "id": 2586,
                         "name": "roles",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2433,
+                        "referencedDeclaration": 2550,
                         "src": "612:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint8_$",
                           "typeString": "mapping(string memory => uint8)"
                         }
                       },
-                      "id": 2471,
+                      "id": 2588,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 2470,
+                        "id": 2587,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2456,
+                        "referencedDeclaration": 2573,
                         "src": "618:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -612,11 +612,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 2472,
+                      "id": 2589,
                       "name": "assignedUserRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2458,
+                      "referencedDeclaration": 2575,
                       "src": "627:16:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint8",
@@ -629,14 +629,14 @@
                       "typeString": "uint8"
                     }
                   },
-                  "id": 2474,
+                  "id": 2591,
                   "nodeType": "ExpressionStatement",
                   "src": "612:31:5"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2479,
+                    "id": 2596,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -645,25 +645,25 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 2475,
+                        "id": 2592,
                         "name": "usedAddresses",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2429,
+                        "referencedDeclaration": 2546,
                         "src": "654:13:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
                           "typeString": "mapping(string memory => bool)"
                         }
                       },
-                      "id": 2477,
+                      "id": 2594,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 2476,
+                        "id": 2593,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2456,
+                        "referencedDeclaration": 2573,
                         "src": "668:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -686,7 +686,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 2478,
+                      "id": 2595,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -707,27 +707,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 2480,
+                  "id": 2597,
                   "nodeType": "ExpressionStatement",
                   "src": "654:28:5"
                 }
               ]
             },
-            "id": 2482,
+            "id": 2599,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2461,
+                "id": 2578,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2460,
+                  "id": 2577,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "543:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -741,15 +741,15 @@
             "name": "addEmail",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2459,
+              "id": 2576,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2456,
+                  "id": 2573,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2482,
+                  "scope": 2599,
                   "src": "498:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -758,7 +758,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2455,
+                    "id": 2572,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "498:6:5",
@@ -772,10 +772,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 2458,
+                  "id": 2575,
                   "name": "assignedUserRole",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2482,
+                  "scope": 2599,
                   "src": "512:22:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -784,7 +784,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 2457,
+                    "id": 2574,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "512:5:5",
@@ -801,12 +801,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2462,
+              "id": 2579,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "554:0:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "480:210:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -814,7 +814,7 @@
           },
           {
             "body": {
-              "id": 2495,
+              "id": 2612,
               "nodeType": "Block",
               "src": "771:38:5",
               "statements": [
@@ -823,25 +823,25 @@
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
-                      "id": 2491,
+                      "id": 2608,
                       "name": "roles",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2433,
+                      "referencedDeclaration": 2550,
                       "src": "789:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint8_$",
                         "typeString": "mapping(string memory => uint8)"
                       }
                     },
-                    "id": 2493,
+                    "id": 2610,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 2492,
+                      "id": 2609,
                       "name": "email",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2484,
+                      "referencedDeclaration": 2601,
                       "src": "795:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -859,28 +859,28 @@
                       "typeString": "uint8"
                     }
                   },
-                  "functionReturnParameters": 2490,
-                  "id": 2494,
+                  "functionReturnParameters": 2607,
+                  "id": 2611,
                   "nodeType": "Return",
                   "src": "782:19:5"
                 }
               ]
             },
-            "id": 2496,
+            "id": 2613,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2487,
+                "id": 2604,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2486,
+                  "id": 2603,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "742:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -894,15 +894,15 @@
             "name": "getRoleId",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2485,
+              "id": 2602,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2484,
+                  "id": 2601,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2496,
+                  "scope": 2613,
                   "src": "721:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -911,7 +911,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2483,
+                    "id": 2600,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "721:6:5",
@@ -928,15 +928,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2490,
+              "id": 2607,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2489,
+                  "id": 2606,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2496,
+                  "scope": 2613,
                   "src": "764:5:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -945,7 +945,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 2488,
+                    "id": 2605,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "764:5:5",
@@ -960,7 +960,7 @@
               ],
               "src": "763:7:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "702:107:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -968,14 +968,14 @@
           },
           {
             "body": {
-              "id": 2509,
+              "id": 2626,
               "nodeType": "Block",
               "src": "873:46:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2507,
+                    "id": 2624,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -984,25 +984,25 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 2503,
+                        "id": 2620,
                         "name": "usedAddresses",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2429,
+                        "referencedDeclaration": 2546,
                         "src": "884:13:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
                           "typeString": "mapping(string memory => bool)"
                         }
                       },
-                      "id": 2505,
+                      "id": 2622,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 2504,
+                        "id": 2621,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2498,
+                        "referencedDeclaration": 2615,
                         "src": "898:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -1025,7 +1025,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 2506,
+                      "id": 2623,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1046,27 +1046,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 2508,
+                  "id": 2625,
                   "nodeType": "ExpressionStatement",
                   "src": "884:27:5"
                 }
               ]
             },
-            "id": 2510,
+            "id": 2627,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2501,
+                "id": 2618,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2500,
+                  "id": 2617,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "864:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1080,15 +1080,15 @@
             "name": "setUsedEmail",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2499,
+              "id": 2616,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2498,
+                  "id": 2615,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2510,
+                  "scope": 2627,
                   "src": "843:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1097,7 +1097,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2497,
+                    "id": 2614,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "843:6:5",
@@ -1114,12 +1114,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2502,
+              "id": 2619,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "873:0:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "821:98:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1127,7 +1127,7 @@
           },
           {
             "body": {
-              "id": 2523,
+              "id": 2640,
               "nodeType": "Block",
               "src": "1002:46:5",
               "statements": [
@@ -1136,25 +1136,25 @@
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
-                      "id": 2519,
+                      "id": 2636,
                       "name": "usedAddresses",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2429,
+                      "referencedDeclaration": 2546,
                       "src": "1020:13:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
                         "typeString": "mapping(string memory => bool)"
                       }
                     },
-                    "id": 2521,
+                    "id": 2638,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 2520,
+                      "id": 2637,
                       "name": "email",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2512,
+                      "referencedDeclaration": 2629,
                       "src": "1034:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -1172,28 +1172,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 2518,
-                  "id": 2522,
+                  "functionReturnParameters": 2635,
+                  "id": 2639,
                   "nodeType": "Return",
                   "src": "1013:27:5"
                 }
               ]
             },
-            "id": 2524,
+            "id": 2641,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2515,
+                "id": 2632,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2514,
+                  "id": 2631,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "974:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1207,15 +1207,15 @@
             "name": "getUsedEmail",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2513,
+              "id": 2630,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2512,
+                  "id": 2629,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2524,
+                  "scope": 2641,
                   "src": "953:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1224,7 +1224,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2511,
+                    "id": 2628,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "953:6:5",
@@ -1241,15 +1241,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2518,
+              "id": 2635,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2517,
+                  "id": 2634,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2524,
+                  "scope": 2641,
                   "src": "996:4:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1258,7 +1258,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 2516,
+                    "id": 2633,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "996:4:5",
@@ -1273,14 +1273,14 @@
               ],
               "src": "995:6:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "931:117:5",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2526,
+        "scope": 2643,
         "src": "28:1023:5"
       }
     ],
@@ -1290,14 +1290,14 @@
     "absolutePath": "/D/LAB15/git/CountingVotes/ps-blockchain/contracts/useractivation.sol",
     "exportedSymbols": {
       "UserActivation": [
-        2525
+        2642
       ]
     },
-    "id": 2526,
+    "id": 2643,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 2420,
+        "id": 2537,
         "literals": [
           "solidity",
           "^",
@@ -1313,19 +1313,19 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 2525,
+        "id": 2642,
         "linearizedBaseContracts": [
-          2525
+          2642
         ],
         "name": "UserActivation",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 2422,
+            "id": 2539,
             "name": "owner",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "61:21:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -1334,7 +1334,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 2421,
+              "id": 2538,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "61:7:5",
@@ -1348,10 +1348,10 @@
           },
           {
             "constant": false,
-            "id": 2425,
+            "id": 2542,
             "name": "emailAddresses",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "89:31:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -1361,7 +1361,7 @@
             },
             "typeName": {
               "baseType": {
-                "id": 2423,
+                "id": 2540,
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "89:6:5",
@@ -1370,7 +1370,7 @@
                   "typeString": "string storage pointer"
                 }
               },
-              "id": 2424,
+              "id": 2541,
               "length": null,
               "nodeType": "ArrayTypeName",
               "src": "89:8:5",
@@ -1384,10 +1384,10 @@
           },
           {
             "constant": false,
-            "id": 2429,
+            "id": 2546,
             "name": "usedAddresses",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "127:46:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -1396,9 +1396,9 @@
               "typeString": "mapping(string memory => bool)"
             },
             "typeName": {
-              "id": 2428,
+              "id": 2545,
               "keyType": {
-                "id": 2426,
+                "id": 2543,
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "136:6:5",
@@ -1414,7 +1414,7 @@
                 "typeString": "mapping(string memory => bool)"
               },
               "valueType": {
-                "id": 2427,
+                "id": 2544,
                 "name": "bool",
                 "nodeType": "ElementaryTypeName",
                 "src": "146:4:5",
@@ -1429,10 +1429,10 @@
           },
           {
             "constant": false,
-            "id": 2433,
+            "id": 2550,
             "name": "roles",
             "nodeType": "VariableDeclaration",
-            "scope": 2525,
+            "scope": 2642,
             "src": "180:39:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -1441,9 +1441,9 @@
               "typeString": "mapping(string memory => uint8)"
             },
             "typeName": {
-              "id": 2432,
+              "id": 2549,
               "keyType": {
-                "id": 2430,
+                "id": 2547,
                 "name": "string",
                 "nodeType": "ElementaryTypeName",
                 "src": "189:6:5",
@@ -1459,7 +1459,7 @@
                 "typeString": "mapping(string memory => uint8)"
               },
               "valueType": {
-                "id": 2431,
+                "id": 2548,
                 "name": "uint8",
                 "nodeType": "ElementaryTypeName",
                 "src": "199:5:5",
@@ -1474,11 +1474,11 @@
           },
           {
             "anonymous": false,
-            "id": 2435,
+            "id": 2552,
             "name": "NotAllowed",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 2434,
+              "id": 2551,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "248:2:5"
@@ -1487,25 +1487,25 @@
           },
           {
             "body": {
-              "id": 2443,
+              "id": 2560,
               "nodeType": "Block",
               "src": "296:37:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2441,
+                    "id": 2558,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 2438,
+                      "id": 2555,
                       "name": "owner",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2422,
+                      "referencedDeclaration": 2539,
                       "src": "307:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -1518,18 +1518,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 2439,
+                        "id": 2556,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2537,
+                        "referencedDeclaration": 2654,
                         "src": "315:3:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 2440,
+                      "id": 2557,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1549,13 +1549,13 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 2442,
+                  "id": 2559,
                   "nodeType": "ExpressionStatement",
                   "src": "307:18:5"
                 }
               ]
             },
-            "id": 2444,
+            "id": 2561,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -1563,19 +1563,19 @@
             "name": "UserActivation",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2436,
+              "id": 2553,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "286:2:5"
             },
             "payable": false,
             "returnParameters": {
-              "id": 2437,
+              "id": 2554,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "296:0:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "263:70:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1583,7 +1583,7 @@
           },
           {
             "body": {
-              "id": 2453,
+              "id": 2570,
               "nodeType": "Block",
               "src": "402:70:5",
               "statements": [
@@ -1594,7 +1594,7 @@
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     },
-                    "id": 2449,
+                    "id": 2566,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1603,18 +1603,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 2446,
+                        "id": 2563,
                         "name": "tx",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2547,
+                        "referencedDeclaration": 2664,
                         "src": "417:2:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_transaction",
                           "typeString": "tx"
                         }
                       },
-                      "id": 2447,
+                      "id": 2564,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1632,11 +1632,11 @@
                     "operator": "==",
                     "rightExpression": {
                       "argumentTypes": null,
-                      "id": 2448,
+                      "id": 2565,
                       "name": "owner",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2422,
+                      "referencedDeclaration": 2539,
                       "src": "430:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -1650,16 +1650,16 @@
                     }
                   },
                   "falseBody": null,
-                  "id": 2452,
+                  "id": 2569,
                   "nodeType": "IfStatement",
                   "src": "413:52:5",
                   "trueBody": {
-                    "id": 2451,
+                    "id": 2568,
                     "nodeType": "Block",
                     "src": "437:28:5",
                     "statements": [
                       {
-                        "id": 2450,
+                        "id": 2567,
                         "nodeType": "PlaceholderStatement",
                         "src": "452:1:5"
                       }
@@ -1668,11 +1668,11 @@
                 }
               ]
             },
-            "id": 2454,
+            "id": 2571,
             "name": "_isOwner",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 2445,
+              "id": 2562,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "399:2:5"
@@ -1682,7 +1682,7 @@
           },
           {
             "body": {
-              "id": 2481,
+              "id": 2598,
               "nodeType": "Block",
               "src": "554:136:5",
               "statements": [
@@ -1692,11 +1692,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 2466,
+                        "id": 2583,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2456,
+                        "referencedDeclaration": 2573,
                         "src": "595:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -1713,18 +1713,18 @@
                       ],
                       "expression": {
                         "argumentTypes": null,
-                        "id": 2463,
+                        "id": 2580,
                         "name": "emailAddresses",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2425,
+                        "referencedDeclaration": 2542,
                         "src": "575:14:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_string_storage_$dyn_storage",
                           "typeString": "string storage ref[] storage ref"
                         }
                       },
-                      "id": 2465,
+                      "id": 2582,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1738,7 +1738,7 @@
                         "typeString": "function (string storage ref) returns (uint256)"
                       }
                     },
-                    "id": 2467,
+                    "id": 2584,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1752,14 +1752,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 2468,
+                  "id": 2585,
                   "nodeType": "ExpressionStatement",
                   "src": "575:26:5"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2473,
+                    "id": 2590,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1768,25 +1768,25 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 2469,
+                        "id": 2586,
                         "name": "roles",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2433,
+                        "referencedDeclaration": 2550,
                         "src": "612:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint8_$",
                           "typeString": "mapping(string memory => uint8)"
                         }
                       },
-                      "id": 2471,
+                      "id": 2588,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 2470,
+                        "id": 2587,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2456,
+                        "referencedDeclaration": 2573,
                         "src": "618:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -1808,11 +1808,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 2472,
+                      "id": 2589,
                       "name": "assignedUserRole",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2458,
+                      "referencedDeclaration": 2575,
                       "src": "627:16:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint8",
@@ -1825,14 +1825,14 @@
                       "typeString": "uint8"
                     }
                   },
-                  "id": 2474,
+                  "id": 2591,
                   "nodeType": "ExpressionStatement",
                   "src": "612:31:5"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2479,
+                    "id": 2596,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1841,25 +1841,25 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 2475,
+                        "id": 2592,
                         "name": "usedAddresses",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2429,
+                        "referencedDeclaration": 2546,
                         "src": "654:13:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
                           "typeString": "mapping(string memory => bool)"
                         }
                       },
-                      "id": 2477,
+                      "id": 2594,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 2476,
+                        "id": 2593,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2456,
+                        "referencedDeclaration": 2573,
                         "src": "668:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -1882,7 +1882,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 2478,
+                      "id": 2595,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1903,27 +1903,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 2480,
+                  "id": 2597,
                   "nodeType": "ExpressionStatement",
                   "src": "654:28:5"
                 }
               ]
             },
-            "id": 2482,
+            "id": 2599,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2461,
+                "id": 2578,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2460,
+                  "id": 2577,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "543:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -1937,15 +1937,15 @@
             "name": "addEmail",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2459,
+              "id": 2576,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2456,
+                  "id": 2573,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2482,
+                  "scope": 2599,
                   "src": "498:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1954,7 +1954,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2455,
+                    "id": 2572,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "498:6:5",
@@ -1968,10 +1968,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 2458,
+                  "id": 2575,
                   "name": "assignedUserRole",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2482,
+                  "scope": 2599,
                   "src": "512:22:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1980,7 +1980,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 2457,
+                    "id": 2574,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "512:5:5",
@@ -1997,12 +1997,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2462,
+              "id": 2579,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "554:0:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "480:210:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2010,7 +2010,7 @@
           },
           {
             "body": {
-              "id": 2495,
+              "id": 2612,
               "nodeType": "Block",
               "src": "771:38:5",
               "statements": [
@@ -2019,25 +2019,25 @@
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
-                      "id": 2491,
+                      "id": 2608,
                       "name": "roles",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2433,
+                      "referencedDeclaration": 2550,
                       "src": "789:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_string_memory_$_t_uint8_$",
                         "typeString": "mapping(string memory => uint8)"
                       }
                     },
-                    "id": 2493,
+                    "id": 2610,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 2492,
+                      "id": 2609,
                       "name": "email",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2484,
+                      "referencedDeclaration": 2601,
                       "src": "795:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -2055,28 +2055,28 @@
                       "typeString": "uint8"
                     }
                   },
-                  "functionReturnParameters": 2490,
-                  "id": 2494,
+                  "functionReturnParameters": 2607,
+                  "id": 2611,
                   "nodeType": "Return",
                   "src": "782:19:5"
                 }
               ]
             },
-            "id": 2496,
+            "id": 2613,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2487,
+                "id": 2604,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2486,
+                  "id": 2603,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "742:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2090,15 +2090,15 @@
             "name": "getRoleId",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2485,
+              "id": 2602,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2484,
+                  "id": 2601,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2496,
+                  "scope": 2613,
                   "src": "721:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2107,7 +2107,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2483,
+                    "id": 2600,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "721:6:5",
@@ -2124,15 +2124,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2490,
+              "id": 2607,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2489,
+                  "id": 2606,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2496,
+                  "scope": 2613,
                   "src": "764:5:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2141,7 +2141,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-                    "id": 2488,
+                    "id": 2605,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "764:5:5",
@@ -2156,7 +2156,7 @@
               ],
               "src": "763:7:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "702:107:5",
             "stateMutability": "view",
             "superFunction": null,
@@ -2164,14 +2164,14 @@
           },
           {
             "body": {
-              "id": 2509,
+              "id": 2626,
               "nodeType": "Block",
               "src": "873:46:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 2507,
+                    "id": 2624,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2180,25 +2180,25 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 2503,
+                        "id": 2620,
                         "name": "usedAddresses",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2429,
+                        "referencedDeclaration": 2546,
                         "src": "884:13:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
                           "typeString": "mapping(string memory => bool)"
                         }
                       },
-                      "id": 2505,
+                      "id": 2622,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 2504,
+                        "id": 2621,
                         "name": "email",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 2498,
+                        "referencedDeclaration": 2615,
                         "src": "898:5:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
@@ -2221,7 +2221,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 2506,
+                      "id": 2623,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2242,27 +2242,27 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 2508,
+                  "id": 2625,
                   "nodeType": "ExpressionStatement",
                   "src": "884:27:5"
                 }
               ]
             },
-            "id": 2510,
+            "id": 2627,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2501,
+                "id": 2618,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2500,
+                  "id": 2617,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "864:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2276,15 +2276,15 @@
             "name": "setUsedEmail",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2499,
+              "id": 2616,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2498,
+                  "id": 2615,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2510,
+                  "scope": 2627,
                   "src": "843:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2293,7 +2293,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2497,
+                    "id": 2614,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "843:6:5",
@@ -2310,12 +2310,12 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2502,
+              "id": 2619,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "873:0:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "821:98:5",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -2323,7 +2323,7 @@
           },
           {
             "body": {
-              "id": 2523,
+              "id": 2640,
               "nodeType": "Block",
               "src": "1002:46:5",
               "statements": [
@@ -2332,25 +2332,25 @@
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
-                      "id": 2519,
+                      "id": 2636,
                       "name": "usedAddresses",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2429,
+                      "referencedDeclaration": 2546,
                       "src": "1020:13:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_string_memory_$_t_bool_$",
                         "typeString": "mapping(string memory => bool)"
                       }
                     },
-                    "id": 2521,
+                    "id": 2638,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 2520,
+                      "id": 2637,
                       "name": "email",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 2512,
+                      "referencedDeclaration": 2629,
                       "src": "1034:5:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_string_memory_ptr",
@@ -2368,28 +2368,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 2518,
-                  "id": 2522,
+                  "functionReturnParameters": 2635,
+                  "id": 2639,
                   "nodeType": "Return",
                   "src": "1013:27:5"
                 }
               ]
             },
-            "id": 2524,
+            "id": 2641,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
             "modifiers": [
               {
                 "arguments": [],
-                "id": 2515,
+                "id": 2632,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 2514,
+                  "id": 2631,
                   "name": "_isOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 2454,
+                  "referencedDeclaration": 2571,
                   "src": "974:8:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -2403,15 +2403,15 @@
             "name": "getUsedEmail",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 2513,
+              "id": 2630,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2512,
+                  "id": 2629,
                   "name": "email",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2524,
+                  "scope": 2641,
                   "src": "953:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2420,7 +2420,7 @@
                     "typeString": "string memory"
                   },
                   "typeName": {
-                    "id": 2511,
+                    "id": 2628,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "953:6:5",
@@ -2437,15 +2437,15 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 2518,
+              "id": 2635,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 2517,
+                  "id": 2634,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 2524,
+                  "scope": 2641,
                   "src": "996:4:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2454,7 +2454,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 2516,
+                    "id": 2633,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "996:4:5",
@@ -2469,14 +2469,14 @@
               ],
               "src": "995:6:5"
             },
-            "scope": 2525,
+            "scope": 2642,
             "src": "931:117:5",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 2526,
+        "scope": 2643,
         "src": "28:1023:5"
       }
     ],
@@ -2486,14 +2486,7 @@
     "name": "solc",
     "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
   },
-  "networks": {
-    "10151010": {
-      "events": {},
-      "links": {},
-      "address": "0x0f915e3d6aacf5faac870e16b3aff0aa975da782",
-      "transactionHash": "0xdaf017c782ecbad234aca8ace62048c166f407ff8c43221a9026d7398e6d3b92"
-    }
-  },
+  "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-03-19T14:56:15.509Z"
+  "updatedAt": "2018-03-20T08:50:35.200Z"
 }

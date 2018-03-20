@@ -22,13 +22,6 @@ module.exports = function (app) {
 						});
 					}
 					else {
-						if (!userService.validateVerificationCode(req.body.email, req.body.code)) {
-							res.status(422).json({
-								message: "Invalid Verification Code"
-							});
-							return;
-						}
-
 						if (!req.body.password || req.body.password.length === 0) {
 							res.status(422).json({
 								message: "Please inform a password"
@@ -39,6 +32,20 @@ module.exports = function (app) {
 						if (!req.body.passwordConfirmation || req.body.passwordConfirmation.length === 0) {
 							res.status(422).json({
 								message: "Please inform a password confirmation"
+							});
+							return;
+						}
+
+						if (req.body.passwordConfirmation != req.body.password) {
+							res.status(422).json({
+								message: "Password and confirmation doesn't match"
+							});
+							return;
+						}
+
+						if (!userService.validateVerificationCode(req.body.email, req.body.code)) {
+							res.status(422).json({
+								message: "Invalid Verification Code"
 							});
 							return;
 						}
@@ -142,13 +149,6 @@ module.exports = function (app) {
 			})
 		}
 
-		if (!userService.validateVerificationCode(req.body.email, req.body.code)) {
-			res.status(422).json({
-				message: "Invalid Verification Code"
-			});
-			return;
-		}
-
 		userService.getUsedEmail(req.body.email, function (err, active) {
 			if (err) {
 				res.status(500).json({ message: err.message });
@@ -163,10 +163,6 @@ module.exports = function (app) {
 			else {
 				var wallet = userService.getWallet(req.body.email, req.body.password);
 
-				pollingStationService.signIn(wallet, function (receipt) {
-
-				});
-
 				userService.getRole(wallet, function (err, roleId) {
 					if (err) {
 						res.status(500).json({ message: err.message });
@@ -176,22 +172,32 @@ module.exports = function (app) {
 						res.status(403).json({
 							message: 'Invalid Credentials'
 						});
+						return;
 					}
-					else {
-						var user = {
-							email: req.body.email,
-							wallet: {
-								address: wallet.address,
-								privateKey: wallet.privateKey
-							}
-						}
-						var token = app.jwt.sign(user, config.secret, { expiresIn: "14 days" });
-						res.json({
-							success: true,
-							user: user.email,
-							token: token
+
+					if (!userService.validateVerificationCode(req.body.email, req.body.code)) {
+						res.status(422).json({
+							message: "Invalid Verification Code"
 						});
+						return;
 					}
+					pollingStationService.signIn(wallet, function (receipt) {
+
+					});
+
+					var user = {
+						email: req.body.email,
+						wallet: {
+							address: wallet.address,
+							privateKey: wallet.privateKey
+						}
+					}
+					var token = app.jwt.sign(user, config.secret, { expiresIn: "14 days" });
+					res.json({
+						success: true,
+						user: user.email,
+						token: token
+					});
 				});
 			}
 		});
@@ -268,7 +274,12 @@ module.exports = function (app) {
 								}
 								else {
 									if (result.returnValues.success) {
-										res.send(result.returnValues);
+										var resultObject = {
+											email: req.body.email,
+											success: result.returnValues.success,
+											role: roleId
+										}
+										res.send(resultObject);
 									} else {
 										res.status(422).json({ message: result.returnValues.message });
 									}

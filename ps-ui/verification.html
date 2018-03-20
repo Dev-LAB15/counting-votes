@@ -16,6 +16,28 @@
 	<link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
 	<link rel="stylesheet" type="text/css" href="sass/counting.min.css" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+	<style>
+		.loader {
+			margin: 0 auto;
+			border: 16px solid #f3f3f3;
+			/* Light grey */
+			border-top: 16px solid #3498db;
+			/* Blue */
+			border-radius: 50%;
+			width: 120px;
+			height: 120px;
+			animation: spin 2s linear infinite;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -92,6 +114,20 @@
 				<i class="icon icon-arrow-right"></i>
 			</button>
 		</footer>
+		<div id="loading-modal" class="modal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">{{$t('message.loading')}}</h5>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<div class="loader"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<!-- /main -->
 
@@ -99,7 +135,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-i18n/7.4.2/vue-i18n.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-toasted/1.1.24/vue-toasted.min.js"></script>
+	<script src="/js/vue-toasted.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>

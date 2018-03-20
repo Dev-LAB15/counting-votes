@@ -10,6 +10,7 @@ window.addEventListener('load', function () {
         data: {
             chairman: this.window.localStorage.chairman,
             tellers: tellers || [],
+            showDeviation: false,
             model: {
                 email: '',
                 password: ''
@@ -20,7 +21,7 @@ window.addEventListener('load', function () {
             axios.get(apiEndpoint + '/verification/getdeviation', axiosHeaders)
                 .then(res => {
                     if (res.data.deviation > 0) {
-                        $('#deviationExplanation').show();
+                        this.showDeviation = true;
                     }
                 })
                 .catch(err => {
@@ -33,6 +34,16 @@ window.addEventListener('load', function () {
                 axios.post(apiEndpoint + '/authentication/signoff', vm.model)
                     .then(res => {
                         $('#loading-modal').modal('hide');
+                        if (res.data.roleId == '4') {
+                            removeTeller(res.data.email);
+                        }
+                        var tellers = getTellers();
+                        if (!tellers || tellers.length == 0) {
+                            if (this.showDeviation) {
+                                $('#deviationExplanation').show();
+                            }
+                        }
+
                         vm.clearModel();
                         vm.$toasted.show('SignOff Ok', {
                             theme: "outline",

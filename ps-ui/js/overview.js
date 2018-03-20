@@ -23,7 +23,8 @@ window.addEventListener('load', function () {
                 registeredVoterPasses: "0",
                 scannedPollingCards: "0",
                 scannedPowerOfAttorneys: "0",
-                total: 0
+                total: 0,
+                totalRegisteredVoters: 0
             }
         },
         mounted: function () {

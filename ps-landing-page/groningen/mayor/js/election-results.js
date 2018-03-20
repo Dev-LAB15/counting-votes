@@ -35,21 +35,21 @@ window.addEventListener('load', function () {
 
                     })
                     .catch(err => {
-                        
+
                     });
             },
             getSummary: function () {
                 axios.get(apiEndpoint + '/mayor/getsummary', axiosHeaders)
                     .then(res => {
-                        vm.model.yes = parseInt(res.data.yes);
-                        vm.model.no = parseInt(res.data.no);
-                        vm.model.blank = parseInt(res.data.blank);
-                        vm.model.invalid = parseInt(res.data.invalid);
+                        vm.model.yes = parseInt(res.data.yesGlobal);
+                        vm.model.no = parseInt(res.data.noGlobal);
+                        vm.model.blank = parseInt(res.data.blankGlobal);
+                        vm.model.invalid = parseInt(res.data.invalidGlobal);
                         vm.model.totalVotes = 0;
-                        vm.model.totalVotes += parseInt(res.data.yes);
-                        vm.model.totalVotes += parseInt(res.data.no);
-                        vm.model.totalVotes += parseInt(res.data.blank);
-                        vm.model.totalVotes += parseInt(res.data.invalid);
+                        vm.model.totalVotes += parseInt(res.data.yesGlobal);
+                        vm.model.totalVotes += parseInt(res.data.noGlobal);
+                        vm.model.totalVotes += parseInt(res.data.blankGlobal);
+                        vm.model.totalVotes += parseInt(res.data.invalidGlobal);
 
                         vm.model.yesProgress = (vm.model.yes / vm.model.totalVotes) * 100;
                         vm.model.yesProgress = Math.round(vm.model.yesProgress);

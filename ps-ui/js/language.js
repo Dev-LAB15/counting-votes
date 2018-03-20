@@ -50,6 +50,8 @@ const lang = {
                     votersPassRegisteredSuccessfyully: "Kiezerspas succesvol geregistreerd",
                     writtenAuthorization: 'Schriftelijke volmacht',
                     yes: "Voor",
+                    ya: "Ja",
+                    ne: "Nee",
                     fillDataFieldsBelow: "Vul onderstaande velden in",
                     totalAmount: "Totaal van",
                     pollingCards: "Stempassen",
@@ -94,10 +96,15 @@ const lang = {
                     collectedVoterPasses: "aantal geldige kiezerspassen",
                     total: "totaal",
                     deviationAdmitedAndVotes: "afwijking tussen toegelaten kiezers en getelde stemmen",
-                    registeredVotes: "geregistreerde stemmen",
+                    registeredVoters: "geregistreerde stemmen",
                     powerOfAttorneysPrivate: "onderhands volmachtbewijs",
                     powerOfAttorneysWritten: "schriftelijk volmachtbewijs",
-                    objectionsToPilot: "bezwaar tegen pilot"
+                    objectionsToPilot: "bezwaar tegen pilot",
+                    scanThePrivateAuthorizationCode: "Scan de code van het onderhandse volmachtsbewijs",
+                    doYouWantToRegisterWrittenAuthorization: "wil je een schriftelijk volmachtsbewijs registreren?",
+                    verifyTheCounting: "controleer de getelde stemmen",
+                    countedVotes: "totaal getelde stemmen",
+                    verify: "controleer"
                 }
             }
         }
@@ -194,6 +201,8 @@ const lang = {
                     teller: "teller",
                     user: "user",
                     role: "role",
+                    ya: "Yes",
+                    ne: "No",
                     signOut: "sign out",
                     signOutConfirmation: " sign out confirmation",
                     overview: "overview",
@@ -204,10 +213,12 @@ const lang = {
                     collectedVoterPasses: "collected voter passes",
                     total: "total",
                     deviationAdmitedAndVotes: "deviation between admitted voters and counted votes",
-                    registeredVotes: "Registered votes",
+                    registeredVoters: "Registered voters",
                     powerOfAttorneysPrivate: "power of attorneys (private)",
                     powerOfAttorneysWritten: "power of attorneys (private)",
-                    objectionsToPilot: "objections to pilot"
+                    objectionsToPilot: "objections to pilot",
+                    scanThePrivateAuthorizationCode: "Scan the private authorization code",
+                    doYouWantToRegisterWrittenAuthorization: "do you want to register a written authorization?"
 
                 }
             }

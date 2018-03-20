@@ -63,39 +63,44 @@ window.addEventListener('load', function () {
                 $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/createpassword', vm.model)
                     .then(resp => {
-                        $('#loading-modal').modal('hide');
+                        vm.clearModel();
                         window.localStorage.chairman = resp.data.user;
                         window.localStorage.token = resp.data.token;
                         window.location = 'tellerlogin.html';
-                    }
-                    ).catch(error => {
-                        $('#loading-modal').modal('hide');
-                        this.$toasted.show(error.response.data.message, {
+                    }).catch(error => {
+                        vm.$toasted.show(error.response.data.message, {
                             theme: "bubble",
                             position: "bottom-center",
                             duration: 3000
                         });
-                    }
-                    );
+                        vm.clearModel();
+                        $('#loading-modal').modal('hide');
+                    });
             },
             requestSignIn: function (event) {
                 $('#sign-in-modal').modal('hide');
                 $('#loading-modal').modal();
                 axios.post(apiEndpoint + '/authentication/signin', vm.model)
                     .then(resp => {
-                        $('#loading-modal').modal('hide');
                         window.localStorage.chairman = resp.data.user;
                         window.localStorage.token = resp.data.token;
                         window.location = 'tellerlogin.html';
                     })
                     .catch(error => {
                         $('#loading-modal').modal('hide');
-                        this.$toasted.show(error.response.data.message, {
+                        vm.$toasted.show(error.response.data.message, {
                             theme: "bubble",
                             position: "bottom-center",
                             duration: 3000
                         });
+                        vm.clearModel();
                     });
+            },
+            clearModel: function () {
+                this.model.email = '',
+                    this.model.password = '',
+                    this.model.passwordConfirmation = '',
+                    this.model.code = ''
             }
         }
 
