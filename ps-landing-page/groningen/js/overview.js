@@ -31,7 +31,7 @@ window.addEventListener('load', function () {
 
                     })
                     .catch(err => {
-                        
+
                     });
             },
             getSummary: function () {
@@ -95,4 +95,6 @@ window.addEventListener('load', function () {
         }
 
     });
+
+    setInterval(vm.getSummary(), 5 * 1000);
 })

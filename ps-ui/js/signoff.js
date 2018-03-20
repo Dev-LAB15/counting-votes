@@ -34,10 +34,15 @@ window.addEventListener('load', function () {
                 axios.post(apiEndpoint + '/authentication/signoff', vm.model)
                     .then(res => {
                         $('#loading-modal').modal('hide');
-                        if (res.data.roleId == '4') {
+                        if (res.data.role == '4') {
                             removeTeller(res.data.email);
                         }
+                        else if (res.data.role == '3') {
+                            vm.canSubmit();
+                            return;
+                        }
                         var tellers = getTellers();
+                        this.tellers = tellers || [];
                         if (!tellers || tellers.length == 0) {
                             if (this.showDeviation) {
                                 $('#deviationExplanation').show();

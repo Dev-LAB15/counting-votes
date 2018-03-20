@@ -28,6 +28,7 @@ const lang = {
                     invalid: 'Ongeldig',
                     invalidCredentials: 'Ongeldige toegangsgegevens',
                     manualInput: "Handmatige invoer",
+                    verifyingPleaseWait: "aan het controleren, een moment geduld aub...",
                     menu: "Menu",
                     no: "Tegen",
                     powerOfAttorney: "Volmacht",
