@@ -143,10 +143,10 @@ p {
   border-radius: 50px; }
 
 .form-control {
-  font-size: 60px;
+  font-size: 40px;
   border: none;
   color: #000;
-  padding: 35px 60px; }
+  padding: 50px 60px; }
   .form-control.input-lg {
     font-size: 120px;
     padding-top: 0;
@@ -199,8 +199,6 @@ p {
     position: relative;
     z-index: 4; }
     .input-group .input-group-append .btn {
-      position: absolute;
-      right: 0;
       padding-right: 0;
       background: none; }
 
