@@ -308,9 +308,65 @@
 					<div class="text-center mt-5">
 						<button type="button" v-on:click="canSignOff" class="btn btn-primary">Sign off</a>
 					</div>
+
+
+
+
+
 				</section>
 			</div>
 			<!-- /main -->
+		</div>
+		<div id="sign-in-modal" class="modal fade" tabindex="1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">{{$t('message.enterYourPassword')}}</h5>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<form>
+								<div class="row justify-content-md-center">
+									<div class="col-12 col-sm-6 col-xl-4">
+										<div class="form-group mt-5">
+											<input type="password" v-model="model.password" class="form-control" placeholder="Enter your password">
+											<span class="input-border"></span>
+										</div>
+
+										<div class="text-center mt-5 mb-5">
+											<button type="button" class="btn btn-primary" v-on:click="requestSignOff">{{$t('message.authenticate')}}</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="loading-modal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">{{$t('message.loading')}}</h5>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<div class="loader"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="success-modal" tabindex="-1" role="dialog" aria-labelledby="success" aria-hidden="true" data-backdrop="static"
+		 data-keyboard="false">
+			<div class="modal-dialog cv-fullwidth" role="document">
+				<div class="cv-vertical-align text-center">
+					<h1>
+						<i class="icon icon-check"></i>Election results
+						<br> succesfully signed!</h1>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -329,7 +385,7 @@
 	<!-- /base -->
 
 	<script src="/groningen/js/language.js"></script>
-	<script src="/groningen/js/config.js"></script>	
+	<script src="/groningen/js/config.js"></script>
 	<script src="/groningen/mayor/js/election-results.js"></script>
 </body>
 

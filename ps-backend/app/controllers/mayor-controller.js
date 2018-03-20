@@ -180,7 +180,62 @@ module.exports = function (app) {
         })
     });
 
+    app.post('/mayor/summary', function (req, res) {
+        var selection = req.body.selection;
+        var pollingStation = '0';
+        switch (selection) {
+            case 2:
+                pollingStation = "003";
+                break;
+            case 3:
+                pollingStation = "011";
+                break;
+            case 4:
+                pollingStation = "016";
+                break;
+            case 5:
+                pollingStation = "004";
+                break;
+            case 6:
+                pollingStation = "134";
+                break;
+            default:
+                pollingStation = '0';
+                break;
+        }
+        municipalityService.querySummary(pollingStation, function (err, summary) {
+            res.json(summary);
+        });
+    });
+
+
     app.get('/mayor/cansignoff', function (req, res) {
-        res.json({ message: 'ok' });
+        municipalityService.canSignOff(function (err, canSignOffResult) {
+            if (err) {
+                res.status(500).json({ message: err });
+                return;
+            }
+            if (canSignOffResult) {
+                res.json({ message: 'ok' });
+            }
+            else {
+                res.status(422).json({ message: "can't sign off!" });
+            }
+        });
+    });
+
+    app.get('/mayor/signoff', function (req, res) {
+        var email = req.user.email;
+        var password = req.body.password;
+        var wallet = userService.getWallet(email, password);
+
+        municipalityService.signOff(wallet, function (signOffStatus) {
+            if (signOffStatus.status) {
+                res.json({ message: 'ok' });
+            }
+            else {
+                res.status(422).json({ message: signOffStatus.message });
+            }
+        });
     });
 }

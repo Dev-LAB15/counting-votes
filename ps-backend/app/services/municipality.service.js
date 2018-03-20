@@ -1,6 +1,7 @@
 var config = require('../../config.json');
 var blockchainService = require('./blockchain.service');
 var contract = require('../contracts/municipality.contract');
+var router = require('../contracts/router.contract');
 
 
 /**
@@ -45,4 +46,29 @@ exports.getRole = function (wallet, callback) {
 
 exports.getSummary = function (callback) {
     contract.getSummary(callback);
+}
+
+exports.querySummary = function (pollingStation, callback) {
+    if (pollingStation != '0') {
+        router.getPollingStationAddress(pollingStation, function (err, address) {
+            var Web3 = require('web3');
+            var web3 = new Web3(new Web3.providers.WebsocketProvider(config.blockchain.provider));
+            var PollingStationAbi = require('../contracts/abi/PollingStation.json').abi;
+            var pollingStation = new web3.eth.Contract(PollingStationAbi, address);
+            pollingStation.methods.getReport().call({ from: config.blockchain.owner.address }, callback);
+        });
+    }
+    else {
+        contract.getSummary(callback);
+    }
+}
+
+exports.canSignOff = function (callback) {
+    contract.canSignOff(callback);
+}
+
+exports.signOff = function (callback) {
+    let _params = [];
+    let methodName = "signOff";
+    blockchainService.executeFunction(wallet, config.blockchain.municipalityAddress, methodName, _params, callback, "0");
 }

@@ -1,6 +1,7 @@
 var apiEndpoint = 'http://localhost:3000';
 var i18n;
 var axiosHeaders;
+var totalVoters = 5162;
 
 window.addEventListener('load', function () {
     Vue.use(VueI18n);

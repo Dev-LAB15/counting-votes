@@ -85,7 +85,9 @@ promise.then(() => {
       "/transaction/votes/all",
       "/transaction/votes/all/",
       "/transaction/scans/all",
-      "/transaction/scans/all/"
+      "/transaction/scans/all/",
+      "/mayor/summary",
+      "/mayor/summary/"
     ]
 
     if (anonymousServices.indexOf(req.path) >= 0) {

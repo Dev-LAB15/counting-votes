@@ -130,3 +130,7 @@ module.exports.getVoteCountedEvents = function (callback) {
 module.exports.getVoterClearedEvent = function (callback) {
     municipality.once('VoterCleared', { fromBlock: 0 }, callback);
 }
+
+module.exports.canSignOff = function (callback) {
+    municipality.methods.canSignOff().call({ from: config.blockchain.owner.address }, callback);
+}

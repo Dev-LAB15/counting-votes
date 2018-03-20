@@ -1,20 +1,18 @@
 window.addEventListener('load', function () {
-    
-    if (!this.window.localStorage.token) {
-        this.window.location = '/groningen/mayor/';
-    }
-    
     var vm = new Vue({
         i18n,
         el: '#app',
         data: {
+            selection: '1',
             model: {
-                password: '',
                 yes: 0,
+                yesProgress: '0 %',
                 no: 0,
+                noProgress: '0 %',
                 blank: 0,
+                blankProgress: '0 %',
                 invalid: 0,
-
+                invalidProgress: '0 %',
                 collectedPollingCards: 0,
                 collectedPowerOfAttorneys: 0,
                 collectedVoterPasses: 0,
@@ -31,53 +29,30 @@ window.addEventListener('load', function () {
             }
         },
         methods: {
+            selectionChanged: function () {
+                vm.getSummary();
+            },
             canSignOff: function () {
                 axios.get(apiEndpoint + '/mayor/cansignoff', axiosHeaders)
                     .then(res => {
-                        $('#sign-in-modal').modal();
+
                     })
                     .catch(err => {
-                        var msg = vm.$t('message.unhandledError');
-                        if (err && err.response && err.response.data && err.response.data.message) {
-                            msg = err.response.data.message;
-                        }
-                        this.$toasted.show(msg, {
-                            theme: "bubble",
-                            position: "bottom-center",
-                            duration: 3000
-                        });
-                    });
-            },
-            requestSignOff: function () {
-                $('#sign-in-modal').modal('hide');
-                axios.post(apiEndpoint + '/mayor/signoff', axiosHeaders)
-                    .then(res => {
-                        $('#success-modal').modal();
-                    })
-                    .catch(err => {
-                        var msg = vm.$t('message.unhandledError');
-                        if (err && err.response && err.response.data && err.response.data.message) {
-                            msg = err.response.data.message;
-                        }
-                        this.$toasted.show(msg, {
-                            theme: "bubble",
-                            position: "bottom-center",
-                            duration: 3000
-                        });
+
                     });
             },
             getSummary: function () {
-                axios.get(apiEndpoint + '/mayor/getsummary', axiosHeaders)
+                axios.post(apiEndpoint + '/mayor/summary', { selection: this.selection }, axiosHeaders)
                     .then(res => {
-                        vm.model.yes = parseInt(res.data.yesGlobal);
-                        vm.model.no = parseInt(res.data.noGlobal);
-                        vm.model.blank = parseInt(res.data.blankGlobal);
-                        vm.model.invalid = parseInt(res.data.invalidGlobal);
+                        vm.model.yes = parseInt(res.data.yesGlobal || res.data.yes);
+                        vm.model.no = parseInt(res.data.noGlobal || res.data.no);
+                        vm.model.blank = parseInt(res.data.blankGlobal || res.data.blank);
+                        vm.model.invalid = parseInt(res.data.invalidGlobal || res.data.invalid);
                         vm.model.totalVotes = 0;
-                        vm.model.totalVotes += parseInt(res.data.yesGlobal);
-                        vm.model.totalVotes += parseInt(res.data.noGlobal);
-                        vm.model.totalVotes += parseInt(res.data.blankGlobal);
-                        vm.model.totalVotes += parseInt(res.data.invalidGlobal);
+                        vm.model.totalVotes += parseInt(res.data.yesGlobal || res.data.yes);
+                        vm.model.totalVotes += parseInt(res.data.noGlobal || res.data.no);
+                        vm.model.totalVotes += parseInt(res.data.blankGlobal || res.data.blank);
+                        vm.model.totalVotes += parseInt(res.data.invalidGlobal || res.data.invalid);
 
                         vm.model.yesProgress = (vm.model.yes / vm.model.totalVotes) * 100;
                         vm.model.yesProgress = Math.round(vm.model.yesProgress);
@@ -119,6 +94,20 @@ window.addEventListener('load', function () {
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredPowerOfAttorneys);
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredVoterPasses);
                         vm.model.totalRegisteredVoters += parseInt(res.data.scannedPowerOfAttorneys);
+                        
+                        var percentage = (vm.model.totalAdmitedVoters / totalVoters) * 100;
+                        var circleValue = Math.round(percentage);
+                        Circles.create({
+                            id: 'avg-rate',
+                            radius: 70,
+                            value: circleValue,
+                            maxValue: 100,
+                            width: 2,
+                            text: function (value) { return value + '%'; },
+                            wrpClass: 'circles-wrp',
+                            textClass: 'circles-text'
+                        })
+
                     });
             }
         },
@@ -126,5 +115,15 @@ window.addEventListener('load', function () {
             this.getSummary();
         }
 
+    });
+    /*
+    setInterval(function () {
+        vm.getSummary()
+    }, 5 * 1000);
+
+    */
+
+    $(function () {
+        $('body').fadeIn();
     });
 })
