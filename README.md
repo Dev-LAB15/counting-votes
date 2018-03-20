@@ -21,3 +21,4 @@ truffle compile
 ## adding contracts to the chain
 truffle migrate
 
+# Create shortcut for cvotes.vbs under %AppData%\Microsoft\Windows\Start Menu\Programs\Startup\
