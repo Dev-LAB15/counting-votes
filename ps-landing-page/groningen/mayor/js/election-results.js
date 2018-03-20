@@ -32,7 +32,7 @@ window.addEventListener('load', function () {
             canSignOff: function () {
                 axios.get(apiEndpoint + '/mayor/cansignoff', axiosHeaders)
                     .then(res => {
-
+                        
                     })
                     .catch(err => {
 

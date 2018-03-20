@@ -71,5 +71,5 @@ window.addEventListener('load', function () {
     setInterval(function(){
         vm.getScans();
         vm.getVotes();
-    }, 5 * 1000);
+    }, 5 *1000);
 });

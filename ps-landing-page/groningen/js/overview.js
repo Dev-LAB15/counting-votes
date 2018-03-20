@@ -96,5 +96,7 @@ window.addEventListener('load', function () {
 
     });
 
-    setInterval(vm.getSummary(), 5 * 1000);
+    setInterval(function () {
+        vm.getSummary()
+    }, 5 * 1000);
 })

@@ -10,58 +10,66 @@ module.exports = function (app) {
         psContract.getPastEvents(function (err, events) {
             //the voter events can't exceed a maximum value of 10
             var voterEvents = [];
-            for (let i = 0; i < events.length; i++) {
-                let event = events[i];
-                switch (event.event) {
-                    case "VoterCleared":
-                        voterEvents.push({ transactionHash: event.transactionHash, error: false });
-                        break;
-                    case "VoterAlreadyRecorded":
-                        voterEvents.push({ transactionHash: event.transactionHash, error: true });
-                        break;
-                    default:
-                        break;
+            try {
+                for (let i = 0; i < events.length; i++) {
+                    let event = events[i];
+                    switch (event.event) {
+                        case "VoterCleared":
+                            voterEvents.push({ transactionHash: event.transactionHash, error: false });
+                            break;
+                        case "VoterAlreadyRecorded":
+                            voterEvents.push({ transactionHash: event.transactionHash, error: true });
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                //reverses the array
+                voterEvents.reverse();
+            } catch (err) {
+
             }
-            //reverses the array
-            voterEvents.reverse();
             console.log(voterEvents);
             res.json(voterEvents);
         });
     });
 
-    
+
 
     app.get('/transaction/scans', function (req, res) {
         var maxLength = 10;
         var result = [];
         psContract.getVoterClearedEvent(function (err, voterClearedEvents) {
-            if (voterClearedEvents && voterClearedEvents instanceof Array && voterClearedEvents.length > 0) {
-                voterClearedEvents.reverse();
-                if (voterClearedEvents.length <= 10)
-                    maxLength = voterClearedEvents.length;
-                for (let i = maxLength - 1; i >= 0; i--) {
-                    let evt = voterClearedEvents[i];
-                    let blockHash = evt.blockHash;
-                    let transactionHash = evt.transactionHash;
-                    let timestamp = null;
-                    var scan = {
-                        blockHash: blockHash,
-                        transactionHash: transactionHash,
-                        timestamp: timestamp
+            try {
+                if (voterClearedEvents && voterClearedEvents instanceof Array && voterClearedEvents.length > 0) {
+                    voterClearedEvents.reverse();
+                    if (voterClearedEvents.length <= 10)
+                        maxLength = voterClearedEvents.length;
+                    for (let i = maxLength - 1; i >= 0; i--) {
+                        let evt = voterClearedEvents[i];
+                        let blockHash = evt.blockHash;
+                        let transactionHash = evt.transactionHash;
+                        let timestamp = null;
+                        var scan = {
+                            blockHash: blockHash,
+                            transactionHash: transactionHash,
+                            timestamp: timestamp
+                        }
+                        result.push(scan);
                     }
-                    result.push(scan);
                 }
-            }
 
-            for (let i = 0; i < result.length; i++) {
-                if (!result[i])
-                    continue;
-                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
-                    if (result[i]) {
-                        result[i].timestamp = blockResult.timestamp;
-                    }
-                });
+                for (let i = 0; i < result.length; i++) {
+                    if (!result[i])
+                        continue;
+                    web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                        if (result[i]) {
+                            result[i].timestamp = blockResult.timestamp;
+                        }
+                    });
+                }
+            } catch (err) {
+
             }
         });
         setTimeout(() => {
@@ -72,33 +80,37 @@ module.exports = function (app) {
         var maxLength = 10;
         var result = [];
         psContract.getVoteCountedEvent(function (err, voteCountedEvents) {
-            if (voteCountedEvents && voteCountedEvents instanceof Array && voteCountedEvents.length > 0) {
-                voteCountedEvents.reverse();
-                if (voteCountedEvents.length <= 10)
-                    maxLength = voteCountedEvents.length;
-                for (let i = maxLength - 1; i >= 0; i--) {
-                    let evt = voteCountedEvents[i];
-                    let blockHash = evt.blockHash;
-                    let transactionHash = evt.transactionHash;
-                    let timestamp = null;
-                    var scan = {
-                        blockHash: blockHash,
-                        transactionHash: transactionHash,
-                        voteCode: evt.returnValues.voteCode,
-                        timestamp: timestamp
+            try {
+                if (voteCountedEvents && voteCountedEvents instanceof Array && voteCountedEvents.length > 0) {
+                    voteCountedEvents.reverse();
+                    if (voteCountedEvents.length <= 10)
+                        maxLength = voteCountedEvents.length;
+                    for (let i = maxLength - 1; i >= 0; i--) {
+                        let evt = voteCountedEvents[i];
+                        let blockHash = evt.blockHash;
+                        let transactionHash = evt.transactionHash;
+                        let timestamp = null;
+                        var scan = {
+                            blockHash: blockHash,
+                            transactionHash: transactionHash,
+                            voteCode: evt.returnValues.voteCode,
+                            timestamp: timestamp
+                        }
+                        result.push(scan);
                     }
-                    result.push(scan);
                 }
-            }
 
-            for (let i = 0; i < result.length; i++) {
-                if (!result[i])
-                    continue;
-                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
-                    if (result[i]) {
-                        result[i].timestamp = blockResult.timestamp;
-                    }
-                });
+                for (let i = 0; i < result.length; i++) {
+                    if (!result[i])
+                        continue;
+                    web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                        if (result[i]) {
+                            result[i].timestamp = blockResult.timestamp;
+                        }
+                    });
+                }
+            } catch (err) {
+
             }
         });
         setTimeout(() => {
@@ -121,60 +133,70 @@ module.exports = function (app) {
             var sendBack = true;
             //the voter events can't exceed a maximum value of 10
             var voterEvents = [];
-            for (let i = 0; i < events.length; i++) {
-                let event = events[i];
-                if (!event) {
-                    continue;
-                }
+            try {
+                for (let i = 0; i < events.length; i++) {
+                    let event = events[i];
+                    if (!event) {
+                        continue;
+                    }
 
-                event.blockNumber;
-                switch (event.event) {
-                    case "VoterCleared":
-                        voterEvents.push({ transactionHash: event.transactionHash, blockNumber: event.blockNumber, error: false });
-                        break;
-                    case "VoterAlreadyRecorded":
-                        voterEvents.push({ transactionHash: event.transactionHash, blockNumber: event.blockNumber, error: true });
-                        break;
-                    default:
-                        break;
+                    event.blockNumber;
+                    switch (event.event) {
+                        case "VoterCleared":
+                            voterEvents.push({ transactionHash: event.transactionHash, blockNumber: event.blockNumber, error: false });
+                            break;
+                        case "VoterAlreadyRecorded":
+                            voterEvents.push({ transactionHash: event.transactionHash, blockNumber: event.blockNumber, error: true });
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            } catch (err) {
+
             }
             res.json(voterEvents);
         });
     });
 
-    
+
     app.get('/transaction/scans/all', function (req, res) {
         var maxLength = 10;
         var result = [];
         mnContract.getVoterClearedEvents(function (err, voterClearedEvents) {
-            if (voterClearedEvents && voterClearedEvents instanceof Array && voterClearedEvents.length > 0) {
-                voterClearedEvents.reverse();
-                if (voterClearedEvents.length <= 10)
-                    maxLength = voterClearedEvents.length;
-                for (let i = maxLength - 1; i >= 0; i--) {
-                    let evt = voterClearedEvents[i];
-                    let blockHash = evt.blockHash;
-                    let transactionHash = evt.transactionHash;
-                    let timestamp = null;
-                    var scan = {
-                        blockHash: blockHash,
-                        transactionHash: transactionHash,
-                        timestamp: timestamp
+            try {
+                if (voterClearedEvents && voterClearedEvents instanceof Array && voterClearedEvents.length > 0) {
+                    voterClearedEvents.reverse();
+                    if (voterClearedEvents.length <= 10)
+                        maxLength = voterClearedEvents.length;
+                    for (let i = maxLength - 1; i >= 0; i--) {
+                        let evt = voterClearedEvents[i];
+                        let blockHash = evt.blockHash;
+                        let transactionHash = evt.transactionHash;
+                        let timestamp = null;
+                        var scan = {
+                            blockHash: blockHash,
+                            transactionHash: transactionHash,
+                            timestamp: timestamp
+                        }
+                        result.push(scan);
                     }
-                    result.push(scan);
                 }
+
+                for (let i = 0; i < result.length; i++) {
+                    if (!result[i])
+                        continue;
+                    web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                        if (result[i]) {
+                            result[i].timestamp = blockResult.timestamp;
+                        }
+                    });
+                }
+            } catch (err) {
+
             }
 
-            for (let i = 0; i < result.length; i++) {
-                if (!result[i])
-                    continue;
-                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
-                    if (result[i]) {
-                        result[i].timestamp = blockResult.timestamp;
-                    }
-                });
-            }
+
         });
         setTimeout(() => {
             res.json(result);
@@ -185,34 +207,39 @@ module.exports = function (app) {
         var maxLength = 10;
         var result = [];
         mnContract.getVoteCountedEvents(function (err, voteCountedEvents) {
-            if (voteCountedEvents && voteCountedEvents instanceof Array && voteCountedEvents.length > 0) {
-                voteCountedEvents.reverse();
-                if (voteCountedEvents.length <= 10)
-                    maxLength = voteCountedEvents.length;
-                for (let i = maxLength - 1; i >= 0; i--) {
-                    let evt = voteCountedEvents[i];
-                    let blockHash = evt.blockHash;
-                    let transactionHash = evt.transactionHash;
-                    let timestamp = null;
-                    var scan = {
-                        blockHash: blockHash,
-                        transactionHash: transactionHash,
-                        voteCode: evt.returnValues.voteCode,
-                        timestamp: timestamp
+            try {
+                if (voteCountedEvents && voteCountedEvents instanceof Array && voteCountedEvents.length > 0) {
+                    voteCountedEvents.reverse();
+                    if (voteCountedEvents.length <= 10)
+                        maxLength = voteCountedEvents.length;
+                    for (let i = maxLength - 1; i >= 0; i--) {
+                        let evt = voteCountedEvents[i];
+                        let blockHash = evt.blockHash;
+                        let transactionHash = evt.transactionHash;
+                        let timestamp = null;
+                        var scan = {
+                            blockHash: blockHash,
+                            transactionHash: transactionHash,
+                            voteCode: evt.returnValues.voteCode,
+                            timestamp: timestamp
+                        }
+                        result.push(scan);
                     }
-                    result.push(scan);
                 }
+
+                for (let i = 0; i < result.length; i++) {
+                    if (!result[i])
+                        continue;
+                    web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
+                        if (result[i]) {
+                            result[i].timestamp = blockResult.timestamp;
+                        }
+                    });
+                }
+            } catch (err) {
+
             }
 
-            for (let i = 0; i < result.length; i++) {
-                if (!result[i])
-                    continue;
-                web3.eth.getBlock(result[i].blockHash, function (err, blockResult) {
-                    if (result[i]) {
-                        result[i].timestamp = blockResult.timestamp;
-                    }
-                });
-            }
         });
         setTimeout(() => {
             res.json(result);

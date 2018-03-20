@@ -107,5 +107,5 @@ exports.setUserRole = function (email, address, callback) {
  */
 exports.signOut = function (wallet, callback) {
     let _params = [];
-    blockchainService.executeFunction(config.blockchain.owner, config.blockchain.pollingStationAddress, "signOut", _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, "signOut", _params, callback, "0");
 }
