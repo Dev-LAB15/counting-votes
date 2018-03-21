@@ -98,7 +98,9 @@ const lang = {
                     registeredVotes: "geregistreerde stemmen",
                     powerOfAttorneysPrivate: "onderhands volmachtbewijs",
                     powerOfAttorneysWritten: "schriftelijk volmachtbewijs",
-                    objectionsToPilot: "bezwaar tegen pilot"
+                    objectionsToPilot: "bezwaar tegen pilot",
+                    lastScannedPollingCards: "Laatst gescande stempassen",
+                    lastRegisteredVotes: "laatst geregistreerde stemmen"
                 }
             }
         }
@@ -208,7 +210,9 @@ const lang = {
                     registeredVotes: "Registered votes",
                     powerOfAttorneysPrivate: "power of attorneys (private)",
                     powerOfAttorneysWritten: "power of attorneys (private)",
-                    objectionsToPilot: "objections to pilot"
+                    objectionsToPilot: "objections to pilot",
+                    lastScannedPollingCards: "last scanned polling cards",
+                    lastRegisteredVotes: "last registered votes"
 
                 }
             }
