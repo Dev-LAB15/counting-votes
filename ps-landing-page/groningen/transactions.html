@@ -17,6 +17,28 @@
 	<link rel="stylesheet" type="text/css" href="css/main.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/custom-icons.min.css" />
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,700" rel="stylesheet">
+	<style>
+		.loader {
+			margin: 0 auto;
+			border: 16px solid #f3f3f3;
+			/* Light grey */
+			border-top: 16px solid #3498db;
+			/* Blue */
+			border-radius: 50%;
+			width: 50px;
+			height: 50px;
+			animation: spin 2s linear infinite;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -31,16 +53,16 @@
 			<header id="header" class="navbar navbar-expand flex-column flex-md-row">
 				<ul id="menu" class="nav justify-content-center">
 					<li class="nav-item">
-						<a class="nav-link" href="#home">Home</a>
+						<a class="nav-link" href="./#home">Home</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#election-results">Verkiezingsuitslag</a>
+						<a class="nav-link" href="./#results">Verkiezingsuitslag</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#pilot">De Pilot</a>
+						<a class="nav-link" href="./#pilot">De Pilot</a>
 					</li>
 					<li class="nav-item logo">
-						<a href="#home" class="navbar-brand goto" title="Stemmen Telt!">
+						<a href="./#home" class="navbar-brand goto" title="Stemmen Telt!">
 							<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 205 20.3"
 							 style="enable-background:new 0 0 205 20.3;" xml:space="preserve">
 								<path d="M11.4,5.5c-0.5-0.4-1.1-0.8-1.6-1C9.2,4.3,8.7,4.2,8.2,4.2C7.6,4.2,7,4.3,6.6,4.6S6,5.3,6,5.8c0,0.3,0.1,0.6,0.3,0.8
@@ -74,14 +96,14 @@
 							</svg>
 						</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item active">
 						<a class="nav-link" href="transactions.html">Transacties</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="faq.html">FAQ</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link goto" href="#contact">Contact</a>
+						<a class="nav-link goto" href="./#contact">Contact</a>
 					</li>
 				</ul>
 			</header>
@@ -94,7 +116,7 @@
 						<div class="page-title">
 							<h5>{{$t('message.scannedPollingCards')}}</h5>
 						</div>
-
+						<div id="loading-scans" class="loader"></div>
 						<div class="table-responsive">
 							<table class="table">
 								<thead>
@@ -115,6 +137,7 @@
 						<div class="page-title">
 							<h5>{{$t('message.registeredVotes')}}</h5>
 						</div>
+						<div id="loading-votes" class="loader"></div>
 
 						<div class="table-responsive">
 							<table class="table">

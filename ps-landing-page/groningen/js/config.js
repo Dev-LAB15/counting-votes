@@ -1,4 +1,4 @@
-var apiEndpoint = 'http://localhost:3000';
+var apiEndpoint = 'https://lab15-cv-api.azurewebsites.net';
 var i18n;
 var axiosHeaders;
 var totalVoters = 5162;
