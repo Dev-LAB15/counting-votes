@@ -151,7 +151,10 @@ window.addEventListener('load', function () {
             wrpClass: 'circles-wrp',
             textClass: 'circles-text'
         })
-        $('body').fadeIn();
+        $('body').css({
+            opacity: 1,
+            visibility: 'visible'
+        });
     });
 
     $('#loading').hide();

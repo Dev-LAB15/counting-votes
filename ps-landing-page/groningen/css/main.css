@@ -14,7 +14,6 @@ img::selection {
 html,
 body {
   background: #fff;
-  height: 100%;
   color: #998E8E;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
@@ -22,6 +21,10 @@ body {
   text-rendering: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
+
+body {
+  -webkit-transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88);
+  transition: all 0.3s cubic-bezier(0.79, 0.1, 0.18, 0.88); }
 
 h2 {
   color: #000;
