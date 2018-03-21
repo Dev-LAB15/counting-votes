@@ -23,7 +23,7 @@
 		<![endif]-->
 </head>
 
-<body>
+<body style="display: none">
 	<div id="app">
 		<div class="cv-container">
 			<header id="header" class="navbar navbar-expand flex-column flex-md-row">
@@ -95,7 +95,7 @@
 							<div class="container">
 								<div class="row justify-content-md-center yes">
 									<div class="col-3 col-lg-3">
-										<h3>yes</h3>
+										<h3>{{$t('message.yes')}}</h3>
 									</div>
 
 									<div class="col-5 col-lg-6">
@@ -111,7 +111,7 @@
 
 								<div class="row justify-content-md-center no">
 									<div class="col-3 col-lg-3">
-										<h3>no</h3>
+										<h3>{{$t('message.no')}}</h3>
 									</div>
 
 									<div class="col-5 col-lg-6">
@@ -127,7 +127,7 @@
 
 								<div class="row justify-content-md-center blank">
 									<div class="col-3 col-lg-3">
-										<h3>blank</h3>
+										<h3>{{$t('message.blank')}}</h3>
 									</div>
 
 									<div class="col-5 col-lg-6">
@@ -143,7 +143,7 @@
 
 								<div class="row justify-content-md-center invalid">
 									<div class="col-3 col-lg-3">
-										<h3>invalid</h3>
+										<h3>{{$t('message.invalid')}}</h3>
 									</div>
 
 									<div class="col-5 col-lg-6">
@@ -162,7 +162,7 @@
 								<div class="container">
 									<div class="row justify-content-md-center">
 										<div class="col-8 col-lg-8 offset-lg-1">
-											<h3>total registered votes</h3>
+											<h3>{{$t('message.totalRegisteredVotes')}}</h3>
 										</div>
 
 										<div class="col-4 col-lg-3">
@@ -177,12 +177,12 @@
 						<div class="admitted">
 							<div class="container">
 								<div class="page-title">
-									<h5>Admitted voters</h5>
+									<h5>{{$t('message.admitedVoters')}}</h5>
 								</div>
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>collected polling cards</h4>
+										<h4>{{$t('message.collectedPollingCards')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -192,7 +192,7 @@
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>collected power of attorneys</h4>
+										<h4>{{$t('message.collectedPowerOfAttorneys')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -202,7 +202,7 @@
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>collected voter passes</h4>
+										<h4>{{$t('message.collectedVoterPasses')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -215,7 +215,7 @@
 								<div class="container">
 									<div class="row justify-content-md-center">
 										<div class="col-8 col-lg-8 offset-lg-1">
-											<h3>total</h3>
+											<h3>{{$t('message.total')}}</h3>
 										</div>
 
 										<div class="col-4 col-lg-3">
@@ -231,12 +231,12 @@
 						<div class="registered">
 							<div class="container">
 								<div class="page-title">
-									<h5>Registered votes</h5>
+									<h5>{{$t('message.registeredVotes')}}</h5>
 								</div>
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>polling cards</h4>
+										<h4>{{$t('message.pollingCards')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -246,7 +246,7 @@
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>power of attorneys (private)</h4>
+										<h4>{{$t('message.powerOfAttorneysPrivate')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -256,7 +256,7 @@
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>power of attorneys (written)</h4>
+										<h4>{{$t('message.powerOfAttorneysWritten')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -266,7 +266,7 @@
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>voter passes</h4>
+										<h4>{{$t('message.voterPasses')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -276,7 +276,7 @@
 
 								<div class="row justify-content-md-center">
 									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>objections to pilot</h4>
+										<h4>{{$t('message.objectionsToPilot')}}</h4>
 									</div>
 
 									<div class="col-4 col-lg-3">
@@ -291,7 +291,7 @@
 								<div class="container">
 									<div class="row justify-content-md-center">
 										<div class="col-8 col-lg-8 offset-lg-1">
-											<h3>total</h3>
+											<h3>{{$t('message.total')}}</h3>
 										</div>
 
 										<div class="col-4 col-lg-3">
@@ -306,7 +306,7 @@
 					<!-- /report -->
 
 					<div class="text-center mt-5">
-						<button type="button" v-on:click="canSignOff" class="btn btn-primary">Sign off</a>
+						<button type="button" v-on:click="canSignOff" class="btn btn-primary">{{$t('message.signOff')}}</a>
 					</div>
 				</section>
 			</div>
@@ -359,8 +359,8 @@
 				<div class="modal-dialog cv-fullwidth" role="document">
 					<div class="cv-vertical-align text-center">
 						<h1>
-							<i class="icon icon-check"></i>Election results
-							<br> succesfully signed!</h1>
+							<i class="icon icon-check"></i>{{$t('message.electionResults')}}
+							<br> {{$t('message.sucessfullySubmited')}}</h1>
 					</div>
 				</div>
 			</div>

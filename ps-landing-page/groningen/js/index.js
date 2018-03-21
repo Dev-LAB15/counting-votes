@@ -109,19 +109,20 @@ window.addEventListener('load', function () {
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredVoterPasses);
                         vm.model.totalRegisteredVoters += parseInt(res.data.scannedPowerOfAttorneys);
 
-                        var percentage = (vm.model.totalRegisteredVoters / totalVoters) * 100;
-                        var circleValue = Math.round(percentage);
-                        Circles.create({
-                            id: 'avg-rate',
-                            radius: 70,
-                            value: circleValue,
-                            maxValue: 100,
-                            width: 2,
-                            text: function (value) { return value + '%'; },
-                            wrpClass: 'circles-wrp',
-                            textClass: 'circles-text'
-                        })
-
+                        if (summaryBody.selection === "1") {
+                            var percentage = (vm.model.totalRegisteredVoters / totalVoters) * 100;
+                            var circleValue = Math.round(percentage);
+                            Circles.create({
+                                id: 'avg-rate',
+                                radius: 70,
+                                value: circleValue,
+                                maxValue: 100,
+                                width: 2,
+                                text: function (value) { return value + '%'; },
+                                wrpClass: 'circles-wrp',
+                                textClass: 'circles-text'
+                            });
+                        }
                     })
                     .catch(err => {
                         $('#loading').hide();

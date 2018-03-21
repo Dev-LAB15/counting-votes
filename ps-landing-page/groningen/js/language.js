@@ -56,7 +56,7 @@ const lang = {
                     totalAmount: "Totaal van",
                     pollingCards: "stempassen",
                     powerOfAttorneys: "volmachten",
-                    voterPasses: "Kiezerspassen",
+                    voterPasses: "kiezerspassen",
                     dataInserted: "Ingevoerde data",
                     continue: "Ga door",
                     tellers: "Tellers",
