@@ -196,9 +196,13 @@ select.form-control {
     position: fixed;
     top: 0;
     z-index: 1071; }
+    #header.navbar .navbar-nav-scroll {
+      max-width: 100%;
+      overflow-x: auto;
+      margin: 0 auto;
+      -webkit-overflow-scrolling: touch; }
     #header.navbar .nav {
-      width: 100%;
-      padding-right: 50px; }
+      white-space: nowrap; }
       #header.navbar .nav li {
         margin: 0 20px; }
         #header.navbar .nav li a {
@@ -350,7 +354,8 @@ footer {
     color: #F33232;
     text-align: center; }
     #fullpage .section.home .cv-vertical-align {
-      padding-bottom: 80px; }
+      padding-bottom: 100px;
+      padding-top: 20px; }
     #fullpage .section.home .subtitle {
       margin-bottom: 30px; }
     #fullpage .section.home .logo {
@@ -748,6 +753,9 @@ footer {
     font-size: 16px;
     line-height: 22px; }
 
+  h2 {
+    letter-spacing: 4px; }
+
   h4 {
     font-size: 16px; }
 
@@ -766,16 +774,19 @@ footer {
 
   #header {
     height: 60px; }
-    #header.navbar .nav li {
-      margin: 0 6px; }
-      #header.navbar .nav li a {
-        height: 60px;
-        line-height: 60px; }
-      #header.navbar .nav li.logo {
-        display: none; }
+    #header.navbar .nav {
+      display: inline-block; }
+      #header.navbar .nav li {
+        display: inline-block;
+        margin: 0; }
+        #header.navbar .nav li a {
+          height: 60px;
+          line-height: 60px; }
 
   #fullpage .section.home {
     background-size: 200px; }
+    #fullpage .section.home .cv-vertical-align {
+      padding-bottom: 20px; }
     #fullpage .section.home .subtitle {
       margin-bottom: 15px;
       width: 60%; }
@@ -876,5 +887,30 @@ footer {
       #fullpage .section.transactions .page-title h5 {
         font-size: 16px;
         line-height: 22px; } }
+@media (max-width: 991px) and (max-height: 600px) {
+  #fullpage .section.home .logo {
+    width: 60%; }
+  #fullpage .section.home .btn {
+    display: none; }
+  #fullpage .section.home .date,
+  #fullpage .section.home .subtitle {
+    width: 30%; } }
+@media (max-width: 1199px) {
+  #header.navbar .nav li.logo {
+    display: none; } }
+@media (max-height: 740px) {
+  #fullpage .section.home .logo {
+    width: 60%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+  #fullpage .section.home .date,
+  #fullpage .section.home .subtitle {
+    width: 30%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; }
+  #fullpage .section.home .btn {
+    display: none; } }
 
 /*# sourceMappingURL=main.css.map */
