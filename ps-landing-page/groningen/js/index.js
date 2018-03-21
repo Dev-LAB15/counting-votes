@@ -109,7 +109,7 @@ window.addEventListener('load', function () {
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredVoterPasses);
                         vm.model.totalRegisteredVoters += parseInt(res.data.scannedPowerOfAttorneys);
 
-                        var percentage = (vm.model.totalAdmitedVoters / totalVoters) * 100;
+                        var percentage = (vm.model.totalRegisteredVoters / totalVoters) * 100;
                         var circleValue = Math.round(percentage);
                         Circles.create({
                             id: 'avg-rate',
