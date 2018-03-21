@@ -1,8 +1,8 @@
 window.addEventListener('load', function () {
 
-    // if (!this.window.localStorage.token) {
-    //     this.window.location = '/groningen/mayor/';
-    // }
+    if (!this.window.localStorage.token) {
+        this.window.location = '/groningen/mayor/';
+    }
 
     var vm = new Vue({
         i18n,
