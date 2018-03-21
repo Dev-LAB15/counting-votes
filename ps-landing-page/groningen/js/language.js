@@ -28,6 +28,7 @@ const lang = {
                     invalid: 'Ongeldig',
                     invalidCredentials: 'Ongeldige toegangsgegevens',
                     manualInput: "Handmatige invoer",
+                    countedVotes: "Getelde stemmen",
                     menu: "Menu",
                     no: "Tegen",
                     powerOfAttorney: "Volmacht",
