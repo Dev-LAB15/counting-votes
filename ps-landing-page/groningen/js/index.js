@@ -1,3 +1,5 @@
+
+
 window.addEventListener('load', function () {
     var vm = new Vue({
         i18n,
@@ -30,7 +32,7 @@ window.addEventListener('load', function () {
         },
         methods: {
             selectionChanged: function () {
-                vm.getSummary();
+                this.getSummary();
             },
             canSignOff: function () {
                 axios.get(apiEndpoint + '/mayor/cansignoff', axiosHeaders)
@@ -42,7 +44,18 @@ window.addEventListener('load', function () {
                     });
             },
             getSummary: function () {
-                axios.post(apiEndpoint + '/mayor/summary', { selection: this.selection }, axiosHeaders)
+
+                var summaryBody = {
+                    selection: '1'
+                }
+
+                try {
+                    summaryBody.selection = vm.selection;
+                } catch (err) {
+
+                }
+
+                axios.post(apiEndpoint + '/mayor/summary', summaryBody, axiosHeaders)
                     .then(res => {
                         vm.model.yes = parseInt(res.data.yesGlobal || res.data.yes);
                         vm.model.no = parseInt(res.data.noGlobal || res.data.no);
@@ -94,7 +107,7 @@ window.addEventListener('load', function () {
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredPowerOfAttorneys);
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredVoterPasses);
                         vm.model.totalRegisteredVoters += parseInt(res.data.scannedPowerOfAttorneys);
-                        
+
                         var percentage = (vm.model.totalAdmitedVoters / totalVoters) * 100;
                         var circleValue = Math.round(percentage);
                         Circles.create({
@@ -120,8 +133,7 @@ window.addEventListener('load', function () {
     setInterval(function () {
         vm.getSummary()
     }, 5 * 1000);
-
-    */
+*/
 
     $(function () {
         Circles.create({

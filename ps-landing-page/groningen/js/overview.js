@@ -95,8 +95,4 @@ window.addEventListener('load', function () {
         }
 
     });
-
-    setInterval(function () {
-        vm.getSummary()
-    }, 5 * 1000);
 })

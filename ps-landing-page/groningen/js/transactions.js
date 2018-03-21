@@ -67,9 +67,10 @@ window.addEventListener('load', function () {
             this.getVotes();
         }
     });
-
+    /*
     setInterval(function(){
         vm.getScans();
         vm.getVotes();
     }, 5 *1000);
+    */
 });
