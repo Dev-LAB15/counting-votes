@@ -159,7 +159,132 @@
 					</div>
 
 					<div class="report">
-						<!-- real time -->
+						<div class="registered">
+							<div class="container">
+								<div class="page-title">
+									<h5>{{$t('message.registeredVotes')}}</h5>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>{{$t('message.pollingCards')}}</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="800">{{model.scannedPollingCards}}</h2>
+									</div>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>{{$t('message.voterPass')}}</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="1000">{{model.registeredVoterPasses}}</h2>
+									</div>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>{{$t('message.powerOfAttorneysPrivate')}}</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="3000">{{model.scannedPowerOfAttorneys}}</h2>
+									</div>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>{{$t('message.powerOfAttorneysWritten')}}</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="3000">{{model.registeredPowerOfAttorneys}}</h2>
+									</div>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>{{$t('message.objectionsToPilot')}}</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2 class="counter" data-votes="0" data-speed="5200">{{model.registeredObjections}}</h2>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="total-bar">
+								<div class="container">
+									<div class="row justify-content-md-center">
+										<div class="col-8 col-lg-8 offset-lg-1">
+											<h3>{{$t('message.total')}}</h3>
+										</div>
+
+										<div class="col-4 col-lg-3">
+											<h2 class="counter" data-votes="0" data-speed="350">{{model.totalRegisteredVoters}}</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="admitted">
+							<div class="container">
+								<div class="page-title">
+									<h5>{{$t('message.admitedVoters')}}</h5>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>collected polling cards</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2>{{model.collectedPollingCards}}</h2>
+									</div>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>{{$t('message.collectedVoterPasses')}}</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2>{{model.collectedVoterPasses}}</h2>
+									</div>
+								</div>
+
+								<div class="row justify-content-md-center">
+									<div class="col-8 col-lg-8 offset-lg-1">
+										<h4>{{$t('message.collectedPowerOfAttorneys')}}</h4>
+									</div>
+
+									<div class="col-4 col-lg-3">
+										<h2>{{model.collectedPowerOfAttorneys}}</h2>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="total-bar">
+								<div class="container">
+									<div class="row justify-content-md-center">
+										<div class="col-8 col-lg-8 offset-lg-1">
+											<h3>{{$t('message.total')}}</h3>
+										</div>
+
+										<div class="col-4 col-lg-3">
+											<h2>{{model.totalAdmitedVoters}}</h2>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- /admitted -->
 						<div class="total">
 							<div class="container">
 								<div class="row justify-content-md-center yes">
@@ -245,136 +370,6 @@
 								</div>
 							</div>
 						</div>
-						<!-- /total -->
-
-						<div class="admitted">
-							<div class="container">
-								<div class="page-title">
-									<h5>{{$t('message.admitedVoters')}}</h5>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>collected polling cards</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2>{{model.collectedPollingCards}}</h2>
-									</div>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>{{$t('message.collectedVoterPasses')}}</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2>{{model.collectedVoterPasses}}</h2>
-									</div>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>{{$t('message.collectedPowerOfAttorneys')}}</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2>{{model.collectedPowerOfAttorneys}}</h2>
-									</div>
-								</div>
-
-							</div>
-
-							<div class="total-bar">
-								<div class="container">
-									<div class="row justify-content-md-center">
-										<div class="col-8 col-lg-8 offset-lg-1">
-											<h3>{{$t('message.total')}}</h3>
-										</div>
-
-										<div class="col-4 col-lg-3">
-											<h2>{{model.totalAdmitedVoters}}</h2>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /admitted -->
-
-						<!-- real time -->
-						<div class="registered">
-							<div class="container">
-								<div class="page-title">
-									<h5>{{$t('message.registeredVotes')}}</h5>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>{{$t('message.pollingCards')}}</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2 class="counter" data-votes="0" data-speed="800">{{model.scannedPollingCards}}</h2>
-									</div>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>{{$t('message.voterPass')}}</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2 class="counter" data-votes="0" data-speed="1000">{{model.registeredVoterPasses}}</h2>
-									</div>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>{{$t('message.powerOfAttorneysPrivate')}}</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2 class="counter" data-votes="0" data-speed="3000">{{model.scannedPowerOfAttorneys}}</h2>
-									</div>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>{{$t('message.powerOfAttorneysWritten')}}</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2 class="counter" data-votes="0" data-speed="3000">{{model.registeredPowerOfAttorneys}}</h2>
-									</div>
-								</div>
-
-								<div class="row justify-content-md-center">
-									<div class="col-8 col-lg-8 offset-lg-1">
-										<h4>{{$t('message.objectionsToPilot')}}</h4>
-									</div>
-
-									<div class="col-4 col-lg-3">
-										<h2 class="counter" data-votes="0" data-speed="5200">{{model.registeredObjections}}</h2>
-									</div>
-								</div>
-
-							</div>
-
-							<div class="total-bar">
-								<div class="container">
-									<div class="row justify-content-md-center">
-										<div class="col-8 col-lg-8 offset-lg-1">
-											<h3>{{$t('message.total')}}</h3>
-										</div>
-
-										<div class="col-4 col-lg-3">
-											<h2 class="counter" data-votes="0" data-speed="350">{{model.totalRegisteredVoters}}</h2>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- /registered -->
 					</div>
 					<!-- /report -->
 				</div>
