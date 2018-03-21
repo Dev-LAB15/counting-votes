@@ -124,6 +124,16 @@ window.addEventListener('load', function () {
     */
 
     $(function () {
+        Circles.create({
+            id: 'avg-rate',
+            radius: 70,
+            value: 0,
+            maxValue: 100,
+            width: 2,
+            text: function (value) { return value + '%'; },
+            wrpClass: 'circles-wrp',
+            textClass: 'circles-text'
+        })
         $('body').fadeIn();
     });
 })
