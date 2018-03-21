@@ -13,7 +13,7 @@ $(function(){
 		slidesToShow: 1,
 		adaptiveHeight: false,
 		autoplay: true,
-			autoplaySpeed: 2000,
+			autoplaySpeed: 5000,
 			fade: true,
 			cssEase: 'linear',
 			arrows: false,
