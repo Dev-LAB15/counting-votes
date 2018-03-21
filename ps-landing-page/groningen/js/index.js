@@ -54,9 +54,10 @@ window.addEventListener('load', function () {
                 } catch (err) {
 
                 }
-
+                $('#loading').show();
                 axios.post(apiEndpoint + '/mayor/summary', summaryBody, axiosHeaders)
                     .then(res => {
+                        $('#loading').hide();
                         vm.model.yes = parseInt(res.data.yesGlobal || res.data.yes);
                         vm.model.no = parseInt(res.data.noGlobal || res.data.no);
                         vm.model.blank = parseInt(res.data.blankGlobal || res.data.blank);
@@ -121,6 +122,9 @@ window.addEventListener('load', function () {
                             textClass: 'circles-text'
                         })
 
+                    })
+                    .catch(err => {
+                        $('#loading').hide();
                     });
             }
         },
@@ -148,4 +152,6 @@ window.addEventListener('load', function () {
         })
         $('body').fadeIn();
     });
+
+    $('#loading').hide();
 })
