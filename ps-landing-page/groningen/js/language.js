@@ -39,6 +39,7 @@ const lang = {
                     objectionToPilot: "Bezwaar tegen pilot",
                     qrCodeScannedSuccessfully: "QR-code succesvol geregistreerd",
                     scan: "Scan",
+                    enterYourCredentials: "Vul uw gegevens in",
                     signedInTellers: "Aangemelde tellers",
                     signedInUsers: "Gebruikers",
                     signin: "Aanmelden",
@@ -47,14 +48,14 @@ const lang = {
                     twoFactorAuthentication: "Twee-factor authenticatie",
                     verification: "Verifiëren",
                     vote: "Stem",
-                    voterPass: "Kiezerspas",
+                    voterPass: "kiezerspas",
                     votersPassRegisteredSuccessfyully: "Kiezerspas succesvol geregistreerd",
                     writtenAuthorization: 'Schriftelijke volmacht',
                     yes: "Voor",
                     fillDataFieldsBelow: "Vul onderstaande velden in",
                     totalAmount: "Totaal van",
-                    pollingCards: "Stempassen",
-                    powerOfAttorneys: "Volmachten",
+                    pollingCards: "stempassen",
+                    powerOfAttorneys: "volmachten",
                     voterPasses: "Kiezerspassen",
                     dataInserted: "Ingevoerde data",
                     continue: "Ga door",
@@ -212,7 +213,8 @@ const lang = {
                     powerOfAttorneysWritten: "power of attorneys (private)",
                     objectionsToPilot: "objections to pilot",
                     lastScannedPollingCards: "last scanned polling cards",
-                    lastRegisteredVotes: "last registered votes"
+                    lastRegisteredVotes: "last registered votes",
+                    enterYourCredentials: "Enter your credentials",
 
                 }
             }
