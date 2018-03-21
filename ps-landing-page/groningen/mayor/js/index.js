@@ -38,6 +38,7 @@ window.addEventListener('load', function () {
                     }
                 }
                 ).catch(error => {
+                    vm.clearModel();
                     var msg = 'Unknown error, check if the application is running there is access to the node';
                     if (error && error.response && error.response.data && error.response.data.message)
                         msg = error.response.data.message;
@@ -67,6 +68,7 @@ window.addEventListener('load', function () {
                         window.location = '/groningen/mayor/election-results.html';
                     }
                     ).catch(error => {
+                        vm.clearModel();
                         $('#loading-modal').modal('hide');
                         this.$toasted.show(error.response.data.message, {
                             theme: "bubble",
@@ -88,12 +90,20 @@ window.addEventListener('load', function () {
                     })
                     .catch(error => {
                         $('#loading-modal').modal('hide');
+                        vm.clearModel();
                         this.$toasted.show(error.response.data.message, {
                             theme: "bubble",
                             position: "bottom-center",
                             duration: 3000
                         });
                     });
+            },
+            clearModel: function(){
+                this.model.email = '';
+                this.model.password = '';
+                this.model.passwordConfirmation = '';
+                this.model.code = '';
+
             }
         }
 

@@ -67,7 +67,7 @@ exports.canSignOff = function (callback) {
     contract.canSignOff(callback);
 }
 
-exports.signOff = function (callback) {
+exports.signOff = function (wallet, callback) {
     let _params = [];
     let methodName = "signOff";
     blockchainService.executeFunction(wallet, config.blockchain.municipalityAddress, methodName, _params, callback, "0");

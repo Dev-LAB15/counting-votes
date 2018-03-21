@@ -1,9 +1,9 @@
 window.addEventListener('load', function () {
-    
+
     if (!this.window.localStorage.token) {
         this.window.location = '/groningen/mayor/';
     }
-    
+
     var vm = new Vue({
         i18n,
         el: '#app',
@@ -50,9 +50,13 @@ window.addEventListener('load', function () {
             },
             requestSignOff: function () {
                 $('#sign-in-modal').modal('hide');
-                axios.post(apiEndpoint + '/mayor/signoff', axiosHeaders)
+                var model = {
+                    password: this.model.password
+                }
+                axios.post(apiEndpoint + '/mayor/signoff', model, axiosHeaders)
                     .then(res => {
                         $('#success-modal').modal();
+                        window.localStorage.clear();
                     })
                     .catch(err => {
                         var msg = vm.$t('message.unhandledError');
@@ -119,6 +123,9 @@ window.addEventListener('load', function () {
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredPowerOfAttorneys);
                         vm.model.totalRegisteredVoters += parseInt(res.data.registeredVoterPasses);
                         vm.model.totalRegisteredVoters += parseInt(res.data.scannedPowerOfAttorneys);
+                    })
+                    .catch(err => {
+                        var errror = err;
                     });
             }
         },

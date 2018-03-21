@@ -224,7 +224,7 @@ module.exports = function (app) {
         });
     });
 
-    app.get('/mayor/signoff', function (req, res) {
+    app.post('/mayor/signoff', function (req, res) {
         var email = req.user.email;
         var password = req.body.password;
         var wallet = userService.getWallet(email, password);
