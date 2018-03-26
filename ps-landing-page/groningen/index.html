@@ -139,41 +139,16 @@
 			<section id="home" class="section home cv-fullwidth active" data-header-position="bottom">
 				<div class="cv-vertical-align">
 					<div class="container">
+						<img src="img/svg/ended-label.svg" class="ended-label img-fluid">
 						<img src="img/svg/subtitle.svg" class="subtitle img-fluid">
 						<img src="img/svg/logo.svg" class="logo img-fluid">
 						<p>Een pilot van de gemeente om nog betrouwbaarder te stemmen</p>
 						<img src="img/svg/date.svg" class="date img-fluid">
 
-						<!-- before elections only -->
-						<!-- <div id="countdown">
-									<div class="item">
-										<span class="days"></span>
-										<small>dagen</small>
-									</div>
-
-									<div class="item">
-										<span class="hours"></span>
-										<small>uren</small>
-									</div>
-
-									<div class="item">
-										<span class="minutes"></span>
-										<small>min</small>
-									</div>
-
-									<div class="item">
-										<span class="seconds"></span>
-										<small>sec</small>
-									</div>
-								</div> -->
-						<!-- / -->
-
-						<!-- during elections only -->
 						<p>Opkomstpercentage</p>
 						<div class="circle mb-4" id="avg-rate"></div>
-						<!-- / -->
 
-						<a href="#pilot" class="btn btn-primary goto">Bekijk Meer</a>
+						<a href="#results" class="btn btn-primary goto">BEKIJK RESULTAAT</a>
 					</div>
 				</div>
 				<!-- /content -->
@@ -279,6 +254,17 @@
 							</div>
 						</div>
 
+						<div class="alert alert-info" role="alert">
+							<div class="row align-items-center">
+								<div class="col-12 col-sm-2 text-center">
+									<img src="img/svg/icon-info.svg" class="img-fluid icon">
+								</div>
+								<div class="col-12 col-sm-10">
+									Zoals beschreven in onze pilot uitleg kan het voorkomen dat het aantal door ons geregistreerde stemmers afwijkt van het totaal aantal officieel toegelaten kiezers. Dit komt doordat deze proef niet officieel onderdeel uitmaakt van het stemproces. Hierdoor kon het bijvoorbeeld gebeuren dat stemgerechtigden hun stempas aan ons toonden, maar zich later niet konden identificeren. Dit heeft gezorgd voor een afwijking van 15 registraties.
+								</div>
+							</div>
+						</div>
+
 						<div class="admitted">
 							<div class="container">
 								<div class="page-title">
@@ -332,6 +318,7 @@
 							</div>
 						</div>
 						<!-- /admitted -->
+						
 						<div class="total">
 							<div class="container">
 								<div class="page-title" style="margin-top: 0">
@@ -422,9 +409,83 @@
 						</div>
 					</div>
 					<!-- /report -->
+
+					<div class="final-result">
+						<div class="container">
+							<div class="row justify-content-md-center">
+								<div class="col col-md-10">
+									<div class="page-title text-center">
+										<h5>Eindresultaat</h5>
+									</div>
+
+									<div class="table-responsive">
+										<table class="table table-lg">
+											<thead>
+												<tr>
+													<th>Adress</th>
+													<th class="yes">{{$t('message.yes')}}</th>
+													<th class="no">{{$t('message.no')}}</th>
+													<th class="blank">{{$t('message.blank')}}</th>
+													<th class="invalid">{{$t('message.invalid')}}</th>
+													<th class="text-right total">{{$t('message.total')}}</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												<tr>
+													<td scope="col">Hanzeplein</td>
+													<td class="yes">92</td>
+													<td class="no">276</td>
+													<td class="blank">5</td>
+													<td class="invalid">0</td>
+													<td class="text-right total">373</td>
+												</tr>
+
+												<tr>
+													<td scope="col">Oude Boteringestraat</td>
+													<td class="yes">59</td>
+													<td class="no">207</td>
+													<td class="blank">2</td>
+													<td class="invalid">0</td>
+													<td class="text-right total">268</td>
+												</tr>
+
+												<tr>
+													<td scope="col">Spilsluizen</td>
+													<td class="yes">106</td>
+													<td class="no">203</td>
+													<td class="blank">1</td>
+													<td class="invalid">0</td>
+													<td class="text-right total">310</td>
+												</tr>
+
+												<tr>
+													<td scope="col">Zuiderdiep</td>
+													<td class="yes">161</td>
+													<td class="no">524</td>
+													<td class="blank">8</td>
+													<td class="invalid">0</td>
+													<td class="text-right total">693</td>
+												</tr>
+
+												<tr>
+													<td scope="col">Trompsingel</td>
+													<td class="yes">85</td>
+													<td class="no">281</td>
+													<td class="blank">4</td>
+													<td class="invalid">0</td>
+													<td class="text-right total">370</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /final-numbers -->
 				</div>
 			</section>
-
 
 			<section id="pilot" class="section pilot">
 				<div class="cv-fullwidth">
@@ -478,6 +539,41 @@
 									</dd>
 								</dl>
 							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section id="feedback" class="section feedback">
+				<div class="container">
+					<div class="page-title text-center">
+						<h2>Test resultaten</h2>
+					</div>
+
+					<div class="row align-items-center">
+						<div class="col-12 col-sm-3 offset-sm-0 col-lg-1 offset-lg-2 text-left">
+							<img src="img/svg/icon-check.svg" class="img-fluid icon">
+						</div>
+						<div class="col-12 col-sm-9 col-lg-7">
+							<p class="mb-0">Op basis onze evaluatie kunnen we concluderen dat de applicatie succesvol was in zowel het registreren van stemgerechtigden als het tellen van stemmen. Ook het authenticatie mechanisme en het managen van gebruikers werkte zoals verwacht.</p>
+						</div>
+					</div>
+
+					<div class="row align-items-center mt-5">
+						<div class="col-12 col-sm-3 order-sm-2 col-lg-1 text-right">
+							<img src="img/svg/icon-hacker.svg" class="img-fluid icon">
+						</div>
+						<div class="col-12 col-sm-9 order-sm-1 offset-lg-0 col-lg-7 offset-lg-2">
+							<p class="mb-0">Gedurende de dag hebben zich meerder hack pogingen voorgedaan om toegang te krijgen tot het netwerk en is geprobeerd transacties toe te voegen en aan te passen zonder succes. Deze mislukte pogingen sterken ons in onze overtuiging van de waarde van blockchaintechnologie voor het tellen en registreren van getelde stemmen.</p>
+						</div>
+					</div>
+
+					<div class="row align-items-center mt-5">
+						<div class="col-12 col-sm-3 offset-sm-0 col-lg-1 offset-lg-2 text-left">
+							<img src="img/svg/icon-performance.svg" class="img-fluid icon">
+						</div>
+						<div class="col-12 col-sm-9 col-lg-7">
+							<p class="mb-0">Daarnaast hebben we als aanvulling ons blockchain netwerk gestresstest op performance en throughput. Deze test heeft er toe geleid dat niet alle getelde stemmen zijn geregistreerd, wat het verschil tussen toegelaten kiezers en getelde stemmen verklaard. Ondanks dat, was deze proef een succes en heeft het ons veel inzicht gegeven in de aanpassingen die we kunnen doen om de applicatie door te ontwikkelen voor productie.</p>
 						</div>
 					</div>
 				</div>

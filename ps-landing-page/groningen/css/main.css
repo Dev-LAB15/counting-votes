@@ -175,6 +175,19 @@ select.form-control {
   padding-top: 0px;
   padding-bottom: 0px; }
 
+.alert .icon {
+  max-width: 80px; }
+.alert.alert-info {
+  background: #fff;
+  color: #998E8E;
+  border: 2px solid #734FC1;
+  padding: 40px; }
+.alert.alert-danger {
+  background: #fff;
+  color: #F33232;
+  border: 2px solid #F33232;
+  padding: 40px; }
+
 .page-title {
   padding: 0px;
   margin: 0 0 100px 0;
@@ -359,6 +372,14 @@ footer {
     #fullpage .section.home .cv-vertical-align {
       padding-bottom: 100px;
       padding-top: 20px; }
+    #fullpage .section.home .container {
+      position: relative; }
+    #fullpage .section.home .ended-label {
+      position: absolute;
+      top: 20%;
+      left: 22%;
+      z-index: 10;
+      width: 55%; }
     #fullpage .section.home .subtitle {
       margin-bottom: 30px; }
     #fullpage .section.home .logo {
@@ -442,6 +463,24 @@ footer {
             background: #EAEAEA; }
     #fullpage .section.pilot .info p:last-child {
       margin-bottom: 0px; }
+  #fullpage .section.feedback {
+    padding: 100px 0 180px; }
+    #fullpage .section.feedback h3 {
+      margin-bottom: 100px; }
+    #fullpage .section.feedback .mt-5 {
+      margin-top: 100px !important; }
+    #fullpage .section.feedback .page-title h2 {
+      margin-bottom: 0px; }
+      #fullpage .section.feedback .page-title h2 span {
+        font-size: 40px;
+        font-weight: 300;
+        letter-spacing: 0;
+        text-transform: none;
+        line-height: 1;
+        display: inline-block;
+        vertical-align: text-top; }
+    #fullpage .section.feedback .icon {
+      max-width: 80px; }
   #fullpage .section.contact {
     padding: 80px 0;
     text-align: center;
@@ -612,6 +651,9 @@ footer {
       vertical-align: middle; }
     #fullpage .section.results .report h2 {
       font-size: 30px; }
+    #fullpage .section.results .report .alert {
+      max-width: 920px;
+      margin: 100px auto 0; }
     #fullpage .section.results .report .page-title {
       text-align: center;
       margin: 100px 0 60px 0; }
@@ -665,6 +707,22 @@ footer {
       #fullpage .section.results .report .deviation .badge strong {
         margin-right: 15px;
         font-weight: 400; }
+    #fullpage .section.results .final-result {
+      padding-top: 100px; }
+      #fullpage .section.results .final-result .page-title h5 {
+        color: #734FC1; }
+      #fullpage .section.results .final-result .table th.yes,
+      #fullpage .section.results .final-result .table td.yes {
+        color: #734FC1; }
+      #fullpage .section.results .final-result .table th.no,
+      #fullpage .section.results .final-result .table td.no {
+        color: #5BCBC3; }
+      #fullpage .section.results .final-result .table th.blank,
+      #fullpage .section.results .final-result .table td.blank {
+        color: #0052D0; }
+      #fullpage .section.results .final-result .table th.invalid,
+      #fullpage .section.results .final-result .table td.invalid {
+        color: #F3A36C; }
   #fullpage .section.transactions {
     padding: 180px 0 100px; }
     #fullpage .section.transactions .page-title {
@@ -741,7 +799,29 @@ footer {
   .table tbody td {
     border-bottom: 1px solid #EAEAEA;
     border-top: none; }
+  .table.table-lg thead th,
+  .table.table-lg thead td,
+  .table.table-lg tbody th,
+  .table.table-lg tbody td {
+    font-size: 24px;
+    font-weight: 300;
+    color: #000; }
+  .table.table-lg thead th,
+  .table.table-lg tbody th {
+    color: #998E8E;
+    font-weight: 500; }
 
+@media (max-width: 1199px) {
+  #header.navbar .nav li.logo {
+    display: none; } }
+@media (max-width: 991px) and (max-height: 600px) {
+  #fullpage .section.home .logo {
+    width: 60%; }
+  #fullpage .section.home .btn {
+    display: none; }
+  #fullpage .section.home .date,
+  #fullpage .section.home .subtitle {
+    width: 30%; } }
 @media (max-width: 991px) {
   body {
     font-size: 15px;
@@ -758,6 +838,9 @@ footer {
 
   h2 {
     letter-spacing: 4px; }
+
+  h3 {
+    letter-spacing: 6px; }
 
   h4 {
     font-size: 16px; }
@@ -890,17 +973,32 @@ footer {
       #fullpage .section.transactions .page-title h5 {
         font-size: 16px;
         line-height: 22px; } }
-@media (max-width: 991px) and (max-height: 600px) {
-  #fullpage .section.home .logo {
-    width: 60%; }
-  #fullpage .section.home .btn {
-    display: none; }
-  #fullpage .section.home .date,
-  #fullpage .section.home .subtitle {
-    width: 30%; } }
-@media (max-width: 1199px) {
-  #header.navbar .nav li.logo {
-    display: none; } }
+@media (max-width: 767px) {
+  .alert .icon {
+    margin-bottom: 40px; }
+
+  #fullpage .section.feedback {
+    padding: 80px 0; }
+    #fullpage .section.feedback h3 {
+      text-align: center;
+      margin-bottom: 40px; }
+    #fullpage .section.feedback .mt-5 {
+      margin-top: 40px !important; }
+    #fullpage .section.feedback .icon {
+      margin: 0 auto 40px;
+      width: 60px;
+      display: block; }
+    #fullpage .section.feedback .page-title h2 span {
+      font-size: 30px;
+      display: block; }
+  #fullpage .section.results, #fullpage .section.pilot, #fullpage .section.feedback, #fullpage .section.contact {
+    padding-left: 15px;
+    padding-right: 15px; }
+  #fullpage .section.results .report .total-bar {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px; } }
 @media (max-height: 740px) {
   #fullpage .section.home .logo {
     width: 60%;

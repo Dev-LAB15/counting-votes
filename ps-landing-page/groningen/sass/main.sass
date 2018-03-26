@@ -227,6 +227,22 @@ select
 		padding-top: 0px
 		padding-bottom: 0px
 
+.alert
+	.icon
+		max-width: 80px
+
+	&.alert-info
+		background: $white
+		color: $gray
+		border: 2px solid $counting
+		padding: 40px
+
+	&.alert-danger
+		background: $white
+		color: $red
+		border: 2px solid $red
+		padding: 40px
+
 .page-title
 	padding: 0px
 	margin: 0 0 100px 0
@@ -454,6 +470,16 @@ footer
 				padding-bottom: 100px
 				padding-top: 20px
 
+			.container
+				position: relative
+
+			.ended-label
+				position: absolute
+				top: 20%
+				left: 22%
+				z-index: 10
+				width: 55%
+
 			.subtitle
 				margin-bottom: 30px
 
@@ -558,6 +584,31 @@ footer
 				p
 					&:last-child
 						margin-bottom: 0px
+
+		&.feedback
+			padding: 100px 0 180px
+
+			h3
+				margin-bottom: 100px
+
+			.mt-5
+				margin-top: 100px !important
+
+			.page-title
+				h2
+					margin-bottom: 0px
+
+					span
+						font-size: 40px
+						font-weight: 300
+						letter-spacing: 0
+						text-transform: none
+						line-height: 1
+						display: inline-block
+						vertical-align: text-top
+
+			.icon
+				max-width: 80px
 
 		&.contact
 			padding: 80px 0
@@ -777,6 +828,10 @@ footer
 				h2
 					font-size: 30px
 
+				.alert
+					max-width: 920px
+					margin: 100px auto 0
+
 				.page-title
 					text-align: center
 					margin: 100px 0 60px 0
@@ -855,6 +910,28 @@ footer
 						strong
 							margin-right: 15px
 							font-weight: 400
+
+			.final-result
+				padding-top: 100px
+
+				.page-title
+					h5
+						color: $counting
+
+				.table
+					th,
+					td
+						&.yes
+							color: $counting
+
+						&.no
+							color: $verification
+
+						&.blank
+							color: $scan
+							
+						&.invalid
+							color: $transactions
 
 		&.transactions
 			padding: 180px 0 100px
@@ -951,6 +1028,41 @@ footer
 			border-bottom: 1px solid $lightgray_b
 			border-top: none
 
+	&.table-lg
+		thead,
+		tbody
+			th,
+			td
+				font-size: 24px
+				font-weight: 300
+				color: $black
+
+			th
+				color: $gray
+				font-weight: 500
+
+@media (max-width: 1199px)
+	#header
+		&.navbar
+			.nav
+				li
+					&.logo
+						display: none
+
+@media (max-width: 991px) and (max-height: 600px)
+	#fullpage 
+		.section
+			&.home
+				.logo
+					width: 60%
+
+				.btn
+					display: none
+
+				.date,
+				.subtitle
+					width: 30%
+					
 @media (max-width: 991px)
 	body
 		font-size: 15px
@@ -967,6 +1079,9 @@ footer
 
 	h2
 		letter-spacing: 4px
+
+	h3
+		letter-spacing: 6px
 
 	h4
 		font-size: 16px
@@ -1150,28 +1265,49 @@ footer
 					h5
 						font-size: 16px
 						line-height: 22px
-				
-@media (max-width: 991px) and (max-height: 600px)
-	#fullpage 
+
+@media (max-width: 767px)
+	.alert
+		.icon
+			margin-bottom: 40px
+
+	#fullpage
 		.section
-			&.home
-				.logo
-					width: 60%
+			&.feedback
+				padding: 80px 0
 
-				.btn
-					display: none
+				h3
+					text-align: center
+					margin-bottom: 40px
 
-				.date,
-				.subtitle
-					width: 30%
+				.mt-5
+					margin-top: 40px !important
 
-@media (max-width: 1199px)
-	#header
-		&.navbar
-			.nav
-				li
-					&.logo
-						display: none
+				.icon
+					margin: 0 auto 40px
+					width: 60px
+					display: block
+
+				.page-title
+					h2	
+						span
+							font-size: 30px
+							display: block
+						
+			&.results,
+			&.pilot,
+			&.feedback,
+			&.contact
+				padding-left: 15px
+				padding-right: 15px
+
+			&.results
+				.report
+					.total-bar
+						margin-left: -15px
+						margin-right: -15px
+						padding-left: 15px
+						padding-right: 15px
 
 @media (max-height: 740px)
 	#fullpage 
