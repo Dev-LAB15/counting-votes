@@ -287,6 +287,16 @@ contract PollingStation is Permissions {
             SignedOff(msg.sender, false, "Couldn't signoff.");
             return false;
         }
+
+        if (role == Role.Teller && signedInTellers[msg.sender] != true) {
+            SignedOff(msg.sender, false, "Only signed in Tellers can sign off.");
+            return false;
+        }
+        if (role == Role.Chairman && signedInChairmen[msg.sender] != true) {
+            SignedOff(msg.sender, false, "Only signed in Chairmen can sign off.");
+            return false;
+        }
+
         if (role == Role.Teller) {
             signedOffTellerCount++;
             signedOffStaff[msg.sender] = 1;
