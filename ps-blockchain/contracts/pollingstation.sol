@@ -3,6 +3,7 @@ pragma solidity ^0.4.19;
 import "./permissions.sol";
 import "./municipality.sol";
 
+
 contract PollingStation is Permissions {
     
     //Voting data
@@ -109,41 +110,6 @@ contract PollingStation is Permissions {
         
     }
     
-    modifier _canSignOff() {
-        if (votingSessionClosed) {
-            SignedOff(msg.sender, false, "Can only sign off during open voting session.");
-            return;
-        }
-        
-        if (!verificationSuccessful) {
-            return;
-        }
-        
-        if (signedOffStaff[msg.sender] != 0) {
-            SignedOff(msg.sender, false, "Staff memeber already signed off.");
-            return;
-        }
-        
-        Role currRole = Role(roles[msg.sender]);
-        
-        if (currRole == Role.Teller && signedInTellers[msg.sender] != true) {
-            SignedOff(msg.sender, false, "Only signed in Tellers can sign off.");
-            return;
-        }
-        
-        if (currRole == Role.Chairman && signedInChairmen[msg.sender] != true) {
-            SignedOff(msg.sender, false, "Only signed in Chairmen can sign off.");
-            return;
-        }
-        
-        if ((currRole == Role.Chairman && signedOffChairmenCount < signedInChairmenCount && signedInTellerCount > 0) || 
-            (currRole == Role.Teller && signedOffTellerCount < signedInTellerCount && signedOffChairmenCount == 0)) {
-            _;
-        } else {
-            SignedOff(msg.sender, false, "All Tellers must sign off, then chairman can sign off. No other role can sign off.");
-        }
-    }
-    
     function getMunicipalityAddress() public view returns (address municipalityAddress) {
         return munContract;
     }
@@ -238,41 +204,21 @@ contract PollingStation is Permissions {
     function getReport() public view returns (uint scannedPollingCards, uint registeredVoterPasses, uint scannedPowerOfAttorneys, uint registeredPowerOfAttorneys, uint registeredObjections, uint collectedPollingCards, uint collectedVoterPasses, uint collectedPowerOfAttorneys, uint yes, uint no, uint blank, uint invalid) {
         return (scannedPollingCardCount, registeredVoterPassCount, scannedPowerOfAttorneyCount, registeredPowerOfAttorneyCount, registeredObjectionCount, collectedPollingCardCount, collectedVoterPassCount, collectedPowerOfAttorneyCount, yesLocal, noLocal, blankLocal, invalidLocal);
     }
-    
-    function yes(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
+
+    function countVote(uint voteId, string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
         beganCounting = true;
-        yesLocal++;
-        munContract.countVote(1, timestamp);
-        VoteCounted(1, true, timestamp);
-    }
-    
-    function no(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
-        beganCounting = true;
-        noLocal++;
-        munContract.countVote(2, timestamp);
-        VoteCounted(2, true, timestamp);
-    }
-    
-    function blank(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
-        beganCounting = true;
-        blankLocal++;
-        munContract.countVote(3, timestamp);
-        VoteCounted(3, true, timestamp);
-    }
-    
-    function invalid(string timestamp) public _isSessionOpen() _isNotVerified() _verifyRole(Role.Chairman) {
-        beganCounting = true;
-        invalidLocal++;
-        munContract.countVote(4, timestamp);
-        VoteCounted(4, true, timestamp);
-    }
-    
-    function getVerification() public view returns (bool) {
-        return verificationSuccessful;
-    }
-    
-    function getVotingRound() public view returns (uint) {
-        return votingRound;
+        if (voteId == 1) {
+            yesLocal++;
+        } else if (voteId == 2) {
+            noLocal++;
+        } else if (voteId == 3) {
+            blankLocal++;
+        } else {
+            invalidLocal++;
+        }
+        
+        munContract.countVote(voteId, timestamp);
+        VoteCounted(voteId, true, timestamp);
     }
     
     function recount() public _verifyRole(Role.Chairman) {
@@ -334,8 +280,13 @@ contract PollingStation is Permissions {
         return uint(deviation);
     }
     
-    function signOff(string explanation) public _canSignOff() returns(bool) {       
+    function signOff(string explanation) public returns(bool) {       
         Role role = Role(roles[msg.sender]);
+
+        if (votingSessionClosed || !verificationSuccessful || signedOffStaff[msg.sender] != 0) {
+            SignedOff(msg.sender, false, "Couldn't signoff.");
+            return false;
+        }
         if (role == Role.Teller) {
             signedOffTellerCount++;
             signedOffStaff[msg.sender] = 1;

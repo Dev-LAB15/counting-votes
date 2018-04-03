@@ -12,7 +12,7 @@
     "tokenExpiration": "14 days",
     "blockchain": {
         "pollingStationId": "ptest",
-        "routerAddress": "0xa5d82075fbed8609731bf89feb12ca76837cc68b",
+        "routerAddress": "0x5aa7045d8ef0d0201cb82726653e41becced10e4",
         "provider": "ws://104.40.190.151:8546",
         "httpProvider": "http://104.40.190.151:8545",
         "owner": {

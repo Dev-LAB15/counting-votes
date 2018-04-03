@@ -29,24 +29,24 @@ module.exports.setUserRole = function (address, email, callback) {
  * @param {any} wallet 
  */
 module.exports.recordVote = function (voteOption, timeStamp, wallet, callback) {
-    var _params = [{ type: "string", value: timeStamp }];
+    var _params;
     var methodName;
     switch (voteOption) {
         case "vote-yes":
-            methodName = "yes";
+            _params = [{ type: "uint", value: 1 }, { type: "string", value: timeStamp }];
             break;
         case "vote-no":
-            methodName = "no";
+            _params = [{ type: "uint", value: 2 }, { type: "string", value: timeStamp }];
             break;
         case "vote-blank":
-            methodName = "blank";
+            _params = [{ type: "uint", value: 3 }, { type: "string", value: timeStamp }];
             break;
         default:
-            methodName = "invalid";
+            _params = [{ type: "uint", value: 4 }, { type: "string", value: timeStamp }];
             break;
     }
 
-    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, methodName, _params, callback, "0");
+    blockchainService.executeFunction(wallet, config.blockchain.pollingStationAddress, "countVote", _params, callback, "0");
 }
 /**
  * Signs in the current user assynchronously.
@@ -170,7 +170,7 @@ module.exports.getVerificationDoneEvent = function (callback) {
 module.exports.getSignedOffEvent = function (callback) {
     contract.getSignedOffEvent(callback);
 }
-module.exports.getUserSignedOutEvent = function(callback){
+module.exports.getUserSignedOutEvent = function (callback) {
     contract.getUserSignedOutEvent(callback);
 }
 
