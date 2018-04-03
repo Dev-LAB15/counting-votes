@@ -33,16 +33,16 @@ module.exports.recordVote = function (voteOption, timeStamp, wallet, callback) {
     var methodName;
     switch (voteOption) {
         case "vote-yes":
-            _params = [{ type: "uint", value: 1 }, { type: "string", value: timeStamp }];
+            _params = [{ type: "uint256", value: "1" }, { type: "string", value: timeStamp }];
             break;
         case "vote-no":
-            _params = [{ type: "uint", value: 2 }, { type: "string", value: timeStamp }];
+            _params = [{ type: "uint256", value: "2" }, { type: "string", value: timeStamp }];
             break;
         case "vote-blank":
-            _params = [{ type: "uint", value: 3 }, { type: "string", value: timeStamp }];
+            _params = [{ type: "uint256", value: "3" }, { type: "string", value: timeStamp }];
             break;
         default:
-            _params = [{ type: "uint", value: 4 }, { type: "string", value: timeStamp }];
+            _params = [{ type: "uint256", value: "4" }, { type: "string", value: timeStamp }];
             break;
     }
 
