@@ -1,6 +1,6 @@
 {
     "enableSecurityToken": true,
-    "useVerificationCode": true,
+    "useVerificationCode": false,
     "sendGridEmailFrom": "no-reply@lab15.io",
     "sendGridEmailFromName": "LAB15 - Counting Votes Verification Services",
     "sendGridApiKey": "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",
@@ -12,12 +12,12 @@
     "tokenExpiration": "14 days",
     "blockchain": {
         "pollingStationId": "ptest",
-        "routerAddress": "0x5aa7045d8ef0d0201cb82726653e41becced10e4",
-        "provider": "ws://104.40.190.151:8546",
-        "httpProvider": "http://104.40.190.151:8545",
+        "routerAddress": "0x2c13e04976ab2ae8c0ef0ad61835a3e0f59b3609",
+        "provider": "ws://127.0.0.1:8545",
+        "httpProvider": "http://127.0.0.1:8545",
         "owner": {
-            "address": "0x5b29a9a7543b364a4b9cf5b978358f65c80cf442",
-            "privateKey": "a4034aac32913768e99ec80e5c4e2e99c63e9e090f5fcc97ba1f311141163959"
+            "address": "0x7452a483C1c883D586EEe545E583c61a3F230CE4",
+            "privateKey": "84e0ea215e19f07f21323f96cb0b58ced9569a23f2ff5caa5da9f722e64fb2fe"
         },
         "defaultValueInEther": "10"
     },
