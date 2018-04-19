@@ -12,12 +12,12 @@
     "tokenExpiration": "14 days",
     "blockchain": {
         "pollingStationId": "ptest",
-        "routerAddress": "0x2c13e04976ab2ae8c0ef0ad61835a3e0f59b3609",
-        "provider": "ws://127.0.0.1:8545",
-        "httpProvider": "http://127.0.0.1:8545",
+        "routerAddress": "0x5099d642cb3fd0bec70eb180d3d6886113493029",
+        "provider": "ws://192.168.0.3:8546",
+        "httpProvider": "http://192.168.0.3:8545",
         "owner": {
-            "address": "0x7452a483C1c883D586EEe545E583c61a3F230CE4",
-            "privateKey": "84e0ea215e19f07f21323f96cb0b58ced9569a23f2ff5caa5da9f722e64fb2fe"
+            "address": "0x060c648ede78724950fd0b168be7e0d28a041708",
+            "privateKey": "f2289ff9f957da3f4363d14d93266b7b61c4ae52289079df607a8a023ab50ebc"
         },
         "defaultValueInEther": "10"
     },
