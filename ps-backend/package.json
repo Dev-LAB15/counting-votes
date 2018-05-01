@@ -2,13 +2,13 @@
   "name": "ps-backend",
   "version": "1.0.0",
   "description": "Backend for Polling Station Services",
-  "main": "index.js",
+  "main": "app/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app/server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Moises Goncalves",
+  "license": "GNU V3",
   "dependencies": {
     "@sendgrid/mail": "^6.2.1",
     "abi-decoder": "^1.0.9",

@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Moises Goncalves",
+  "license": "GNU3",
   "dependencies": {
     "scandit-sdk": "^1.4.7"
   }
