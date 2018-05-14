@@ -7,6 +7,21 @@ Redirect to https://www.myetherwallet.com/ for more info on how to generate a wa
 A private key will always create the same public key regardless of the network you use 
 for this test.
 
+## Licensing
+This file is part of Counting Votes project.
+
+Counting Votes project is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or any later version.
+
+Counting Votes project is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Counting Votes project. If not, see <http://www.gnu.org/licenses/>.
+
 ## Genesis File  
 In order to start an ethereum node you'll need a genesis.json file.
 There is an example genesis.json file under the project root folder.
