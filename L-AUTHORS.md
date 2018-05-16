@@ -1,4 +1,9 @@
-## Staff
+## PARTNERS
+Berenschot
+Gemeente Groningen
+LAB15 B.V.
+
+## STAFF
 
 ### PRODUCT OWNER
 Joris van der Steuijt
@@ -10,7 +15,4 @@ Jefferson Pereira da Silva
 Alberto Molero Jurado  
 Eduardo Elias Saleh  
 Fábio Santos Franco  
-José Moisés P. Gonçalves  
-
-LAB15 BV
-R&D TEAM
+José Moisés P. Gonçalves

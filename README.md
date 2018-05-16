@@ -1,5 +1,5 @@
 # Introduction  
-Project Designed for the Dutch Referendum for the Intelligence and Security Services Act 2017, held on 21th of March of 2018, Groningen, The Netherlands.
+Berenschot, Gemeente Groningen, and LAB15 have taken the initiative to test how blockchain can assist in the process of counting votes during elections. The project was specifically designed for the Dutch Referendum for the Intelligence and Security Services Act 2017, held on 21th of March of 2018, Groningen, The Netherlands.
 
 ## Licensing
 This file is part of Counting Votes project.
