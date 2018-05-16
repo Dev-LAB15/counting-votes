@@ -1,6 +1,6 @@
 ## PARTNERS
 Berenschot
-Gemeente Groningen
+Gemeente Groningen  
 LAB15 B.V.
 
 ## STAFF
